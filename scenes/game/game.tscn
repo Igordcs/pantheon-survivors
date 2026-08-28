@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/core/game.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/spawning/enemy_spawner.gd" id="3_spawner"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/basic_enemy.tscn" id="4_enemy"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Player" parent="World" instance=ExtResource("2_player")]
+
+[node name="Enemies" type="Node2D" parent="World"]
+
+[node name="EnemySpawner" type="Node" parent="."]
+script = ExtResource("3_spawner")
+enemy_scene = ExtResource("4_enemy")
+max_enemies = 50
+spawn_interval = 1.5

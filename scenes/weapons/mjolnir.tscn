@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/mjolnir.gd" id="1_script"]
+[ext_resource type="Resource" path="res://resources/weapons/mjolnir_data.tres" id="2_data"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/projectile.tscn" id="3_projectile"]
+
+[node name="Mjolnir" type="Node2D"]
+script = ExtResource("1_script")
+weapon_data = ExtResource("2_data")
+projectile_scene = ExtResource("3_projectile")
