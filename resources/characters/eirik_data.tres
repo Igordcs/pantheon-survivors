@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/progression/character_data.gd" id="1_script"]
+[ext_resource type="Resource" path="res://resources/weapons/mjolnir_data.tres" id="2_weapon"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"eirik"
+display_name = "Eirik, O Guerreiro"
+starting_weapon = ExtResource("2_weapon")
+base_health = 120.0
+base_speed = 220.0
+passive_description = "+15% Dano Elétrico"

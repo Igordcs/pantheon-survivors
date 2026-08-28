@@ -43,5 +43,3 @@ script = ExtResource("6_pickup")
 shape = SubResource("CircleShape2D_Pickup")
 
 [node name="WeaponHolder" type="Node2D" parent="." unique_id=1992211160]
-
-[node name="Mjolnir" parent="WeaponHolder" unique_id=2090086179 instance=ExtResource("4_mjolnir")]

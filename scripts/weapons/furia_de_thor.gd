@@ -39,6 +39,8 @@ func _on_cooldown_timeout() -> void:
 func _smite(pos: Vector2) -> void:
 	# Efeito visual de raio
 	_spawn_lightning_vfx(pos)
+	ScreenShake.shake(0.8)
+	AudioManager.play_sfx("furia_thor_smite")
 	
 	# Dano em área
 	var area_radius := weapon_data.area if weapon_data else 150.0
@@ -54,8 +56,7 @@ func _smite(pos: Vector2) -> void:
 		if dist_sq <= (area_radius * area_radius):
 			var health = enemy_body.get_node_or_null("HealthComponent") as HealthComponent
 			if health and health.is_alive():
-				health.take_damage(dmg)
-				_hit_flash(enemy_body)
+				health.take_damage(dmg, pos)
 
 
 func _spawn_lightning_vfx(pos: Vector2) -> void:
@@ -90,12 +91,3 @@ func _find_closest_enemy() -> CharacterBody2D:
 			closest = enemy_body
 
 	return closest
-
-
-func _hit_flash(body: Node2D) -> void:
-	var sprite := body.get_node_or_null("Sprite2D") as CanvasItem
-	if not sprite:
-		return
-	var tween := body.create_tween()
-	sprite.modulate = Color.WHITE
-	tween.tween_property(sprite, "modulate", Color(1, 0.3, 0.3, 1), 0.15)

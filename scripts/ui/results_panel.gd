@@ -25,13 +25,17 @@ func show_results(is_victory: bool, stats: Dictionary, time_str: String, kills: 
 		title_label.modulate = Color(0.8, 0.2, 0.2) # Red
 		
 	time_label.text = time_str
-	gold_label.text = str(stats.get("gold_reward", 0))
+	var gold = stats.get("gold_reward", 0)
+	gold_label.text = str(gold)
 	kills_label.text = str(kills)
 	bosses_label.text = str(stats.get("bosses_defeated", 0))
+	
+	# Salva o progresso na persistência
+	SaveManager.add_currency(gold)
 	
 	show()
 
 
 func _on_restart_pressed() -> void:
 	get_tree().paused = false
-	get_tree().reload_current_scene()
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")

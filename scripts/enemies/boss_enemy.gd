@@ -24,8 +24,15 @@ func _ready() -> void:
 		health_component.current_health = boss_data.max_health
 	
 	health_component.died.connect(_on_died)
+	health_component.damaged.connect(_on_damaged)
 	telegraph_area.hide()
 	hit_area.monitoring = false
+
+
+func _on_damaged(_amount: float, _source_pos: Vector2) -> void:
+	var tween = create_tween()
+	sprite.modulate = Color.WHITE
+	tween.tween_property(sprite, "modulate", Color(1, 0.3, 0.3, 1), 0.15)
 
 
 func reset(pos: Vector2) -> void:

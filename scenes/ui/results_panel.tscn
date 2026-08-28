@@ -95,4 +95,4 @@ text = "1"
 [node name="RestartButton" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "Try Again"
+text = "MENU PRINCIPAL"

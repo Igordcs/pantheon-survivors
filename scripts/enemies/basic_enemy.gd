@@ -7,15 +7,30 @@ var _player: CharacterBody2D
 var _contact_cooldown: float = 0.0
 const CONTACT_COOLDOWN_TIME: float = 0.5
 
+var _knockback_velocity: Vector2 = Vector2.ZERO
+
 
 func _ready() -> void:
 	_player = _find_player()
 	# Sync health from EnemyData
-	if enemy_data:
-		var health := get_node_or_null("HealthComponent") as HealthComponent
-		if health:
+	var health := get_node_or_null("HealthComponent") as HealthComponent
+	if health:
+		if enemy_data:
 			health.max_health = enemy_data.max_health
-			health.reset()
+		health.reset()
+		health.damaged.connect(_on_damaged)
+
+
+func _on_damaged(_amount: float, source_pos: Vector2) -> void:
+	# Hit Flash
+	var tween = create_tween()
+	$Sprite2D.modulate = Color.WHITE
+	tween.tween_property($Sprite2D, "modulate", Color(1, 0.3, 0.3, 1), 0.15)
+	
+	# Knockback
+	if source_pos != Vector2.ZERO:
+		var dir = source_pos.direction_to(global_position)
+		_knockback_velocity = dir * 200.0
 
 
 func _physics_process(delta: float) -> void:
@@ -26,7 +41,10 @@ func _physics_process(delta: float) -> void:
 
 	var spd := enemy_data.speed if enemy_data else 80.0
 	var direction := global_position.direction_to(_player.global_position)
-	velocity = direction * spd
+	
+	_knockback_velocity = _knockback_velocity.lerp(Vector2.ZERO, 10.0 * delta)
+	velocity = (direction * spd) + _knockback_velocity
+	
 	move_and_slide()
 
 	# Flip sprite to face player

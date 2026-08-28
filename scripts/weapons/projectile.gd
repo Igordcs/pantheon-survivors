@@ -35,16 +35,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	var health := body.get_node_or_null("HealthComponent") as HealthComponent
 	if health and health.is_alive():
-		health.take_damage(damage)
-		_hit_flash(body)
+		health.take_damage(damage, global_position)
+		ScreenShake.shake(0.2)
+		AudioManager.play_sfx("mjolnir_hit")
 	queue_free()
-
-
-func _hit_flash(body: Node2D) -> void:
-	var sprite := body.get_node_or_null("Sprite2D") as CanvasItem
-	if not sprite:
-		return
-	# Tween bound to body so it survives projectile's queue_free
-	var tween := body.create_tween()
-	sprite.modulate = Color.WHITE
-	tween.tween_property(sprite, "modulate", Color(1, 0.3, 0.3, 1), 0.15)
