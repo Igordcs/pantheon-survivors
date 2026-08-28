@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"solar_disk"
+display_name = "Disco Solar"
+base_damage = 10.0
+cooldown = 0.5
+area = 100.0
+projectile_speed = 3.0
+projectile_count = 1
+max_level = 8

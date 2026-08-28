@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"furia_de_thor"
+display_name = "Fúria de Thor"
+base_damage = 100.0
+cooldown = 2.0
+area = 150.0
+projectile_speed = 0.0
+projectile_count = 1
+max_level = 1

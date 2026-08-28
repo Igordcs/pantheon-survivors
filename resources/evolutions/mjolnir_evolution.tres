@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/progression/evolution_recipe.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/weapons/mjolnir_data.tres" id="2"]
+[ext_resource type="Resource" path="res://resources/relics/thor_relic_data.tres" id="3"]
+[ext_resource type="Resource" path="res://resources/weapons/furia_de_thor_data.tres" id="4"]
+
+[resource]
+script = ExtResource("1")
+base_weapon = ExtResource("2")
+required_relic = ExtResource("3")
+evolved_weapon = ExtResource("4")
+require_max_weapon_level = true

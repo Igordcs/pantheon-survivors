@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://scripts/spawning/enemy_spawner.gd" id="3_spawner"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/basic_enemy.tscn" id="4_enemy"]
+[ext_resource type="Script" path="res://scripts/progression/upgrade_system.gd" id="5_upgrade"]
+[ext_resource type="PackedScene" path="res://scenes/ui/level_up_panel.tscn" id="6_levelup"]
+[ext_resource type="Script" path="res://scripts/spawning/spawn_director.gd" id="7_director"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="8_hud"]
+[ext_resource type="Script" path="res://scripts/core/run_manager.gd" id="9_runmanager"]
+[ext_resource type="PackedScene" path="res://scenes/ui/results_panel.tscn" id="10_resultspanel"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_script")
@@ -14,8 +20,31 @@ script = ExtResource("1_script")
 
 [node name="Enemies" type="Node2D" parent="World"]
 
+[node name="Items" type="Node2D" parent="World"]
+
 [node name="EnemySpawner" type="Node" parent="."]
 script = ExtResource("3_spawner")
 enemy_scene = ExtResource("4_enemy")
 max_enemies = 50
 spawn_interval = 1.5
+
+[node name="SpawnDirector" type="Node" parent="." node_paths=PackedStringArray("spawner")]
+script = ExtResource("7_director")
+spawner = NodePath("../EnemySpawner")
+
+[node name="RunManager" type="Node" parent="." node_paths=PackedStringArray("spawn_director", "enemy_spawner")]
+script = ExtResource("9_runmanager")
+spawn_director = NodePath("../SpawnDirector")
+enemy_spawner = NodePath("../EnemySpawner")
+
+[node name="UpgradeSystem" type="Node" parent="."]
+script = ExtResource("5_upgrade")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("8_hud")]
+
+[node name="LevelUpPanel" parent="CanvasLayer" instance=ExtResource("6_levelup")]
+
+[node name="ResultsPanel" parent="CanvasLayer" instance=ExtResource("10_resultspanel")]
+

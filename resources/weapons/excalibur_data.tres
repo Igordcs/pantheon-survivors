@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"excalibur"
+display_name = "Excalibur"
+base_damage = 30.0
+cooldown = 1.5
+area = 1.0
+projectile_speed = 0.0
+projectile_count = 1
+max_level = 8

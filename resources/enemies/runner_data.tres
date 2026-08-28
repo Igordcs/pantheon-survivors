@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"runner_enemy"
+display_name = "Runner"
+max_health = 10.0
+speed = 140.0
+contact_damage = 5.0
+score_value = 5

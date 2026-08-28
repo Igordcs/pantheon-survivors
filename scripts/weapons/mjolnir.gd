@@ -5,6 +5,7 @@ extends Node2D
 @export var projectile_scene: PackedScene
 
 var _cooldown_timer: Timer
+var _current_level: int = 1
 
 
 func _ready() -> void:
@@ -14,6 +15,20 @@ func _ready() -> void:
 	_cooldown_timer.autostart = true
 	_cooldown_timer.timeout.connect(_on_cooldown_timeout)
 	add_child(_cooldown_timer)
+
+
+func get_weapon_id() -> StringName:
+	return weapon_data.id if weapon_data else &"mjolnir"
+
+
+func get_current_level() -> int:
+	return _current_level
+
+
+func upgrade() -> void:
+	if weapon_data and _current_level < weapon_data.max_level:
+		_current_level += 1
+		print("Mjolnir upgraded to level ", _current_level)
 
 
 func _on_cooldown_timeout() -> void:
@@ -51,11 +66,16 @@ func _fire_at(target: CharacterBody2D) -> void:
 	var dir := global_position.direction_to(target.global_position)
 	var dist := global_position.distance_to(target.global_position)
 
+	# Calculate damage based on level (e.g., +25% per level)
+	var base_dmg := weapon_data.base_damage if weapon_data else 15.0
+	var dmg_multiplier := 1.0 + ((_current_level - 1) * 0.25)
+	var final_dmg := base_dmg * dmg_multiplier
+
 	proj.global_position = global_position
 	proj.setup(
 		dir,
 		weapon_data.projectile_speed if weapon_data else 600.0,
-		weapon_data.base_damage if weapon_data else 15.0,
+		final_dmg,
 		dist + 50.0
 	)
 
