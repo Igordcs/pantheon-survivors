@@ -1,12 +1,11 @@
-[gd_resource type="Resource" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://86db14m2o7mw"]
 
-[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" uid="uid://7sdoy4k44d5y" path="res://scripts/enemies/enemy_data.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
 id = &"boss_enemy"
 display_name = "Boss (Deus Caído)"
-max_health = 1500.0
-speed = 80.0
+max_health = 10.0
 contact_damage = 30.0
 score_value = 1000

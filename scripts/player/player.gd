@@ -1,5 +1,4 @@
 extends CharacterBody2D
-## Player — movimento em 8 direções com WASD/setas.
 
 @export var speed: float = 200.0
 @export_range(32.0, 192.0, 1.0) var character_visual_height: float = 80.0
@@ -10,6 +9,10 @@ extends CharacterBody2D
 var last_direction: Vector2 = Vector2.RIGHT
 var _character_data: CharacterData
 var _uses_directional_sprites: bool = false
+
+var _boss_fight_active: bool = false
+var _boss_fight_center: Vector2 = Vector2.ZERO
+const BOSS_ARENA_RADIUS: float = 500.0
 
 
 func _ready() -> void:
@@ -27,6 +30,18 @@ func _physics_process(_delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = input_dir * speed
 	move_and_slide()
+	
+	# Boss fight boundary: clamp position to camera view (1280x720 with 1.6 zoom)
+	if _boss_fight_active:
+		var half_w = (1280.0 / 1.4 / 2.0)
+		var half_h = (720.0 / 1.4 / 2.0)
+		var min_x = _boss_fight_center.x - half_w
+		var max_x = _boss_fight_center.x + half_w
+		var min_y = _boss_fight_center.y - half_h
+		var max_y = _boss_fight_center.y + half_h
+		
+		global_position.x = clamp(global_position.x, min_x, max_x)
+		global_position.y = clamp(global_position.y, min_y, max_y)
 
 	# Update facing direction
 	if input_dir != Vector2.ZERO:

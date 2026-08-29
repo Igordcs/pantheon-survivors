@@ -1,8 +1,105 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=22 format=3 uid="uid://bossenemy1"]
 
 [ext_resource type="Script" path="res://scripts/enemies/boss_enemy.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="2_texture"]
-[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="3_health"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2_health"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/idel/01.png" id="3_idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/idel/02.png" id="4_idle2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/idel/03.png" id="5_idle3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/idel/04.png" id="6_idle4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/attack/01.png" id="7_atk1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/attack/02.png" id="8_atk2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/attack/03.png" id="9_atk3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/attack/04.png" id="10_atk4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/attack/05.png" id="11_atk5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/attack/06.png" id="12_atk6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/attack/07.png" id="13_atk7"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/attack/08.png" id="14_atk8"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/Dead/01.png" id="15_dead1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/Dead/02.png" id="16_dead2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/Dead/03.png" id="17_dead3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/Dead/04.png" id="18_dead4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/Dead/05.png" id="19_dead5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/Dead/06.png" id="20_dead6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/Dead/07.png" id="21_dead7"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/BOSS/KING SLIME/Dead/08.png" id="22_dead8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_boss"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_idle2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_idle3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_idle4")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_atk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_atk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_atk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_atk4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_atk5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_atk6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_atk7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_atk8")
+}],
+"loop": false,
+"name": &"ATTACK",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_dead1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_dead2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_dead3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_dead4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_dead5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_dead6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_dead7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_dead8")
+}],
+"loop": false,
+"name": &"DEAD",
+"speed": 8.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 32.0
@@ -15,17 +112,19 @@ collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.6, 0.1, 0.9, 1)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_texture")
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_boss")
+animation = &"IDLE"
+autoplay = "IDLE"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1")
 
 [node name="HealthComponent" type="Node" parent="."]
-script = ExtResource("3_health")
-max_health = 1500.0
+script = ExtResource("2_health")
+max_health = 10
 
 [node name="TelegraphArea" type="ColorRect" parent="."]
 offset_top = -40.0
