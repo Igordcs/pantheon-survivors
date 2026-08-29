@@ -5,7 +5,6 @@ class_name UpgradeSystem
 # Lista hardcoded das armas e relíquias disponíveis
 const AVAILABLE_WEAPONS = [
 	preload("res://resources/weapons/mjolnir_data.tres"),
-	preload("res://resources/weapons/holy_aura_data.tres"),
 	preload("res://resources/weapons/excalibur_data.tres"),
 	preload("res://resources/weapons/solar_disk_data.tres")
 ]
@@ -67,13 +66,20 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 				opt.is_new_weapon = true
 				opt.current_level = 0
 				opt.display_text = "Nova Arma: %s" % data.display_name
+				opt.description_text = data.description
 			else:
 				opt.is_new_weapon = false
 				opt.current_level = current_lvl
 				opt.display_text = "Upgrade: %s Lv %d" % [data.display_name, current_lvl + 1]
+				var weapon := _get_weapon(data.id)
+				if weapon and weapon.has_method("get_next_upgrade_description"):
+					opt.description_text = weapon.get_next_upgrade_description()
+				else:
+					opt.description_text = data.get_level_description(current_lvl + 1)
 		elif data is RelicData:
 			opt.is_relic = true
 			opt.display_text = "Relíquia: %s" % data.display_name
+			opt.description_text = data.description
 			
 		options.append(opt)
 		
@@ -150,12 +156,18 @@ func _has_relic(relic_id: StringName) -> bool:
 
 
 func _get_weapon_level(weapon_id: StringName) -> int:
+	var weapon := _get_weapon(weapon_id)
+	if weapon:
+		if weapon.has_method("get_current_level"):
+			return weapon.get_current_level()
+		return 1
+	return 0
+
+
+func _get_weapon(weapon_id: StringName) -> Node:
 	if not is_instance_valid(_player_weapons):
-		return 0
-		
+		return null
 	for child in _player_weapons.get_children():
 		if child.has_method("get_weapon_id") and child.get_weapon_id() == weapon_id:
-			if child.has_method("get_current_level"):
-				return child.get_current_level()
-			return 1
-	return 0
+			return child
+	return null

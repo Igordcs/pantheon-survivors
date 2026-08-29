@@ -24,10 +24,14 @@ func show_options(options: Array[UpgradeOption]) -> void:
 		
 	# Criar novos botões
 	for i in range(options.size()):
-		var opt = options[i]
-		var btn = Button.new()
+		var opt := options[i]
+		var btn := Button.new()
 		btn.text = opt.display_text
-		btn.custom_minimum_size = Vector2(0, 60)
+		if not opt.description_text.is_empty():
+			btn.text += "\n%s" % opt.description_text
+		btn.custom_minimum_size = Vector2(0, 90)
+		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		btn.pressed.connect(_on_button_pressed.bind(i))
 		buttons_container.add_child(btn)
 		

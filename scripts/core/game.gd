@@ -83,6 +83,7 @@ func _on_chest_collected(_chest: Chest) -> void:
 		opt.item_data = recipe.evolved_weapon
 		opt.is_new_weapon = true
 		opt.display_text = "EVOLUÇÃO DIVINA: %s" % recipe.evolved_weapon.display_name
+		opt.description_text = recipe.evolved_weapon.description
 		level_up_panel.show_options([opt])
 	else:
 		print("Nenhuma evolução disponível. Você encontrou Ouro!")
