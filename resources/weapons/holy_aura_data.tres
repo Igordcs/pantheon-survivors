@@ -6,6 +6,7 @@
 script = ExtResource("1")
 id = &"holy_aura"
 display_name = "Aura Sagrada"
+description = "Emite pulsos sagrados que ferem todos os inimigos próximos."
 base_damage = 5.0
 cooldown = 1.0
 area = 100.0

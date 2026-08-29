@@ -6,6 +6,7 @@
 script = ExtResource("1")
 id = &"furia_de_thor"
 display_name = "Fúria de Thor"
+description = "Invoca uma tempestade de raios devastadora sobre vários inimigos."
 base_damage = 100.0
 cooldown = 2.0
 area = 150.0

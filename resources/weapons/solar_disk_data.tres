@@ -1,14 +1,73 @@
-[gd_resource type="Resource" load_steps=2 format=3]
+[gd_resource type="Resource" load_steps=11 format=3]
 
-[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+
+[sub_resource type="Resource" id="Level_1"]
+script = ExtResource("2_level")
+description = "Cria 1 disco que orbita o herói."
+
+[sub_resource type="Resource" id="Level_2"]
+script = ExtResource("2_level")
+description = "+25% de dano."
+damage_multiplier = 1.25
+
+[sub_resource type="Resource" id="Level_3"]
+script = ExtResource("2_level")
+description = "+15% de raio orbital e discos 10% maiores."
+damage_multiplier = 1.25
+area_multiplier = 1.15
+
+[sub_resource type="Resource" id="Level_4"]
+script = ExtResource("2_level")
+description = "Adiciona um segundo disco orbital."
+damage_multiplier = 1.25
+area_multiplier = 1.15
+projectile_count = 2
+
+[sub_resource type="Resource" id="Level_5"]
+script = ExtResource("2_level")
+description = "+20% de velocidade orbital."
+damage_multiplier = 1.25
+area_multiplier = 1.15
+speed_multiplier = 1.2
+projectile_count = 2
+
+[sub_resource type="Resource" id="Level_6"]
+script = ExtResource("2_level")
+description = "+60% de dano total e discos 25% maiores."
+damage_multiplier = 1.6
+area_multiplier = 1.15
+speed_multiplier = 1.2
+projectile_count = 2
+
+[sub_resource type="Resource" id="Level_7"]
+script = ExtResource("2_level")
+description = "Adiciona um terceiro disco orbital."
+damage_multiplier = 1.6
+area_multiplier = 1.15
+speed_multiplier = 1.2
+projectile_count = 3
+
+[sub_resource type="Resource" id="Level_8"]
+script = ExtResource("2_level")
+description = "Explosão solar a cada volta, causando 50% do dano em área."
+damage_multiplier = 1.6
+area_multiplier = 1.15
+speed_multiplier = 1.2
+projectile_count = 3
+special_effect = &"solar_pulse"
+special_value = 0.5
 
 [resource]
-script = ExtResource("1")
+script = ExtResource("1_weapon")
 id = &"solar_disk"
 display_name = "Disco Solar"
+description = "Orbita o herói e fere inimigos que tocam sua lâmina solar."
 base_damage = 10.0
 cooldown = 0.5
 area = 100.0
 projectile_speed = 3.0
 projectile_count = 1
 max_level = 8
+levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])

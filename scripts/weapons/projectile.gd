@@ -1,6 +1,8 @@
 extends Area2D
 ## Projétil genérico — voa em direção ao alvo e causa dano no impacto.
 
+signal hit_enemy(enemy: Node2D, impact_position: Vector2, dealt_damage: float)
+
 var direction: Vector2 = Vector2.ZERO
 var speed: float = 600.0
 var damage: float = 15.0
@@ -36,6 +38,7 @@ func _on_body_entered(body: Node2D) -> void:
 	var health := body.get_node_or_null("HealthComponent") as HealthComponent
 	if health and health.is_alive():
 		health.take_damage(damage, global_position)
+		hit_enemy.emit(body, global_position, damage)
 		ScreenShake.shake(0.2)
 		AudioManager.play_sfx("mjolnir_hit")
 	queue_free()

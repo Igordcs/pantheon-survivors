@@ -1,14 +1,73 @@
-[gd_resource type="Resource" load_steps=2 format=3]
+[gd_resource type="Resource" load_steps=11 format=3]
 
-[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+
+[sub_resource type="Resource" id="Level_1"]
+script = ExtResource("2_level")
+description = "Desfere um golpe direcional em arco."
+
+[sub_resource type="Resource" id="Level_2"]
+script = ExtResource("2_level")
+description = "+25% de dano."
+damage_multiplier = 1.25
+
+[sub_resource type="Resource" id="Level_3"]
+script = ExtResource("2_level")
+description = "+20% de alcance."
+damage_multiplier = 1.25
+area_multiplier = 1.2
+
+[sub_resource type="Resource" id="Level_4"]
+script = ExtResource("2_level")
+description = "Reduz o intervalo entre golpes em 15%."
+damage_multiplier = 1.25
+cooldown_multiplier = 0.85
+area_multiplier = 1.2
+
+[sub_resource type="Resource" id="Level_5"]
+script = ExtResource("2_level")
+description = "O dano total passa para +55%."
+damage_multiplier = 1.55
+cooldown_multiplier = 0.85
+area_multiplier = 1.2
+
+[sub_resource type="Resource" id="Level_6"]
+script = ExtResource("2_level")
+description = "Executa um segundo golpe reverso com 60% do dano."
+damage_multiplier = 1.55
+cooldown_multiplier = 0.85
+area_multiplier = 1.2
+special_effect = &"double_slash"
+special_value = 0.6
+
+[sub_resource type="Resource" id="Level_7"]
+script = ExtResource("2_level")
+description = "+50% de alcance total e os golpes passam a empurrar inimigos."
+damage_multiplier = 1.55
+cooldown_multiplier = 0.85
+area_multiplier = 1.5
+special_effect = &"double_slash_knockback"
+special_value = 0.6
+
+[sub_resource type="Resource" id="Level_8"]
+script = ExtResource("2_level")
+description = "Corte do Rei: arco de 150° e segundo golpe com dano total."
+damage_multiplier = 1.55
+cooldown_multiplier = 0.85
+area_multiplier = 1.5
+special_effect = &"royal_slash"
+special_value = 1.0
 
 [resource]
-script = ExtResource("1")
+script = ExtResource("1_weapon")
 id = &"excalibur"
 display_name = "Excalibur"
+description = "Desfere golpes em arco na última direção de movimento."
 base_damage = 30.0
 cooldown = 1.5
 area = 1.0
 projectile_speed = 0.0
 projectile_count = 1
 max_level = 8
+levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])
