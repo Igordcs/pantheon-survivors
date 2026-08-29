@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/progression/character_data.gd" id="1_script"]
+[ext_resource type="Resource" path="res://resources/weapons/excalibur_data.tres" id="2_weapon"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/portraits/arthur_portrait.png" id="3_portrait"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"arthur"
+display_name = "Arthur, o Rei Eterno"
+description = "O rei de Camelot retorna ao campo de batalha guiado por sua espada lendária."
+portrait = ExtResource("3_portrait")
+gameplay_sprite = ExtResource("3_portrait")
+gameplay_sprite_directory = "res://assets/sprites/characters/arthur/Idle/rotations"
+starting_weapon = ExtResource("2_weapon")
+base_health = 140.0
+base_speed = 190.0
+passive_description = "Mais resistente, porém menos veloz."

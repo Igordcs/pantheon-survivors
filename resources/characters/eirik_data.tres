@@ -1,13 +1,18 @@
-[gd_resource type="Resource" load_steps=3 format=3]
+[gd_resource type="Resource" load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/progression/character_data.gd" id="1_script"]
 [ext_resource type="Resource" path="res://resources/weapons/mjolnir_data.tres" id="2_weapon"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/portraits/eirik_portrait.png" id="3_portrait"]
 
 [resource]
 script = ExtResource("1_script")
 id = &"eirik"
 display_name = "Eirik, O Guerreiro"
+description = "Um guerreiro nórdico escolhido pelo trovão para enfrentar os deuses caídos."
+portrait = ExtResource("3_portrait")
+gameplay_sprite = ExtResource("3_portrait")
+gameplay_sprite_directory = "res://assets/sprites/characters/eirik/Idle/rotations"
 starting_weapon = ExtResource("2_weapon")
 base_health = 120.0
 base_speed = 220.0
-passive_description = "+15% Dano Elétrico"
+passive_description = "Equilibrado, resistente e ágil."

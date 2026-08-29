@@ -71,7 +71,7 @@ func _get_enemy() -> CharacterBody2D:
 	# Escolhe um tipo aleatório da wave atual
 	var chosen_data: EnemyData = null
 	if not _current_allowed_enemies.is_empty():
-		chosen_data = _current_allowed_enemies.pick_random()
+		chosen_data = _choose_enemy_data()
 
 	# Reuse from pool (só se o data for igual, para simplificar vamos achar o primeiro inativo e forçar o data)
 	for e in _pool:
@@ -92,6 +92,26 @@ func _get_enemy() -> CharacterBody2D:
 		health.died.connect(_on_enemy_died.bind(enemy))
 
 	return enemy
+
+
+func _choose_enemy_data() -> EnemyData:
+	var total_weight := 0.0
+	for data in _current_allowed_enemies:
+		if data:
+			total_weight += maxf(data.spawn_weight, 0.0)
+
+	if total_weight <= 0.0:
+		return _current_allowed_enemies.pick_random()
+
+	var roll := randf() * total_weight
+	for data in _current_allowed_enemies:
+		if not data:
+			continue
+		roll -= maxf(data.spawn_weight, 0.0)
+		if roll <= 0.0:
+			return data
+
+	return _current_allowed_enemies.back()
 
 
 func _get_xp_gem() -> Area2D:
@@ -126,8 +146,9 @@ func _on_enemy_died(enemy: CharacterBody2D) -> void:
 	if "enemy_data" in enemy and enemy.enemy_data:
 		xp_value = enemy.enemy_data.score_value
 		
-	# Spawn gem first before moving enemy
-	_spawn_xp_gem(pos, xp_value)
+	# Mortes podem ocorrer durante callbacks de colisão das armas. Adia o drop
+	# para não alterar a árvore/estado de física enquanto queries são liberadas.
+	_spawn_xp_gem.call_deferred(pos, xp_value)
 
 	enemy.visible = false
 	enemy.set_physics_process(false)

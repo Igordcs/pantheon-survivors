@@ -1,0 +1,30 @@
+[gd_resource type="Resource" load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/medusa/Idle/rotations/south.png" id="2_south"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/medusa/Idle/rotations/south-east.png" id="3_south_east"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/medusa/Idle/rotations/east.png" id="4_east"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/medusa/Idle/rotations/north-east.png" id="5_north_east"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/medusa/Idle/rotations/north.png" id="6_north"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/medusa/Idle/rotations/north-west.png" id="7_north_west"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/medusa/Idle/rotations/west.png" id="8_west"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/medusa/Idle/rotations/south-west.png" id="9_south_west"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"medusa"
+display_name = "Medusa"
+max_health = 30.0
+speed = 80.0
+contact_damage = 10.0
+score_value = 10
+spawn_weight = 1.0
+visual_size = 64.0
+sprite_south = ExtResource("2_south")
+sprite_south_east = ExtResource("3_south_east")
+sprite_east = ExtResource("4_east")
+sprite_north_east = ExtResource("5_north_east")
+sprite_north = ExtResource("6_north")
+sprite_north_west = ExtResource("7_north_west")
+sprite_west = ExtResource("8_west")
+sprite_south_west = ExtResource("9_south_west")

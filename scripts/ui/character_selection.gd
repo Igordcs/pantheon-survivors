@@ -2,9 +2,10 @@ extends Control
 ## CharacterSelection — Tela para escolher o personagem antes da Run.
 
 @onready var character_list: ItemList = $VBoxContainer/ItemList
-@onready var start_button: Button = $VBoxContainer/StartButton
-@onready var back_button: Button = $VBoxContainer/BackButton
-@onready var info_label: Label = $VBoxContainer/InfoLabel
+@onready var start_button: Button = $VBoxContainer/ButtonsContainer/StartButton
+@onready var back_button: Button = $VBoxContainer/ButtonsContainer/BackButton
+@onready var portrait: TextureRect = $VBoxContainer/DetailsContainer/Portrait
+@onready var info_label: Label = $VBoxContainer/DetailsContainer/InfoLabel
 
 var _unlocked_chars = []
 
@@ -41,8 +42,19 @@ func _on_item_selected(index: int) -> void:
 	var data_path = "res://resources/characters/%s_data.tres" % char_id
 	var data = load(data_path) as CharacterData
 	if data:
-		info_label.text = "Arma Inicial: %s\nPassiva: %s\nVida: %d | Velocidade: %d" % [
-			data.starting_weapon.display_name if data.starting_weapon else "Nenhuma",
+		portrait.texture = data.portrait
+		portrait.visible = data.portrait != null
+
+		var weapon_name := "Nenhuma"
+		var weapon_description := "Sem arma inicial."
+		if data.starting_weapon is WeaponData:
+			weapon_name = data.starting_weapon.display_name
+			weapon_description = data.starting_weapon.description
+
+		info_label.text = "%s\n\nArma inicial: %s\n%s\n\nPerfil: %s\nVida: %d | Velocidade: %d" % [
+			data.description,
+			weapon_name,
+			weapon_description,
 			data.passive_description,
 			data.base_health,
 			data.base_speed

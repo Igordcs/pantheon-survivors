@@ -22,48 +22,49 @@ func _ready() -> void:
 
 
 func _generate_default_waves() -> void:
-	var basic_enemy = load("res://resources/enemies/basic_enemy_data.tres")
-	var runner_enemy = load("res://resources/enemies/runner_data.tres")
-	var tank_enemy = load("res://resources/enemies/tank_data.tres")
+	var enemy_roster: Array[EnemyData] = [
+		load("res://resources/enemies/medusa_data.tres") as EnemyData,
+		load("res://resources/enemies/draugr_data.tres") as EnemyData,
+		load("res://resources/enemies/cyclops_data.tres") as EnemyData,
+		load("res://resources/enemies/mummy_data.tres") as EnemyData,
+		load("res://resources/enemies/minotaur_data.tres") as EnemyData,
+		load("res://resources/enemies/harpy_data.tres") as EnemyData,
+	]
 	
 	waves.clear()
 	
 	# Curva de 10 minutos (600 segundos) dividida em 5 waves
 	
-	# Wave 1: 0-2min (Basic)
+	# Wave 1: 0-2min
 	var wave1 = WaveData.new()
 	wave1.duration_seconds = 120.0
 	wave1.spawn_interval = 1.0
 	wave1.max_enemies = 30
-	if basic_enemy: wave1.allowed_enemies.append(basic_enemy)
+	_append_available_enemies(wave1, enemy_roster)
 	waves.append(wave1)
 	
-	# Wave 2: 2-4min (Basic + Runner)
+	# Wave 2: 2-4min
 	var wave2 = WaveData.new()
 	wave2.duration_seconds = 120.0
 	wave2.spawn_interval = 0.8
 	wave2.max_enemies = 50
-	if basic_enemy: wave2.allowed_enemies.append(basic_enemy)
-	if runner_enemy: wave2.allowed_enemies.append(runner_enemy)
+	_append_available_enemies(wave2, enemy_roster)
 	waves.append(wave2)
 	
-	# Wave 3: 4-6min (Runner + Tank)
+	# Wave 3: 4-6min
 	var wave3 = WaveData.new()
 	wave3.duration_seconds = 120.0
 	wave3.spawn_interval = 0.6
 	wave3.max_enemies = 80
-	if runner_enemy: wave3.allowed_enemies.append(runner_enemy)
-	if tank_enemy: wave3.allowed_enemies.append(tank_enemy)
+	_append_available_enemies(wave3, enemy_roster)
 	waves.append(wave3)
 	
-	# Wave 4: 6-8min (All enemies, faster)
+	# Wave 4: 6-8min
 	var wave4 = WaveData.new()
 	wave4.duration_seconds = 120.0
 	wave4.spawn_interval = 0.4
 	wave4.max_enemies = 150
-	if basic_enemy: wave4.allowed_enemies.append(basic_enemy)
-	if runner_enemy: wave4.allowed_enemies.append(runner_enemy)
-	if tank_enemy: wave4.allowed_enemies.append(tank_enemy)
+	_append_available_enemies(wave4, enemy_roster)
 	waves.append(wave4)
 	
 	# Wave 5: 8-10min (Massive spawn before boss)
@@ -71,10 +72,14 @@ func _generate_default_waves() -> void:
 	wave5.duration_seconds = 120.0
 	wave5.spawn_interval = 0.2
 	wave5.max_enemies = 300
-	if basic_enemy: wave5.allowed_enemies.append(basic_enemy)
-	if runner_enemy: wave5.allowed_enemies.append(runner_enemy)
-	if tank_enemy: wave5.allowed_enemies.append(tank_enemy)
+	_append_available_enemies(wave5, enemy_roster)
 	waves.append(wave5)
+
+
+func _append_available_enemies(wave: WaveData, enemy_roster: Array[EnemyData]) -> void:
+	for enemy_data in enemy_roster:
+		if enemy_data and enemy_data.has_visual():
+			wave.allowed_enemies.append(enemy_data)
 
 
 func _process(delta: float) -> void:

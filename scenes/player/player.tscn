@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://don4noo083j8k"]
 
 [ext_resource type="Script" uid="uid://cc2pwx0n8v015" path="res://scripts/player/player.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://eejf77qijpr4" path="res://icon.svg" id="2_texture"]
 [ext_resource type="Script" uid="uid://rpi6bjtolxtp" path="res://scripts/combat/health_component.gd" id="3_health"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/mjolnir.tscn" id="4_mjolnir"]
 [ext_resource type="Script" uid="uid://clxgf7qrmu808" path="res://scripts/progression/experience_component.gd" id="5_exp"]
@@ -18,8 +17,7 @@ collision_mask = 0
 script = ExtResource("1_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1425762219]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_texture")
+texture_filter = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1931616188]
 shape = SubResource("CircleShape2D_1")

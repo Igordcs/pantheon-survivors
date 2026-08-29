@@ -2,17 +2,35 @@ extends Node
 ## SaveManager — Gerencia a persistência de meta-progressão do jogo.
 
 const SAVE_PATH = "user://save_data.json"
+const INITIAL_CHARACTER_IDS := ["eirik", "arthur", "neferu"]
 
 var save_data: Dictionary = {
 	"currency": 0,
 	"unlocked_weapons": ["mjolnir"],
 	"unlocked_relics": ["thor_relic", "speed_relic"],
-	"unlocked_characters": ["eirik"]
+	"unlocked_characters": INITIAL_CHARACTER_IDS.duplicate()
 }
 
 
 func _ready() -> void:
 	load_game()
+	if _ensure_initial_characters_unlocked():
+		save_game()
+
+
+func _ensure_initial_characters_unlocked() -> bool:
+	var unlocked_characters = save_data.get("unlocked_characters", [])
+	if not unlocked_characters is Array:
+		unlocked_characters = []
+
+	var changed := false
+	for character_id in INITIAL_CHARACTER_IDS:
+		if character_id not in unlocked_characters:
+			unlocked_characters.append(character_id)
+			changed = true
+
+	save_data["unlocked_characters"] = unlocked_characters
+	return changed
 
 
 func add_currency(amount: int) -> void:

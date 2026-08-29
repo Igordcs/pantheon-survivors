@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"mummy"
+display_name = "Múmia Sacerdote"
+max_health = 50.0
+speed = 60.0
+contact_damage = 14.0
+score_value = 14
+spawn_weight = 0.55
+visual_size = 64.0
+sprite_directory = "res://assets/sprites/enemies/mummy/Idle/rotations"

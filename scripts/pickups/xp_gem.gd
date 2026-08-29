@@ -11,8 +11,8 @@ func setup(pos: Vector2, value: int) -> void:
 	xp_value = value
 	_collected = false
 	visible = true
-	monitoring = true
-	monitorable = true
+	set_deferred("monitoring", true)
+	set_deferred("monitorable", true)
 
 
 func collect() -> int:
@@ -20,7 +20,7 @@ func collect() -> int:
 		return 0
 	_collected = true
 	visible = false
-	monitoring = false
-	monitorable = false
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 	global_position = Vector2(-9999, -9999)
 	return xp_value
