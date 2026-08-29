@@ -43,6 +43,8 @@ func _ready() -> void:
 	# Conectar RunManager
 	run_manager.boss_spawned.connect(_on_boss_spawned)
 	run_manager.run_ended.connect(_on_run_ended)
+	run_manager.boss_fight_started.connect(_on_boss_fight_started)
+	run_manager.boss_fight_ended.connect(_on_boss_fight_ended)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -123,3 +125,26 @@ func _on_upgrade_option_chosen(option: UpgradeOption) -> void:
 	elif option.item_data is RelicData:
 		# Poderíamos adicionar ícones de relíquia no HUD também, por ora usamos o mesmo container
 		hud.add_weapon_icon(option.item_data.id)
+
+
+func _on_boss_fight_started(boss_pos: Vector2) -> void:
+	# Ativa o boundary no player (arena de 500px ao redor do boss)
+	player.enter_boss_fight(boss_pos)
+	
+	# A câmera foca no Boss e ignora o movimento do Player
+	var cam = player.get_node_or_null("Camera2D") as Camera2D
+	if cam:
+		cam.top_level = true
+		var tween = create_tween()
+		tween.tween_property(cam, "global_position", boss_pos, 1.0).set_ease(Tween.EASE_OUT)
+
+
+func _on_boss_fight_ended() -> void:
+	player.exit_boss_fight()
+	
+	# Reseta a câmera para seguir o player novamente
+	var cam = player.get_node_or_null("Camera2D") as Camera2D
+	if cam:
+		cam.top_level = false
+		var tween = create_tween()
+		tween.tween_property(cam, "position", Vector2.ZERO, 0.5)

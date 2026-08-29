@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"healer"
+display_name = "Healer Slime"
+max_health = 40.0
+speed = 70.0
+contact_damage = 5.0
+score_value = 20
+enemy_type = &"healer"
+heal_amount = 10.0
+heal_interval = 3.0
+heal_range = 200.0

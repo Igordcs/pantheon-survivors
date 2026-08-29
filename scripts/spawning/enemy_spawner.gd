@@ -1,6 +1,6 @@
 extends Node
 ## EnemySpawner — spawna inimigos ao redor do Player com pooling.
-## Também gerencia os drops de XP Gems dos inimigos mortos.
+## Suporta múltiplas cenas de inimigos (melee, ranged, tank, healer).
 
 signal kill_scored
 
@@ -11,9 +11,10 @@ signal kill_scored
 @export var min_spawn_radius: float = 400.0
 @export var max_spawn_radius: float = 600.0
 
-var _pool: Array[CharacterBody2D] = []
-var _gem_pool: Array[Area2D] = []
+var _enemy_scenes: Dictionary = {}
+var _pools: Dictionary = {} # type -> Array[CharacterBody2D]
 var _active_count: int = 0
+var _gem_pool: Array[Area2D] = []
 var _spawn_timer: Timer
 var _player: CharacterBody2D
 var _current_allowed_enemies: Array[EnemyData] = []
@@ -21,6 +22,12 @@ var _current_allowed_enemies: Array[EnemyData] = []
 
 func _ready() -> void:
 	_player = _find_player()
+	
+	# Registra as cenas de inimigos por tipo
+	_enemy_scenes[&"melee"] = enemy_scene # basic_enemy.tscn
+	_enemy_scenes[&"tank"] = preload("res://scenes/enemies/tank_enemy.tscn")
+	_enemy_scenes[&"ranged"] = preload("res://scenes/enemies/ranged_enemy.tscn")
+	_enemy_scenes[&"healer"] = preload("res://scenes/enemies/healer_enemy.tscn")
 
 	_spawn_timer = Timer.new()
 	_spawn_timer.wait_time = spawn_interval
@@ -34,11 +41,17 @@ func apply_wave_data(wave: WaveData) -> void:
 	max_enemies = wave.max_enemies
 	_spawn_timer.wait_time = wave.spawn_interval
 	_current_allowed_enemies = wave.allowed_enemies
-	# Default to basic enemy data if empty to prevent crashes
 	if _current_allowed_enemies.is_empty():
 		var fallback = load("res://resources/enemies/basic_enemy_data.tres")
 		if fallback:
 			_current_allowed_enemies.append(fallback)
+
+
+func stop_spawning() -> void:
+	if _spawn_timer:
+		_spawn_timer.stop()
+	set_process(false)
+	set_physics_process(false)
 
 
 func _on_spawn_timer_timeout() -> void:
@@ -50,7 +63,13 @@ func _on_spawn_timer_timeout() -> void:
 	if _active_count >= max_enemies:
 		return
 
-	var enemy := _get_enemy()
+	# Escolhe um tipo aleatório da wave
+	var chosen_data: EnemyData = null
+	if not _current_allowed_enemies.is_empty():
+		chosen_data = _current_allowed_enemies.pick_random()
+	
+	var enemy_type = chosen_data.enemy_type if chosen_data else &"melee"
+	var enemy := _get_enemy(enemy_type, chosen_data)
 	var spawn_pos := _random_spawn_position()
 
 	if not enemy.is_inside_tree():
@@ -67,26 +86,26 @@ func _on_spawn_timer_timeout() -> void:
 	_active_count += 1
 
 
-func _get_enemy() -> CharacterBody2D:
-	# Escolhe um tipo aleatório da wave atual
-	var chosen_data: EnemyData = null
-	if not _current_allowed_enemies.is_empty():
-		chosen_data = _current_allowed_enemies.pick_random()
-
-	# Reuse from pool (só se o data for igual, para simplificar vamos achar o primeiro inativo e forçar o data)
-	for e in _pool:
+func _get_enemy(enemy_type: StringName, chosen_data: EnemyData) -> CharacterBody2D:
+	# Pool por tipo
+	if not _pools.has(enemy_type):
+		_pools[enemy_type] = []
+	
+	var pool = _pools[enemy_type] as Array
+	
+	for e in pool:
 		if is_instance_valid(e) and not e.visible:
 			if chosen_data and "enemy_data" in e:
 				e.enemy_data = chosen_data
 			return e
 
-	# Create new
-	var enemy := enemy_scene.instantiate() as CharacterBody2D
+	# Cena correspondente ao tipo
+	var scene = _enemy_scenes.get(enemy_type, enemy_scene) as PackedScene
+	var enemy := scene.instantiate() as CharacterBody2D
 	if chosen_data and "enemy_data" in enemy:
 		enemy.enemy_data = chosen_data
-	_pool.append(enemy)
+	pool.append(enemy)
 
-	# Connect death signal (only once per instance)
 	var health := enemy.get_node_or_null("HealthComponent")
 	if health:
 		health.died.connect(_on_enemy_died.bind(enemy))
@@ -95,12 +114,10 @@ func _get_enemy() -> CharacterBody2D:
 
 
 func _get_xp_gem() -> Area2D:
-	# Reuse from pool
 	for gem in _gem_pool:
 		if is_instance_valid(gem) and not gem.visible:
 			return gem
 			
-	# Create new
 	var gem := xp_gem_scene.instantiate() as Area2D
 	_gem_pool.append(gem)
 	return gem
@@ -121,12 +138,10 @@ func _spawn_xp_gem(pos: Vector2, value: int) -> void:
 func _on_enemy_died(enemy: CharacterBody2D) -> void:
 	kill_scored.emit()
 	var pos = enemy.global_position
-	# Pega o score_value do EnemyData para ser o valor da XP
 	var xp_value := 10
 	if "enemy_data" in enemy and enemy.enemy_data:
 		xp_value = enemy.enemy_data.score_value
 		
-	# Spawn gem first before moving enemy
 	_spawn_xp_gem(pos, xp_value)
 
 	enemy.visible = false

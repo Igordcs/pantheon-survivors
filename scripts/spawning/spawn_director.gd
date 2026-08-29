@@ -25,6 +25,8 @@ func _generate_default_waves() -> void:
 	var basic_enemy = load("res://resources/enemies/basic_enemy_data.tres")
 	var runner_enemy = load("res://resources/enemies/runner_data.tres")
 	var tank_enemy = load("res://resources/enemies/tank_data.tres")
+	var ranged_enemy = load("res://resources/enemies/ranged_enemy_data.tres")
+	var healer_enemy = load("res://resources/enemies/healer_enemy_data.tres")
 	
 	waves.clear()
 	
@@ -47,16 +49,17 @@ func _generate_default_waves() -> void:
 	if runner_enemy: wave2.allowed_enemies.append(runner_enemy)
 	waves.append(wave2)
 	
-	# Wave 3: 4-6min (Runner + Tank)
+	# Wave 3: 4-6min (Runner + Tank + Ranged)
 	var wave3 = WaveData.new()
 	wave3.duration_seconds = 120.0
 	wave3.spawn_interval = 0.6
 	wave3.max_enemies = 80
 	if runner_enemy: wave3.allowed_enemies.append(runner_enemy)
 	if tank_enemy: wave3.allowed_enemies.append(tank_enemy)
+	if ranged_enemy: wave3.allowed_enemies.append(ranged_enemy)
 	waves.append(wave3)
 	
-	# Wave 4: 6-8min (All enemies, faster)
+	# Wave 4: 6-8min (All enemies + Healer)
 	var wave4 = WaveData.new()
 	wave4.duration_seconds = 120.0
 	wave4.spawn_interval = 0.4
@@ -64,6 +67,8 @@ func _generate_default_waves() -> void:
 	if basic_enemy: wave4.allowed_enemies.append(basic_enemy)
 	if runner_enemy: wave4.allowed_enemies.append(runner_enemy)
 	if tank_enemy: wave4.allowed_enemies.append(tank_enemy)
+	if ranged_enemy: wave4.allowed_enemies.append(ranged_enemy)
+	if healer_enemy: wave4.allowed_enemies.append(healer_enemy)
 	waves.append(wave4)
 	
 	# Wave 5: 8-10min (Massive spawn before boss)
@@ -74,6 +79,8 @@ func _generate_default_waves() -> void:
 	if basic_enemy: wave5.allowed_enemies.append(basic_enemy)
 	if runner_enemy: wave5.allowed_enemies.append(runner_enemy)
 	if tank_enemy: wave5.allowed_enemies.append(tank_enemy)
+	if ranged_enemy: wave5.allowed_enemies.append(ranged_enemy)
+	if healer_enemy: wave5.allowed_enemies.append(healer_enemy)
 	waves.append(wave5)
 
 

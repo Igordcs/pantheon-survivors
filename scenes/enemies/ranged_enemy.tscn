@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://rangedenemy1"]
+
+[ext_resource type="Script" path="res://scripts/enemies/ranged_enemy.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2_health"]
+[ext_resource type="Resource" path="res://resources/enemies/ranged_enemy_data.tres" id="3_data"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/Slime 2/Idel walk/01.png" id="4_idle1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/Slime 2/Idel walk/02.png" id="5_idle2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/Slime 2/Idel walk/03.png" id="6_idle3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/Slime 2/Idel walk/04.png" id="7_idle4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/Slime 2/Dead/01.png" id="8_dead1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/Slime 2/Dead/02.png" id="9_dead2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/Slime 2/Dead/03.png" id="10_dead3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/Slime 2/Dead/04.png" id="11_dead4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_idle2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_idle3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_idle4")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_idle2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_idle3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_idle4")
+}],
+"loop": true,
+"name": &"RUN",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_dead1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_dead2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_dead3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_dead4")
+}],
+"loop": false,
+"name": &"DEAD",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 12.0
+
+[node name="RangedEnemy" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_script")
+enemy_data = ExtResource("3_data")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_1")
+animation = &"IDLE"
+autoplay = "IDLE"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_health")
+max_health = 20.0

@@ -24,8 +24,8 @@ func _ready() -> void:
 func _on_damaged(_amount: float, source_pos: Vector2) -> void:
 	# Hit Flash
 	var tween = create_tween()
-	$Sprite2D.modulate = Color.WHITE
-	tween.tween_property($Sprite2D, "modulate", Color(1, 0.3, 0.3, 1), 0.15)
+	$AnimatedSprite2D.modulate = Color.WHITE
+	tween.tween_property($AnimatedSprite2D, "modulate", Color(1, 0.3, 0.3, 1), 0.15)
 	
 	# Knockback
 	if source_pos != Vector2.ZERO:
@@ -49,7 +49,7 @@ func _physics_process(delta: float) -> void:
 
 	# Flip sprite to face player
 	if direction.x != 0.0:
-		$Sprite2D.flip_h = direction.x < 0.0
+		$AnimatedSprite2D.flip_h = direction.x < 0.0
 
 	# Contact damage
 	_contact_cooldown -= delta
@@ -74,7 +74,6 @@ func reset(pos: Vector2) -> void:
 			health.max_health = enemy_data.max_health
 		health.reset()
 	# Reset sprite color
-	$Sprite2D.modulate = Color(1, 0.3, 0.3, 1)
 	_player = _find_player()
 
 
