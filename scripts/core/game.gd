@@ -14,6 +14,10 @@ extends Node2D
 func _ready() -> void:
 	print("Pantheon Survivors — Game started")
 	
+	if not player:
+		push_error("Game: Player node not found at World/Player!")
+		return
+	
 	# Setup do UpgradeSystem com a referência das armas do Player
 	var weapon_holder := player.get_node_or_null("WeaponHolder") as Node2D
 	upgrade_system.setup(weapon_holder)
@@ -32,9 +36,10 @@ func _ready() -> void:
 		hud.update_hp(health_comp.current_health, health_comp.max_health)
 		
 	# Adicionar armas iniciais ao HUD
-	for child in weapon_holder.get_children():
-		if child.has_method("get_weapon_id"):
-			hud.add_weapon_icon(child.get_weapon_id())
+	if weapon_holder:
+		for child in weapon_holder.get_children():
+			if child.has_method("get_weapon_id"):
+				hud.add_weapon_icon(child.get_weapon_id())
 		
 	level_up_panel.option_chosen.connect(_on_upgrade_option_chosen)
 	spawn_director.time_updated.connect(hud.update_time)
@@ -129,8 +134,6 @@ func _on_upgrade_option_chosen(option: UpgradeOption) -> void:
 
 
 func _on_boss_fight_started(boss_pos: Vector2) -> void:
-	# Ativa o boundary no player (arena de 500px ao redor do boss)
-	player.enter_boss_fight(boss_pos)
 	
 	# A câmera foca no Boss e ignora o movimento do Player
 	var cam = player.get_node_or_null("Camera2D") as Camera2D
@@ -141,7 +144,6 @@ func _on_boss_fight_started(boss_pos: Vector2) -> void:
 
 
 func _on_boss_fight_ended() -> void:
-	player.exit_boss_fight()
 	
 	# Reseta a câmera para seguir o player novamente
 	var cam = player.get_node_or_null("Camera2D") as Camera2D

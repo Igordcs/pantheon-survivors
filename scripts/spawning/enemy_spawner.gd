@@ -68,8 +68,8 @@ func _on_spawn_timer_timeout() -> void:
 	if not _current_allowed_enemies.is_empty():
 		chosen_data = _current_allowed_enemies.pick_random()
 	
-	var enemy_type = chosen_data.enemy_type if chosen_data else &"melee"
-	var enemy := _get_enemy(enemy_type, chosen_data)
+	var type_key = chosen_data.id if chosen_data else &"melee"
+	var enemy := _get_enemy(type_key)
 	var spawn_pos := _random_spawn_position()
 
 	if not enemy.is_inside_tree():
@@ -86,14 +86,17 @@ func _on_spawn_timer_timeout() -> void:
 	_active_count += 1
 
 
-func _get_enemy() -> CharacterBody2D:
-	# Escolhe um tipo aleatório da wave atual
+func _get_enemy(enemy_type: StringName = &"melee") -> CharacterBody2D:
+	# Escolhe um EnemyData da wave atual
 	var chosen_data: EnemyData = null
 	if not _current_allowed_enemies.is_empty():
 		chosen_data = _choose_enemy_data()
 
-	# Reuse from pool (só se o data for igual, para simplificar vamos achar o primeiro inativo e forçar o data)
-	for e in _pool:
+	# Reutiliza do pool (primeiro inativo)
+	if not _pools.has(enemy_type):
+		_pools[enemy_type] = []
+	var pool: Array = _pools[enemy_type]
+	for e in pool:
 		if is_instance_valid(e) and not e.visible:
 			if chosen_data and "enemy_data" in e:
 				e.enemy_data = chosen_data

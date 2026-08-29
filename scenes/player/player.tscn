@@ -5,163 +5,41 @@
 [ext_resource type="Script" uid="uid://clxgf7qrmu808" path="res://scripts/progression/experience_component.gd" id="5_exp"]
 [ext_resource type="Script" uid="uid://bmsbqsv3bhycr" path="res://scripts/player/pickup_area.gd" id="6_pickup"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_75vfm"]
-atlas = ExtResource("2_75vfm")
-region = Rect2(0, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0owmy"]
-atlas = ExtResource("2_75vfm")
-region = Rect2(80, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qek5x"]
-atlas = ExtResource("2_75vfm")
-region = Rect2(160, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5gtgg"]
-atlas = ExtResource("2_75vfm")
-region = Rect2(240, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h17s1"]
-atlas = ExtResource("2_75vfm")
-region = Rect2(320, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_je7p5"]
-atlas = ExtResource("2_75vfm")
-region = Rect2(400, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ugbui"]
-atlas = ExtResource("3_0owmy")
-region = Rect2(0, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fcs02"]
-atlas = ExtResource("3_0owmy")
-region = Rect2(80, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_myrg7"]
-atlas = ExtResource("3_0owmy")
-region = Rect2(160, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kvlxm"]
-atlas = ExtResource("3_0owmy")
-region = Rect2(240, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uf5tr"]
-atlas = ExtResource("3_0owmy")
-region = Rect2(320, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lgqa7"]
-atlas = ExtResource("3_0owmy")
-region = Rect2(400, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ydkj"]
-atlas = ExtResource("3_0owmy")
-region = Rect2(480, 0, 80, 80)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3j4b4"]
-atlas = ExtResource("3_0owmy")
-region = Rect2(560, 0, 80, 80)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_fosws"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_75vfm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0owmy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qek5x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5gtgg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h17s1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_je7p5")
-}],
-"loop": 1,
-"name": &"IDLE",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ugbui")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fcs02")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_myrg7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kvlxm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uf5tr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lgqa7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8ydkj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3j4b4")
-}],
-"loop": 1,
-"name": &"RUN",
-"speed": 12.0
-}]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_Pickup"]
 radius = 30.0
 
-[sub_resource type="Animation" id="Animation_tffgl"]
-resource_name = "IDLE"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_pk8ii"]
-_data = {
-&"IDLE": SubResource("Animation_tffgl")
-}
-
-[node name="Player" type="CharacterBody2D" unique_id=1505011885 groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 0
 script = ExtResource("1_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1425762219]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1931616188]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_1")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=547539881]
+[node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.4, 1.4)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
-[node name="HealthComponent" type="Node" parent="." unique_id=1486221210]
+[node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("3_health")
 
-[node name="ExperienceComponent" type="Node" parent="." unique_id=186269870]
+[node name="ExperienceComponent" type="Node" parent="."]
 script = ExtResource("5_exp")
 
-[node name="PickupArea" type="Area2D" parent="." unique_id=354510814]
+[node name="PickupArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("6_pickup")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea" unique_id=1034345660]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 position = Vector2(-1, -1)
 shape = SubResource("CircleShape2D_Pickup")
 
-[node name="WeaponHolder" type="Node2D" parent="." unique_id=1992211160]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1585938781]
-libraries/ = SubResource("AnimationLibrary_pk8ii")
+[node name="WeaponHolder" type="Node2D" parent="."]

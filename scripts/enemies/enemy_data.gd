@@ -10,6 +10,19 @@ class_name EnemyData
 @export var score_value: int = 10
 @export_range(0.0, 10.0, 0.05) var spawn_weight: float = 1.0
 
+@export_group("Attack")
+@export var attack_cooldown: float = 1.0
+@export var attack_range: float = 3.0
+
+@export_group("Heal")
+@export var heal_interval: float = 3.0
+@export var heal_range: float = 200.0
+@export var heal_amount: float = 10.0
+
+@export_group("projectile")
+@export var projectile_damage: float = 10.0
+@export var projectile_speed: float = 300.0
+
 @export_group("Visual")
 @export_range(16.0, 256.0, 1.0) var visual_size: float = 64.0
 @export_dir var sprite_directory: String = ""
