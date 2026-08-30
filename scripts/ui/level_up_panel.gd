@@ -3,6 +3,8 @@ extends Control
 
 signal option_chosen(option: UpgradeOption)
 
+const OPTION_ICON_SIZE: int = 64
+
 @onready var buttons_container: VBoxContainer = $Panel/VBoxContainer
 var _current_options: Array[UpgradeOption] = []
 var _option_buttons: Array[Button] = []
@@ -56,6 +58,12 @@ func show_options(options: Array[UpgradeOption]) -> void:
 		btn.custom_minimum_size = Vector2(0, 90)
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		var item_icon := _get_item_icon(opt.item_data)
+		if item_icon:
+			btn.icon = item_icon
+			btn.expand_icon = true
+			btn.add_theme_constant_override("icon_max_width", OPTION_ICON_SIZE)
+			btn.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		btn.pressed.connect(_on_button_pressed.bind(i))
 		btn.focus_entered.connect(_on_button_focused.bind(i))
 		buttons_container.add_child(btn)
@@ -64,6 +72,14 @@ func show_options(options: Array[UpgradeOption]) -> void:
 	show()
 	get_tree().paused = true
 	_focus_option(0)
+
+
+func _get_item_icon(item_data: Resource) -> Texture2D:
+	if item_data is WeaponData:
+		return (item_data as WeaponData).icon
+	if item_data is RelicData:
+		return (item_data as RelicData).icon
+	return null
 
 
 func _focus_option(index: int) -> void:

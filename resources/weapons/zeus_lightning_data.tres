@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=11 format=3]
+[gd_resource type="Resource" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
 [ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/zeus_lightning.jpg" id="3_icon"]
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
@@ -74,6 +75,7 @@ special_value = 0.75
 script = ExtResource("1_weapon")
 id = &"zeus_lightning"
 display_name = "Raio de Zeus"
+icon = ExtResource("3_icon")
 description = "Derruba raios do céu sobre inimigos aleatórios visíveis e salta entre alvos."
 base_damage = 28.0
 cooldown = 2.0

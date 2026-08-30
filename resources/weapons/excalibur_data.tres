@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://25g41b34ykt1" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
 [ext_resource type="Script" uid="uid://dby8hcw36xba6" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/excalibur.jpg" id="3_icon"]
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
@@ -72,6 +73,7 @@ special_value = 0.1
 script = ExtResource("1_weapon")
 id = &"excalibur"
 display_name = "Excalibur"
+icon = ExtResource("3_icon")
 description = "Espada lendária que desfere ataques frontais em arco de alto dano."
 base_damage = 30.0
 cooldown = 1.5

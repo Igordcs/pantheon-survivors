@@ -76,23 +76,47 @@ func add_kill() -> void:
 	kills_label.text = "Kills: %d" % _kills
 
 
-func add_weapon_icon(weapon_id: String) -> void:
+func add_weapon_icon(
+	weapon_id: StringName,
+	icon_texture: Texture2D = null,
+	display_name: String = ""
+) -> void:
 	# Evita duplicatas se já tiver equipado
 	for child in weapons_container.get_children():
 		if child.name == weapon_id:
 			return
-			
-	var icon = ColorRect.new()
+
+	var icon: Control
+	if icon_texture:
+		var texture_rect := TextureRect.new()
+		texture_rect.texture = icon_texture
+		texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon = texture_rect
+	else:
+		var placeholder := ColorRect.new()
+		placeholder.color = _get_placeholder_color(weapon_id)
+		icon = placeholder
 	icon.name = weapon_id
-	icon.custom_minimum_size = Vector2(32, 32)
-	# Cores baseadas no id para diferenciar no placeholder
-	if "mjolnir" in weapon_id: icon.color = Color.CYAN
-	elif "aura" in weapon_id: icon.color = Color.YELLOW
-	elif "excalibur" in weapon_id: icon.color = Color.WHITE
-	elif "solar" in weapon_id: icon.color = Color.ORANGE
-	elif "poseidon" in weapon_id: icon.color = Color.DODGER_BLUE
-	elif "medusa" in weapon_id: icon.color = Color.MEDIUM_SEA_GREEN
-	elif "zeus" in weapon_id: icon.color = Color.GOLD
-	else: icon.color = Color.GRAY
-	
+	icon.custom_minimum_size = Vector2(40, 40)
+	icon.tooltip_text = display_name
 	weapons_container.add_child(icon)
+
+
+func _get_placeholder_color(item_id: StringName) -> Color:
+	var id_text := str(item_id)
+	if "mjolnir" in id_text:
+		return Color.CYAN
+	if "aura" in id_text:
+		return Color.YELLOW
+	if "excalibur" in id_text:
+		return Color.WHITE
+	if "solar" in id_text:
+		return Color.ORANGE
+	if "poseidon" in id_text:
+		return Color.DODGER_BLUE
+	if "medusa" in id_text:
+		return Color.MEDIUM_SEA_GREEN
+	if "zeus" in id_text:
+		return Color.GOLD
+	return Color.GRAY

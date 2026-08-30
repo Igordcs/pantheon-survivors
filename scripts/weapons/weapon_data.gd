@@ -4,6 +4,7 @@ class_name WeaponData
 
 @export var id: StringName = &""
 @export var display_name: String = ""
+@export var icon: Texture2D
 @export_multiline var description: String = ""
 @export var base_damage: float = 12.0
 @export var cooldown: float = 2

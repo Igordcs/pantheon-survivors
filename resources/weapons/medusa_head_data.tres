@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=11 format=3]
+[gd_resource type="Resource" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
 [ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/medusa_head.jpg" id="3_icon"]
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
@@ -71,6 +72,7 @@ special_value = 3.0
 script = ExtResource("1_weapon")
 id = &"medusa_head"
 display_name = "Cabeça de Medusa"
+icon = ExtResource("3_icon")
 description = "Petrifica inimigos em um cone frontal e causa dano leve."
 base_damage = 6.0
 cooldown = 3.5

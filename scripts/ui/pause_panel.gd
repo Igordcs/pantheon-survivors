@@ -67,12 +67,14 @@ func _refresh_inventory() -> void:
 			if not weapon.has_method("get_weapon_id"):
 				continue
 			var weapon_name := str(weapon.get_weapon_id()).capitalize()
+			var weapon_icon: Texture2D
 			if "weapon_data" in weapon:
 				var weapon_data := weapon.weapon_data as WeaponData
 				if weapon_data:
 					weapon_name = weapon_data.display_name
+					weapon_icon = weapon_data.icon
 			var weapon_level: int = int(weapon.get_current_level()) if weapon.has_method("get_current_level") else 1
-			lines.append("- %s — Nível %d" % [weapon_name, weapon_level])
+			lines.append(_format_inventory_line(weapon_icon, weapon_name, weapon_level))
 			weapon_count += 1
 
 	if weapon_count == 0:
@@ -85,9 +87,16 @@ func _refresh_inventory() -> void:
 		lines.append("Nenhuma relíquia adquirida.")
 	else:
 		for relic in relics:
-			lines.append("- %s — Nível 1" % relic.display_name)
+			lines.append(_format_inventory_line(relic.icon, relic.display_name, 1))
 
 	inventory_text.text = "\n".join(lines)
+
+
+func _format_inventory_line(icon: Texture2D, item_name: String, item_level: int) -> String:
+	var icon_markup := ""
+	if icon and not icon.resource_path.is_empty():
+		icon_markup = "[img=40x40]%s[/img] " % icon.resource_path
+	return "%s%s — Nível %d" % [icon_markup, item_name, item_level]
 
 
 func _on_main_menu_pressed() -> void:

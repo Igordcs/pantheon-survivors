@@ -51,7 +51,11 @@ func _ready() -> void:
 	if weapon_holder:
 		for child in weapon_holder.get_children():
 			if child.has_method("get_weapon_id"):
-				hud.add_weapon_icon(child.get_weapon_id())
+				var weapon_data := child.weapon_data as WeaponData if "weapon_data" in child else null
+				if weapon_data:
+					hud.add_weapon_icon(weapon_data.id, weapon_data.icon, weapon_data.display_name)
+				else:
+					hud.add_weapon_icon(child.get_weapon_id())
 		
 	level_up_panel.option_chosen.connect(_on_upgrade_option_chosen)
 	spawn_director.time_updated.connect(hud.update_time)
@@ -134,16 +138,21 @@ func _on_upgrade_option_chosen(option: UpgradeOption) -> void:
 		var recipe = upgrade_system.check_evolutions()
 		if recipe:
 			upgrade_system.apply_evolution(recipe)
-			hud.add_weapon_icon(recipe.evolved_weapon.id)
+			hud.add_weapon_icon(
+				recipe.evolved_weapon.id,
+				recipe.evolved_weapon.icon,
+				recipe.evolved_weapon.display_name
+			)
 			run_manager.complete_boss_reward()
 		return
 		
 	upgrade_system.apply_option(option)
 	if option.item_data is WeaponData:
-		hud.add_weapon_icon(option.item_data.id)
+		var weapon_data := option.item_data as WeaponData
+		hud.add_weapon_icon(weapon_data.id, weapon_data.icon, weapon_data.display_name)
 	elif option.item_data is RelicData:
-		# Poderíamos adicionar ícones de relíquia no HUD também, por ora usamos o mesmo container
-		hud.add_weapon_icon(option.item_data.id)
+		var relic_data := option.item_data as RelicData
+		hud.add_weapon_icon(relic_data.id, relic_data.icon, relic_data.display_name)
 
 
 func _on_boss_fight_started(_boss_pos: Vector2) -> void:

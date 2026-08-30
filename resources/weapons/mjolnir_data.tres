@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://25g41b34ykt1" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
 [ext_resource type="Script" uid="uid://dby8hcw36xba6" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/mjolnir.jpg" id="3_icon"]
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
@@ -67,5 +68,6 @@ special_value = 0.6
 script = ExtResource("1_weapon")
 id = &"mjolnir"
 display_name = "Mjolnir"
+icon = ExtResource("3_icon")
 description = "Arremessa o martelo como um bumerangue, causando dano na ida e na volta."
 levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])
