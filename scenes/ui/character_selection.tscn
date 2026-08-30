@@ -28,9 +28,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -460.0
-offset_top = -280.0
+offset_top = -300.0
 offset_right = 460.0
-offset_bottom = 280.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 16
@@ -39,6 +39,13 @@ theme_override_constants/separation = 16
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "ESCOLHA SEU HERÓI"
+horizontal_alignment = 1
+
+[node name="NavigationHint" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.76, 0.86, 1)
+theme_override_font_sizes/font_size = 16
+text = "SETAS: ALTERAR PERSONAGEM  •  ENTER: CONFIRMAR  •  ESC: VOLTAR"
 horizontal_alignment = 1
 
 [node name="ItemList" type="ItemList" parent="VBoxContainer"]

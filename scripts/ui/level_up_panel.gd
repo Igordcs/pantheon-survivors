@@ -5,6 +5,8 @@ signal option_chosen(option: UpgradeOption)
 
 @onready var buttons_container: VBoxContainer = $Panel/VBoxContainer
 var _current_options: Array[UpgradeOption] = []
+var _option_buttons: Array[Button] = []
+var _selected_index: int = 0
 
 
 func _ready() -> void:
@@ -12,11 +14,33 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS # Continua rodando quando pausado
 
 
+func _input(event: InputEvent) -> void:
+	if not visible or _option_buttons.is_empty():
+		return
+	if event is InputEventKey and event.echo:
+		return
+
+	var selection_step := 0
+	if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_left"):
+		selection_step = -1
+	elif event.is_action_pressed("ui_down") or event.is_action_pressed("ui_right"):
+		selection_step = 1
+
+	if selection_step != 0:
+		_focus_option(_selected_index + selection_step)
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
+		_on_button_pressed(_selected_index)
+
+
 func show_options(options: Array[UpgradeOption]) -> void:
 	if options.is_empty():
 		return
 		
 	_current_options = options
+	_option_buttons.clear()
+	_selected_index = 0
 	
 	# Limpar botões antigos
 	for child in buttons_container.get_children():
@@ -33,10 +57,26 @@ func show_options(options: Array[UpgradeOption]) -> void:
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		btn.pressed.connect(_on_button_pressed.bind(i))
+		btn.focus_entered.connect(_on_button_focused.bind(i))
 		buttons_container.add_child(btn)
+		_option_buttons.append(btn)
 		
 	show()
 	get_tree().paused = true
+	_focus_option(0)
+
+
+func _focus_option(index: int) -> void:
+	if _option_buttons.is_empty():
+		return
+	_selected_index = wrapi(index, 0, _option_buttons.size())
+	var button := _option_buttons[_selected_index]
+	if is_instance_valid(button):
+		button.grab_focus()
+
+
+func _on_button_focused(index: int) -> void:
+	_selected_index = index
 
 
 func _on_button_pressed(index: int) -> void:
@@ -44,6 +84,7 @@ func _on_button_pressed(index: int) -> void:
 		return
 		
 	var chosen = _current_options[index]
+	get_viewport().gui_release_focus()
 	hide()
 	get_tree().paused = false
 	option_chosen.emit(chosen)

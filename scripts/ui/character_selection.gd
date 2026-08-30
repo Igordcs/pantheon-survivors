@@ -16,6 +16,30 @@ func _ready() -> void:
 	character_list.item_selected.connect(_on_item_selected)
 	
 	_load_characters()
+	character_list.grab_focus()
+
+
+func _input(event: InputEvent) -> void:
+	if not visible or not is_inside_tree():
+		return
+	if event is InputEventKey and event.echo:
+		return
+
+	var selection_step := 0
+	if event.is_action_pressed("ui_left") or event.is_action_pressed("ui_up"):
+		selection_step = -1
+	elif event.is_action_pressed("ui_right") or event.is_action_pressed("ui_down"):
+		selection_step = 1
+
+	if selection_step != 0:
+		_select_relative_character(selection_step)
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("ui_accept") and not start_button.disabled:
+		get_viewport().set_input_as_handled()
+		_on_start_pressed()
+	elif event.is_action_pressed("ui_cancel"):
+		get_viewport().set_input_as_handled()
+		_on_back_pressed()
 
 
 func _load_characters() -> void:
@@ -33,6 +57,18 @@ func _load_characters() -> void:
 	if character_list.get_item_count() > 0:
 		character_list.select(0)
 		_on_item_selected(0)
+
+
+func _select_relative_character(step: int) -> void:
+	var item_count := character_list.get_item_count()
+	if item_count == 0:
+		return
+	var selected_items := character_list.get_selected_items()
+	var current_index := selected_items[0] if not selected_items.is_empty() else 0
+	var next_index := wrapi(current_index + step, 0, item_count)
+	character_list.select(next_index)
+	character_list.ensure_current_is_visible()
+	_on_item_selected(next_index)
 
 
 func _on_item_selected(index: int) -> void:
