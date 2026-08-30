@@ -9,6 +9,7 @@ extends Node2D
 @onready var enemy_spawner := $EnemySpawner
 @onready var run_manager := $RunManager
 @onready var results_panel := $CanvasLayer/ResultsPanel
+@onready var pause_panel := $CanvasLayer/PausePanel
 
 
 func _ready() -> void:
@@ -21,6 +22,7 @@ func _ready() -> void:
 	# Setup do UpgradeSystem com a referência das armas do Player
 	var weapon_holder := player.get_node_or_null("WeaponHolder") as Node2D
 	upgrade_system.setup(weapon_holder)
+	pause_panel.setup(player, upgrade_system)
 	
 	# Conectar os sinais do HUD
 	var exp_comp := player.get_node_or_null("ExperienceComponent") as ExperienceComponent

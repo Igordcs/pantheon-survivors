@@ -29,6 +29,10 @@ func setup(weapon_holder: Node2D) -> void:
 		_player = weapon_holder.get_parent() as CharacterBody2D
 
 
+func get_obtained_relics() -> Array[RelicData]:
+	return _obtained_relics.duplicate()
+
+
 func generate_options(count: int = 3) -> Array[UpgradeOption]:
 	var options: Array[UpgradeOption] = []
 	var pool: Array[Resource] = []
