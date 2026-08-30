@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu5ky7rwc8d1d"
-path="res://.godot/imported/north-east.png-c94c234498c1aacd7a49f7b4ae136cfe.ctex"
+uid="uid://dh7igwum7ewa"
+path="res://.godot/imported/north-east.png-1bd1b5d1d35fbc905c135141687d23ef.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/minotaur/Idle/rotations/north-east.png"
-dest_files=["res://.godot/imported/north-east.png-c94c234498c1aacd7a49f7b4ae136cfe.ctex"]
+source_file="res://assets/sprites/enemies/minotaur/idle/rotations/north-east.png"
+dest_files=["res://.godot/imported/north-east.png-1bd1b5d1d35fbc905c135141687d23ef.ctex"]
 
 [params]
 

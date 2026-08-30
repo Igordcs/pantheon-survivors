@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dt4yu6wi7f5eu"
-path="res://.godot/imported/south-west.png-62be28c93b2299f7df5c62b5f94748e3.ctex"
+uid="uid://bf4kjtd2jdunm"
+path="res://.godot/imported/south-west.png-afb23ff40c52e6c70baceb5bc69c1ddc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/minotaur/Idle/rotations/south-west.png"
-dest_files=["res://.godot/imported/south-west.png-62be28c93b2299f7df5c62b5f94748e3.ctex"]
+source_file="res://assets/sprites/enemies/minotaur/idle/rotations/south-west.png"
+dest_files=["res://.godot/imported/south-west.png-afb23ff40c52e6c70baceb5bc69c1ddc.ctex"]
 
 [params]
 

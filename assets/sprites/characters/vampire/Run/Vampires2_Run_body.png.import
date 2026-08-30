@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://drko73e6fjn5b"
-path="res://.godot/imported/Vampires2_Run_body.png-c507b79e12f208c4b1714e560fbb2745.ctex"
+path="res://.godot/imported/Vampires2_Run_body.png-0f46b79b2de81a706d08e0096ad050d4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/vampire/Run/Vampires2_Run_body.png"
-dest_files=["res://.godot/imported/Vampires2_Run_body.png-c507b79e12f208c4b1714e560fbb2745.ctex"]
+source_file="res://assets/sprites/characters/vampire/run/Vampires2_Run_body.png"
+dest_files=["res://.godot/imported/Vampires2_Run_body.png-0f46b79b2de81a706d08e0096ad050d4.ctex"]
 
 [params]
 

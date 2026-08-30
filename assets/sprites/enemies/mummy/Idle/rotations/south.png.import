@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xe78is5s0nxt"
-path="res://.godot/imported/south.png-65b4ce9c5c543f3b7ab1bd794813c52b.ctex"
+uid="uid://dch0iamx54b8b"
+path="res://.godot/imported/south.png-4aa628e6e21ba8b5d600b673e774cb2c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/mummy/Idle/rotations/south.png"
-dest_files=["res://.godot/imported/south.png-65b4ce9c5c543f3b7ab1bd794813c52b.ctex"]
+source_file="res://assets/sprites/enemies/mummy/idle/rotations/south.png"
+dest_files=["res://.godot/imported/south.png-4aa628e6e21ba8b5d600b673e774cb2c.ctex"]
 
 [params]
 

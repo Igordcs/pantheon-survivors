@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djjikxy3fsvlr"
-path="res://.godot/imported/west.png-5482aaae9a3ac727457c30eec3eb7e89.ctex"
+uid="uid://b6pcu3w1piyc6"
+path="res://.godot/imported/west.png-3448218408793aee1dc30205984bc6da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/draugr/Idle/rotations/west.png"
-dest_files=["res://.godot/imported/west.png-5482aaae9a3ac727457c30eec3eb7e89.ctex"]
+source_file="res://assets/sprites/enemies/draugr/idle/rotations/west.png"
+dest_files=["res://.godot/imported/west.png-3448218408793aee1dc30205984bc6da.ctex"]
 
 [params]
 

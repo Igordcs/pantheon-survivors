@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f8h1k1pkym8"
-path="res://.godot/imported/north.png-e17e80354172156b0ff29d1652afbc91.ctex"
+uid="uid://bedlffcv7we55"
+path="res://.godot/imported/north.png-a27a710bd7444378c15e0e128951b0c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/medusa/Idle/rotations/north.png"
-dest_files=["res://.godot/imported/north.png-e17e80354172156b0ff29d1652afbc91.ctex"]
+source_file="res://assets/sprites/enemies/medusa/idle/rotations/north.png"
+dest_files=["res://.godot/imported/north.png-a27a710bd7444378c15e0e128951b0c6.ctex"]
 
 [params]
 

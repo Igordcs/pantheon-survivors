@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5fbclq38bok8"
-path="res://.godot/imported/Vampires2_Death_head.png-8cb82bf628ff093f1b79e6c331870614.ctex"
+path="res://.godot/imported/Vampires2_Death_head.png-dfcd44c66019e59fe488d4213784da29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/vampire/Death/Vampires2_Death_head.png"
-dest_files=["res://.godot/imported/Vampires2_Death_head.png-8cb82bf628ff093f1b79e6c331870614.ctex"]
+source_file="res://assets/sprites/characters/vampire/death/Vampires2_Death_head.png"
+dest_files=["res://.godot/imported/Vampires2_Death_head.png-dfcd44c66019e59fe488d4213784da29.ctex"]
 
 [params]
 

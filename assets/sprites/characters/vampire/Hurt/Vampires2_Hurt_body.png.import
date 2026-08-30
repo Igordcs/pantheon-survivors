@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://byv7en30sbelv"
-path="res://.godot/imported/Vampires2_Hurt_body.png-cfa291e9f169d191f9125caccfc0411f.ctex"
+path="res://.godot/imported/Vampires2_Hurt_body.png-719bdc8774649945672f78f37c20bd56.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/vampire/Hurt/Vampires2_Hurt_body.png"
-dest_files=["res://.godot/imported/Vampires2_Hurt_body.png-cfa291e9f169d191f9125caccfc0411f.ctex"]
+source_file="res://assets/sprites/characters/vampire/hurt/Vampires2_Hurt_body.png"
+dest_files=["res://.godot/imported/Vampires2_Hurt_body.png-719bdc8774649945672f78f37c20bd56.ctex"]
 
 [params]
 

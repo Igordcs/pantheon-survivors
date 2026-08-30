@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5e0gkbyahlcv"
-path="res://.godot/imported/north-west.png-96074850b242e2a85282402b2273b7c3.ctex"
+uid="uid://cqw8i5canbld3"
+path="res://.godot/imported/north-west.png-31ce6dd45c791d66dd41d289ba6b14e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/cyclops/Idle/rotations/north-west.png"
-dest_files=["res://.godot/imported/north-west.png-96074850b242e2a85282402b2273b7c3.ctex"]
+source_file="res://assets/sprites/enemies/cyclops/idle/rotations/north-west.png"
+dest_files=["res://.godot/imported/north-west.png-31ce6dd45c791d66dd41d289ba6b14e3.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://boqf3xhaaxqde"
-path="res://.godot/imported/north.png-5e70413a5993dfdde3343ba1c3511b9c.ctex"
+path="res://.godot/imported/north.png-3d52fb7cc9a82e59a239f91d971db526.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/eirik/Idle/rotations/north.png"
-dest_files=["res://.godot/imported/north.png-5e70413a5993dfdde3343ba1c3511b9c.ctex"]
+source_file="res://assets/sprites/characters/eirik/idle/rotations/north.png"
+dest_files=["res://.godot/imported/north.png-3d52fb7cc9a82e59a239f91d971db526.ctex"]
 
 [params]
 

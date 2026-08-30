@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do2j3j5k4oveu"
-path="res://.godot/imported/west.png-c7bde2defcb19ad67f8a963cf2e380e4.ctex"
+uid="uid://c8nk43hvavtfb"
+path="res://.godot/imported/west.png-e5141421da79fa466ca1c27dd8339efe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/harpia/Idle/rotations/west.png"
-dest_files=["res://.godot/imported/west.png-c7bde2defcb19ad67f8a963cf2e380e4.ctex"]
+source_file="res://assets/sprites/enemies/harpia/idle/rotations/west.png"
+dest_files=["res://.godot/imported/west.png-e5141421da79fa466ca1c27dd8339efe.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bsntsw5x8x0gs"
-path="res://.godot/imported/south-east.png-68fa66159cfced994bb4a0e7308ec9bd.ctex"
+path="res://.godot/imported/south-east.png-819eb77ae0273ebb60ddf9e05f789344.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/arthur/Idle/rotations/south-east.png"
-dest_files=["res://.godot/imported/south-east.png-68fa66159cfced994bb4a0e7308ec9bd.ctex"]
+source_file="res://assets/sprites/characters/arthur/idle/rotations/south-east.png"
+dest_files=["res://.godot/imported/south-east.png-819eb77ae0273ebb60ddf9e05f789344.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bt3fll0qalohu"
-path="res://.godot/imported/south-west.png-6d6fa2dd3c66819bdd82c3ad9fc247b7.ctex"
+uid="uid://cmgdp3v86njht"
+path="res://.godot/imported/south-west.png-af5a8a42f798a9e36a7bbbe6ee46d8b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/harpia/Idle/rotations/south-west.png"
-dest_files=["res://.godot/imported/south-west.png-6d6fa2dd3c66819bdd82c3ad9fc247b7.ctex"]
+source_file="res://assets/sprites/enemies/harpia/idle/rotations/south-west.png"
+dest_files=["res://.godot/imported/south-west.png-af5a8a42f798a9e36a7bbbe6ee46d8b7.ctex"]
 
 [params]
 

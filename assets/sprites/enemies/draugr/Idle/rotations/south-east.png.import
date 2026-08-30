@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beosf4kau0b6b"
-path="res://.godot/imported/south-east.png-c380974b4272ef829028c124d71712eb.ctex"
+uid="uid://brr0wt3itoghm"
+path="res://.godot/imported/south-east.png-d23b13fd1a2f2376b146f3c413317b57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/draugr/Idle/rotations/south-east.png"
-dest_files=["res://.godot/imported/south-east.png-c380974b4272ef829028c124d71712eb.ctex"]
+source_file="res://assets/sprites/enemies/draugr/idle/rotations/south-east.png"
+dest_files=["res://.godot/imported/south-east.png-d23b13fd1a2f2376b146f3c413317b57.ctex"]
 
 [params]
 

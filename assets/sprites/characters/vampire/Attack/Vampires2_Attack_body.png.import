@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://tx77lsw1rudq"
-path="res://.godot/imported/Vampires2_Attack_body.png-669385f7940f8f9bcbcc189014ab9262.ctex"
+path="res://.godot/imported/Vampires2_Attack_body.png-3b981c8b86e353df1274cb25e8003be7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/vampire/Attack/Vampires2_Attack_body.png"
-dest_files=["res://.godot/imported/Vampires2_Attack_body.png-669385f7940f8f9bcbcc189014ab9262.ctex"]
+source_file="res://assets/sprites/characters/vampire/attack/Vampires2_Attack_body.png"
+dest_files=["res://.godot/imported/Vampires2_Attack_body.png-3b981c8b86e353df1274cb25e8003be7.ctex"]
 
 [params]
 

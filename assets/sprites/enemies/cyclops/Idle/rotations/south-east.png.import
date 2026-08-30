@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dllqnohh51v70"
-path="res://.godot/imported/south-east.png-9aa1936fb0f79e3f9d53e27fc1085526.ctex"
+uid="uid://2unk43khf4bb"
+path="res://.godot/imported/south-east.png-f422f46597cb152356bfc167668a2057.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/cyclops/Idle/rotations/south-east.png"
-dest_files=["res://.godot/imported/south-east.png-9aa1936fb0f79e3f9d53e27fc1085526.ctex"]
+source_file="res://assets/sprites/enemies/cyclops/idle/rotations/south-east.png"
+dest_files=["res://.godot/imported/south-east.png-f422f46597cb152356bfc167668a2057.ctex"]
 
 [params]
 

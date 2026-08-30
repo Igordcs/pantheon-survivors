@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cekxa73ewx44a"
-path="res://.godot/imported/north.png-ee0b35c723ec59f83b21be93fa6a455e.ctex"
+uid="uid://bhqncnpnhxukn"
+path="res://.godot/imported/north.png-666a81266fbf32b8e3733a0a0f4b885b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/cyclops/Idle/rotations/north.png"
-dest_files=["res://.godot/imported/north.png-ee0b35c723ec59f83b21be93fa6a455e.ctex"]
+source_file="res://assets/sprites/enemies/cyclops/idle/rotations/north.png"
+dest_files=["res://.godot/imported/north.png-666a81266fbf32b8e3733a0a0f4b885b.ctex"]
 
 [params]
 

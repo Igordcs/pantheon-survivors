@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bfdw0egc65mqw"
-path="res://.godot/imported/north-west.png-e8689ea31242733335c5e10b1e895654.ctex"
+path="res://.godot/imported/north-west.png-f0ed0d5f2f3a4afe5918425ce36abebd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/arthur/Idle/rotations/north-west.png"
-dest_files=["res://.godot/imported/north-west.png-e8689ea31242733335c5e10b1e895654.ctex"]
+source_file="res://assets/sprites/characters/arthur/idle/rotations/north-west.png"
+dest_files=["res://.godot/imported/north-west.png-f0ed0d5f2f3a4afe5918425ce36abebd.ctex"]
 
 [params]
 
