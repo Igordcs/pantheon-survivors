@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://i0fjovj1ib1h"
-path="res://.godot/imported/medusa_head.jpg-6a5c754504276d82982d45caefc6c09e.ctex"
+uid="uid://c6vgi3in6thsk"
+path="res://.godot/imported/zeus_lightning.png-c159a75b514113cb672705984269a0b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/weapons/medusa_head.jpg"
-dest_files=["res://.godot/imported/medusa_head.jpg-6a5c754504276d82982d45caefc6c09e.ctex"]
+source_file="res://assets/sprites/weapons/zeus_lightning.png"
+dest_files=["res://.godot/imported/zeus_lightning.png-c159a75b514113cb672705984269a0b0.ctex"]
 
 [params]
 

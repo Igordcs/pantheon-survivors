@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cni0fv4x3b6a3"
-path="res://.godot/imported/excalibur.jpg-c7f9215b920e8697e7dca44e6c6ef17c.ctex"
+uid="uid://cb6j2icqtbyf4"
+path="res://.godot/imported/hermes_sandals.png-16cf0acea75cac12370cc8531aef4354.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/weapons/excalibur.jpg"
-dest_files=["res://.godot/imported/excalibur.jpg-c7f9215b920e8697e7dca44e6c6ef17c.ctex"]
+source_file="res://assets/sprites/weapons/hermes_sandals.png"
+dest_files=["res://.godot/imported/hermes_sandals.png-16cf0acea75cac12370cc8531aef4354.ctex"]
 
 [params]
 

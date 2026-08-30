@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://we4hx640ptke"
-path="res://.godot/imported/hermes_sandals.jpg-f630e7c12064d34ff353c1544a88cf66.ctex"
+uid="uid://ckv2vfbdq3s80"
+path="res://.godot/imported/medusa_head.png-8f4783093f5f4a50f1f7c321010c5afa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/weapons/hermes_sandals.jpg"
-dest_files=["res://.godot/imported/hermes_sandals.jpg-f630e7c12064d34ff353c1544a88cf66.ctex"]
+source_file="res://assets/sprites/weapons/medusa_head.png"
+dest_files=["res://.godot/imported/medusa_head.png-8f4783093f5f4a50f1f7c321010c5afa.ctex"]
 
 [params]
 

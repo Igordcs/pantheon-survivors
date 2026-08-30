@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btmwqpnsd0o26"
-path="res://.godot/imported/poseidon_trident.jpg-c3f4df46ba225370df746bf8a1567f77.ctex"
+uid="uid://dxf4l1lpdy57n"
+path="res://.godot/imported/poseidon_trident.png-d5bc1cc6ed5f10946ba909a5843fe8e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/weapons/poseidon_trident.jpg"
-dest_files=["res://.godot/imported/poseidon_trident.jpg-c3f4df46ba225370df746bf8a1567f77.ctex"]
+source_file="res://assets/sprites/weapons/poseidon_trident.png"
+dest_files=["res://.godot/imported/poseidon_trident.png-d5bc1cc6ed5f10946ba909a5843fe8e1.ctex"]
 
 [params]
 

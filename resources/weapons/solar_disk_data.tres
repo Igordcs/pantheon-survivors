@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://25g41b34ykt1" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
 [ext_resource type="Script" uid="uid://dby8hcw36xba6" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
-[ext_resource type="Texture2D" path="res://assets/sprites/weapons/solar_disk.jpg" id="3_icon"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/solar_disk.png" id="3_icon"]
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")

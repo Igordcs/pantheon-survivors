@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu473mllduds6"
-path="res://.godot/imported/mjolnir.jpg-bc5352b1ef388f212709b69bd0a7d768.ctex"
+uid="uid://ddej77yiprasy"
+path="res://.godot/imported/solar_disk.png-5db0a14906242daa31418412b6b2f496.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/weapons/mjolnir.jpg"
-dest_files=["res://.godot/imported/mjolnir.jpg-bc5352b1ef388f212709b69bd0a7d768.ctex"]
+source_file="res://assets/sprites/weapons/solar_disk.png"
+dest_files=["res://.godot/imported/solar_disk.png-5db0a14906242daa31418412b6b2f496.ctex"]
 
 [params]
 

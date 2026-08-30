@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y1krx6nwh04j"
-path="res://.godot/imported/solar_disk.jpg-39dada4d6ad5e13bba66376425360bf5.ctex"
+uid="uid://dhlr6df31uaah"
+path="res://.godot/imported/excalibur.png-a1f3d3a7c44d2dbc5777e11b03e24ba5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/weapons/solar_disk.jpg"
-dest_files=["res://.godot/imported/solar_disk.jpg-39dada4d6ad5e13bba66376425360bf5.ctex"]
+source_file="res://assets/sprites/weapons/excalibur.png"
+dest_files=["res://.godot/imported/excalibur.png-a1f3d3a7c44d2dbc5777e11b03e24ba5.ctex"]
 
 [params]
 

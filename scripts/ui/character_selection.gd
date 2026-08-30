@@ -4,8 +4,11 @@ extends Control
 @onready var character_list: ItemList = $VBoxContainer/ItemList
 @onready var start_button: Button = $VBoxContainer/ButtonsContainer/StartButton
 @onready var back_button: Button = $VBoxContainer/ButtonsContainer/BackButton
-@onready var portrait: TextureRect = $VBoxContainer/DetailsContainer/Portrait
 @onready var info_label: Label = $VBoxContainer/DetailsContainer/InfoLabel
+@onready var weapon_icon: TextureRect = $VBoxContainer/DetailsContainer/WeaponRow/WeaponIcon
+@onready var weapon_text: Label = $VBoxContainer/DetailsContainer/WeaponRow/WeaponText
+@onready var health_label: Label = $VBoxContainer/DetailsContainer/StatsContainer/HealthLabel
+@onready var speed_label: Label = $VBoxContainer/DetailsContainer/StatsContainer/SpeedLabel
 
 var _unlocked_chars = []
 
@@ -78,23 +81,23 @@ func _on_item_selected(index: int) -> void:
 	var data_path = "res://resources/characters/%s_data.tres" % char_id
 	var data = load(data_path) as CharacterData
 	if data:
-		portrait.texture = data.portrait
-		portrait.visible = data.portrait != null
-
 		var weapon_name := "Nenhuma"
 		var weapon_description := "Sem arma inicial."
+		var starting_weapon_icon: Texture2D
 		if data.starting_weapon is WeaponData:
 			weapon_name = data.starting_weapon.display_name
 			weapon_description = data.starting_weapon.description
+			starting_weapon_icon = data.starting_weapon.icon
 
-		info_label.text = "%s\n\nArma inicial: %s\n%s\n\nPerfil: %s\nVida: %d | Velocidade: %d" % [
+		info_label.text = "%s\n\nPerfil: %s" % [
 			data.description,
-			weapon_name,
-			weapon_description,
 			data.passive_description,
-			data.base_health,
-			data.base_speed
 		]
+		weapon_icon.texture = starting_weapon_icon
+		weapon_icon.visible = starting_weapon_icon != null
+		weapon_text.text = "Arma inicial: %s\n%s" % [weapon_name, weapon_description]
+		health_label.text = "Vida: %d" % int(data.base_health)
+		speed_label.text = "Velocidade: %d" % int(data.base_speed)
 	
 	start_button.disabled = false
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcjhgfibo56fd"
-path="res://.godot/imported/zeus_lightning.jpg-94e7b76a9d98848a3250f827f2fddb89.ctex"
+uid="uid://dhe2tg6rg6hyr"
+path="res://.godot/imported/mjolnir.png-c2ce2f4e774e2350f623832f3dc1ce63.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/weapons/zeus_lightning.jpg"
-dest_files=["res://.godot/imported/zeus_lightning.jpg-94e7b76a9d98848a3250f827f2fddb89.ctex"]
+source_file="res://assets/sprites/weapons/mjolnir.png"
+dest_files=["res://.godot/imported/mjolnir.png-c2ce2f4e774e2350f623832f3dc1ce63.ctex"]
 
 [params]
 
