@@ -18,6 +18,7 @@ var _gem_pool: Array[Area2D] = []
 var _spawn_timer: Timer
 var _player: CharacterBody2D
 var _current_allowed_enemies: Array[EnemyData] = []
+var _world_generator: WorldGenerator
 
 
 func _ready() -> void:
@@ -52,6 +53,10 @@ func stop_spawning() -> void:
 		_spawn_timer.stop()
 	set_process(false)
 	set_physics_process(false)
+
+
+func setup_world_generator(world_generator: WorldGenerator) -> void:
+	_world_generator = world_generator
 
 
 func _on_spawn_timer_timeout() -> void:
@@ -177,6 +182,12 @@ func _on_enemy_died(enemy: CharacterBody2D) -> void:
 
 
 func _random_spawn_position() -> Vector2:
+	if is_instance_valid(_world_generator):
+		return _world_generator.get_valid_spawn_position_around_player(
+			_player.global_position,
+			min_spawn_radius,
+			max_spawn_radius
+		)
 	var angle := randf() * TAU
 	var radius := randf_range(min_spawn_radius, max_spawn_radius)
 	return _player.global_position + Vector2(cos(angle), sin(angle)) * radius

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/biome_data.gd" id="1_biome"]
+
+[resource]
+script = ExtResource("1_biome")
+biome_id = &"water"
+display_name = "Água rasa"
+min_noise_value = -1.0
+max_noise_value = -0.45
+ground_source_id = 0
+ground_atlas_coordinates = Vector2i(1, 13)
+is_navigable = true
+movement_speed_multiplier = 0.8
+decoration_density = 0.0
+obstacle_density = 0.0

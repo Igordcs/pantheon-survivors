@@ -10,6 +10,7 @@ extends Node2D
 @onready var run_manager := $RunManager
 @onready var results_panel := $CanvasLayer/ResultsPanel
 @onready var pause_panel := $CanvasLayer/PausePanel
+@onready var world_generator: WorldGenerator = $World/Environment
 
 
 func _ready() -> void:
@@ -18,11 +19,17 @@ func _ready() -> void:
 	if not player:
 		push_error("Game: Player node not found at World/Player!")
 		return
+	if not world_generator.initial_spawn_position.is_equal_approx(player.global_position):
+		world_generator.initial_spawn_position = player.global_position
+		world_generator.generate_world()
+	world_generator.setup(player)
+	player.setup_world_generator(world_generator)
 	
 	# Setup do UpgradeSystem com a referência das armas do Player
 	var weapon_holder := player.get_node_or_null("WeaponHolder") as Node2D
 	upgrade_system.setup(weapon_holder)
 	pause_panel.setup(player, upgrade_system)
+	enemy_spawner.setup_world_generator(world_generator)
 	
 	# Conectar os sinais do HUD
 	var exp_comp := player.get_node_or_null("ExperienceComponent") as ExperienceComponent

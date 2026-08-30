@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rock"]
+radius = 17.0
+
+[node name="Rock" type="StaticBody2D" groups=["world_obstacles"]]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Body" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-24, 13, -19, -8, -7, -22, 13, -19, 25, -3, 20, 16, -5, 22)
+color = Color(0.3, 0.34, 0.37, 1)
+
+[node name="Light" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-15, -7, -5, -17, 10, -14, 15, -6, -1, -2)
+color = Color(0.48, 0.52, 0.54, 1)
+
+[node name="Shade" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-23, 12, -1, 8, 20, 1, 20, 15, -5, 21)
+color = Color(0.2, 0.23, 0.27, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rock")
+

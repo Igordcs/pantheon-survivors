@@ -1,0 +1,34 @@
+[gd_resource type="Resource" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/biome_data.gd" id="1_biome"]
+[ext_resource type="Script" path="res://scripts/world/world_object_data.gd" id="2_object"]
+[ext_resource type="PackedScene" path="res://scenes/environment/tree.tscn" id="3_tree"]
+[ext_resource type="PackedScene" path="res://scenes/environment/rock.tscn" id="4_rock"]
+
+[sub_resource type="Resource" id="Resource_tree"]
+script = ExtResource("2_object")
+scene = ExtResource("3_tree")
+weight = 0.85
+clearance_radius = 52.0
+
+[sub_resource type="Resource" id="Resource_rock"]
+script = ExtResource("2_object")
+scene = ExtResource("4_rock")
+weight = 0.15
+clearance_radius = 26.0
+
+[resource]
+script = ExtResource("1_biome")
+biome_id = &"forest"
+display_name = "Floresta"
+min_noise_value = 0.35
+max_noise_value = 1.0
+ground_source_id = 0
+ground_atlas_coordinates = Vector2i(1, 7)
+decoration_density = 0.05
+obstacle_density = 0.1
+decoration_source_id = 2
+decoration_atlas_coordinates = Array[Vector2i]([Vector2i(1, 10), Vector2i(2, 10), Vector2i(6, 10)])
+rare_decoration_atlas_coordinates = Array[Vector2i]([Vector2i(5, 8)])
+rare_decoration_chance = 0.03
+obstacle_entries = Array[ExtResource("2_object")]([SubResource("Resource_tree"), SubResource("Resource_rock")])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
@@ -11,11 +11,14 @@
 [ext_resource type="Script" path="res://scripts/core/run_manager.gd" id="9_runmanager"]
 [ext_resource type="PackedScene" path="res://scenes/ui/results_panel.tscn" id="10_resultspanel"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pause_panel.tscn" id="11_pausepanel"]
+[ext_resource type="PackedScene" path="res://scenes/world/world.tscn" id="12_world"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_script")
 
 [node name="World" type="Node2D" parent="."]
+
+[node name="Environment" parent="World" instance=ExtResource("12_world")]
 
 [node name="Player" parent="World" instance=ExtResource("2_player")]
 
