@@ -10,6 +10,7 @@ extends Node2D
 @onready var run_manager := $RunManager
 @onready var results_panel := $CanvasLayer/ResultsPanel
 @onready var pause_panel := $CanvasLayer/PausePanel
+@onready var damage_feedback: DamageFeedback = $CanvasLayer/DamageFeedback
 @onready var world_generator: WorldGenerator = $World/Environment
 @onready var game_camera: GameCameraController = $World/Player/Camera2D
 
@@ -45,6 +46,7 @@ func _ready() -> void:
 	if health_comp:
 		health_comp.health_changed.connect(hud.update_hp)
 		health_comp.died.connect(_on_player_died)
+		health_comp.damaged.connect(_on_player_damaged)
 		hud.update_hp(health_comp.current_health, health_comp.max_health)
 		
 	# Adicionar armas iniciais ao HUD
@@ -123,6 +125,10 @@ func _on_run_ended(is_victory: bool, stats: Dictionary) -> void:
 func _on_player_died() -> void:
 	print("Game Over!")
 	run_manager.trigger_defeat()
+
+
+func _on_player_damaged(amount: float, _source_position: Vector2) -> void:
+	damage_feedback.flash_damage(amount)
 
 
 func _on_player_level_up(new_level: int) -> void:

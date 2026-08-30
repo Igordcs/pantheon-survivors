@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/game.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/results_panel.tscn" id="10_resultspanel"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pause_panel.tscn" id="11_pausepanel"]
 [ext_resource type="PackedScene" path="res://scenes/world/world.tscn" id="12_world"]
+[ext_resource type="PackedScene" path="res://scenes/ui/damage_feedback.tscn" id="13_damage_feedback"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_script")
@@ -53,3 +54,5 @@ script = ExtResource("5_upgrade")
 [node name="ResultsPanel" parent="CanvasLayer" instance=ExtResource("10_resultspanel")]
 
 [node name="PausePanel" parent="CanvasLayer" instance=ExtResource("11_pausepanel")]
+
+[node name="DamageFeedback" parent="CanvasLayer" instance=ExtResource("13_damage_feedback")]

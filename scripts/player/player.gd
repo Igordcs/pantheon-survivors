@@ -25,7 +25,6 @@ func _ready() -> void:
 		health_component.damaged.connect(_on_damaged)
 
 func _on_damaged(_amount: float, _source_pos: Vector2) -> void:
-	ScreenShake.shake(0.6)
 	AudioManager.play_sfx("player_hit")
 
 
