@@ -2,7 +2,7 @@ extends Node
 ## SaveManager — Gerencia a persistência de meta-progressão do jogo.
 
 const SAVE_PATH = "user://save_data.json"
-const INITIAL_CHARACTER_IDS := ["eirik", "arthur", "neferu"]
+const INITIAL_CHARACTER_IDS := ["eirik", "arthur", "neferu", "perseus"]
 
 var save_data: Dictionary = {
 	"currency": 0,

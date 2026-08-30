@@ -12,14 +12,18 @@ var _range: float = 140.0
 var _cone_degrees: float = 90.0
 var _petrification_duration: float = 1.2
 
+const CONE_COLOR := Color(0.2, 0.95, 0.5, 0.48)
+const CONE_HOLD_DURATION := 0.2
+const CONE_FADE_DURATION := 0.55
+
 
 func _ready() -> void:
 	_cooldown_timer = Timer.new()
 	_cooldown_timer.one_shot = false
-	_cooldown_timer.autostart = true
 	_cooldown_timer.timeout.connect(_on_cooldown_timeout)
 	add_child(_cooldown_timer)
 	_apply_level_stats()
+	_cooldown_timer.start()
 
 
 func get_weapon_id() -> StringName:
@@ -59,7 +63,8 @@ func _apply_level_stats() -> void:
 
 func _on_cooldown_timeout() -> void:
 	var facing_direction := _get_facing_direction()
-	var affected_count := 0
+	_spawn_petrification_vfx(facing_direction)
+
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		var enemy_body := enemy as CharacterBody2D
 		if not is_instance_valid(enemy_body) or not enemy_body.visible:
@@ -72,10 +77,6 @@ func _on_cooldown_timeout() -> void:
 		health.take_damage(_damage)
 		if enemy_body.has_method("apply_petrification"):
 			enemy_body.apply_petrification(_petrification_duration)
-			affected_count += 1
-
-	if affected_count > 0:
-		_spawn_petrification_vfx(facing_direction)
 
 
 func _is_inside_cone(target_position: Vector2, facing_direction: Vector2) -> bool:
@@ -105,8 +106,12 @@ func _spawn_petrification_vfx(facing_direction: Vector2) -> void:
 		var angle := lerpf(-half_angle, half_angle, weight) + facing_angle
 		points.append(Vector2.from_angle(angle) * _range)
 	cone.polygon = points
-	cone.color = Color(0.45, 0.85, 0.55, 0.32)
+	cone.color = CONE_COLOR
+	cone.z_index = 4
 	add_child(cone)
 	var tween := cone.create_tween()
-	tween.tween_property(cone, "modulate:a", 0.0, 0.35)
+	tween.tween_interval(CONE_HOLD_DURATION)
+	tween.tween_property(cone, "modulate:a", 0.0, CONE_FADE_DURATION).set_trans(
+		Tween.TRANS_QUAD
+	).set_ease(Tween.EASE_OUT)
 	tween.tween_callback(cone.queue_free)
