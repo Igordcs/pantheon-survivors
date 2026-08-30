@@ -11,6 +11,9 @@ extends Node2D
 @onready var results_panel := $CanvasLayer/ResultsPanel
 @onready var pause_panel := $CanvasLayer/PausePanel
 @onready var world_generator: WorldGenerator = $World/Environment
+@onready var game_camera: GameCameraController = $World/Player/Camera2D
+
+var _active_boss: Node2D
 
 
 func _ready() -> void:
@@ -70,6 +73,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _on_boss_spawned(boss_node: Node2D) -> void:
+	_active_boss = boss_node
 	var boss_health = boss_node.get_node_or_null("HealthComponent") as HealthComponent
 	if boss_health:
 		boss_health.health_changed.connect(hud.update_boss_hp)
@@ -142,21 +146,11 @@ func _on_upgrade_option_chosen(option: UpgradeOption) -> void:
 		hud.add_weapon_icon(option.item_data.id)
 
 
-func _on_boss_fight_started(boss_pos: Vector2) -> void:
-	
-	# A câmera foca no Boss e ignora o movimento do Player
-	var cam = player.get_node_or_null("Camera2D") as Camera2D
-	if cam:
-		cam.top_level = true
-		var tween = create_tween()
-		tween.tween_property(cam, "global_position", boss_pos, 1.0).set_ease(Tween.EASE_OUT)
+func _on_boss_fight_started(_boss_pos: Vector2) -> void:
+	if is_instance_valid(_active_boss):
+		game_camera.focus_boss(_active_boss)
 
 
 func _on_boss_fight_ended() -> void:
-	
-	# Reseta a câmera para seguir o player novamente
-	var cam = player.get_node_or_null("Camera2D") as Camera2D
-	if cam:
-		cam.top_level = false
-		var tween = create_tween()
-		tween.tween_property(cam, "position", Vector2.ZERO, 0.5)
+	game_camera.release_boss()
+	_active_boss = null

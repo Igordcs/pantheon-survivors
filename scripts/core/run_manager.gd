@@ -46,9 +46,8 @@ func _transition_to_boss() -> void:
 	print("WARNING: O Deus Caído chegou!")
 	
 	# Desabilita spawn de inimigos comuns
-	if enemy_spawner and enemy_spawner.has_method("set_process"):
-		enemy_spawner.set_process(false)
-		enemy_spawner.set_physics_process(false)
+	if enemy_spawner and enemy_spawner.has_method("stop_spawning"):
+		enemy_spawner.stop_spawning()
 	
 	# Spawna o boss próximo do player (300px) mas não em cima
 	var players = get_tree().get_nodes_in_group("player")

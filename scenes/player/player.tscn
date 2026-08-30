@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://rpi6bjtolxtp" path="res://scripts/combat/health_component.gd" id="3_health"]
 [ext_resource type="Script" uid="uid://clxgf7qrmu808" path="res://scripts/progression/experience_component.gd" id="5_exp"]
 [ext_resource type="Script" uid="uid://bmsbqsv3bhycr" path="res://scripts/player/pickup_area.gd" id="6_pickup"]
+[ext_resource type="Script" path="res://scripts/camera/game_camera_controller.gd" id="7_camera"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 16.0
@@ -23,9 +24,10 @@ position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_1")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.4, 1.4)
+zoom = Vector2(1.1, 1.1)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+script = ExtResource("7_camera")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("3_health")
