@@ -6,7 +6,10 @@ class_name UpgradeSystem
 const AVAILABLE_WEAPONS = [
 	preload("res://resources/weapons/mjolnir_data.tres"),
 	preload("res://resources/weapons/excalibur_data.tres"),
-	preload("res://resources/weapons/solar_disk_data.tres")
+	preload("res://resources/weapons/solar_disk_data.tres"),
+	preload("res://resources/weapons/poseidon_trident_data.tres"),
+	preload("res://resources/weapons/medusa_head_data.tres"),
+	preload("res://resources/weapons/zeus_lightning_data.tres")
 ]
 
 const AVAILABLE_RELICS = [

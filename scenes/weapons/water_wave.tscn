@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/water_wave.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wave"]
+size = Vector2(52, 28)
+
+[node name="WaterWave" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_script")
+
+[node name="Wave" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-24, -12, 10, -18, 28, 0, 10, 18, -24, 12, -12, 0)
+color = Color(0.15, 0.65, 1, 0.82)
+
+[node name="Foam" type="Line2D" parent="."]
+points = PackedVector2Array(-20, -8, 8, -13, 22, 0, 8, 13, -20, 8)
+width = 3.0
+default_color = Color(0.75, 0.95, 1, 0.9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wave")

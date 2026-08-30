@@ -1,5 +1,5 @@
 extends Node2D
-## Mjolnir — arma automática com múltiplos alvos e chain lightning.
+## Mjölnir — martelo bumerangue com múltiplos alvos e chain lightning.
 
 signal weapon_upgraded(weapon_id: StringName, new_level: int)
 
@@ -98,10 +98,10 @@ func _fire_at(target: CharacterBody2D) -> void:
 	if not projectile_scene:
 		return
 	var projectile := projectile_scene.instantiate() as Area2D
+	var wielder := get_parent().get_parent() as Node2D
 	var direction := global_position.direction_to(target.global_position)
-	var distance := global_position.distance_to(target.global_position)
 	projectile.global_position = global_position
-	projectile.setup(direction, _projectile_speed, _damage, distance + 50.0)
+	projectile.setup(wielder, direction, _projectile_speed, _damage, _attack_range)
 	if projectile.has_signal("hit_enemy"):
 		projectile.connect(
 			"hit_enemy",

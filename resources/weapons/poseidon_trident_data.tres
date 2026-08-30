@@ -1,0 +1,84 @@
+[gd_resource type="Resource" load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+
+[sub_resource type="Resource" id="Level_1"]
+script = ExtResource("2_level")
+description = "Dispara uma onda de água perfurante que empurra inimigos."
+
+[sub_resource type="Resource" id="Level_2"]
+script = ExtResource("2_level")
+description = "+25% de dano."
+damage_multiplier = 1.25
+
+[sub_resource type="Resource" id="Level_3"]
+script = ExtResource("2_level")
+description = "+20% de alcance e uma onda 20% maior."
+damage_multiplier = 1.25
+area_multiplier = 1.2
+special_effect = &"wide_wave"
+special_value = 1.2
+
+[sub_resource type="Resource" id="Level_4"]
+script = ExtResource("2_level")
+description = "Dispara duas ondas em leque."
+damage_multiplier = 1.25
+area_multiplier = 1.2
+projectile_count = 2
+special_effect = &"wide_wave"
+special_value = 1.2
+
+[sub_resource type="Resource" id="Level_5"]
+script = ExtResource("2_level")
+description = "Reduz o intervalo entre ondas em 20%."
+damage_multiplier = 1.25
+cooldown_multiplier = 0.8
+area_multiplier = 1.2
+projectile_count = 2
+special_effect = &"wide_wave"
+special_value = 1.2
+
+[sub_resource type="Resource" id="Level_6"]
+script = ExtResource("2_level")
+description = "+60% de dano total e 50% mais empurrão."
+damage_multiplier = 1.6
+cooldown_multiplier = 0.8
+area_multiplier = 1.2
+projectile_count = 2
+special_effect = &"strong_knockback"
+special_value = 1.5
+
+[sub_resource type="Resource" id="Level_7"]
+script = ExtResource("2_level")
+description = "Dispara três ondas em leque."
+damage_multiplier = 1.6
+cooldown_multiplier = 0.8
+area_multiplier = 1.2
+projectile_count = 3
+special_effect = &"strong_knockback"
+special_value = 1.5
+
+[sub_resource type="Resource" id="Level_8"]
+script = ExtResource("2_level")
+description = "Maré Divina: ondas maiores, rápidas e com o dobro do empurrão."
+damage_multiplier = 2.0
+cooldown_multiplier = 0.75
+area_multiplier = 1.35
+speed_multiplier = 1.2
+projectile_count = 3
+special_effect = &"tidal_surge"
+special_value = 2.0
+
+[resource]
+script = ExtResource("1_weapon")
+id = &"poseidon_trident"
+display_name = "Tridente de Poseidon"
+description = "Dispara ondas de água que atravessam e empurram inimigos."
+base_damage = 22.0
+cooldown = 1.8
+area = 350.0
+projectile_speed = 420.0
+projectile_count = 1
+max_level = 8
+levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])

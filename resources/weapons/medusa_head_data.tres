@@ -1,0 +1,81 @@
+[gd_resource type="Resource" load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+
+[sub_resource type="Resource" id="Level_1"]
+script = ExtResource("2_level")
+description = "Petrifica inimigos em um cone frontal por 1,2 segundo."
+special_effect = &"petrify"
+special_value = 1.2
+
+[sub_resource type="Resource" id="Level_2"]
+script = ExtResource("2_level")
+description = "+20% de alcance do cone de petrificação."
+area_multiplier = 1.2
+special_effect = &"petrify"
+special_value = 1.2
+
+[sub_resource type="Resource" id="Level_3"]
+script = ExtResource("2_level")
+description = "A petrificação dura 1,7 segundo."
+area_multiplier = 1.2
+special_effect = &"petrify"
+special_value = 1.7
+
+[sub_resource type="Resource" id="Level_4"]
+script = ExtResource("2_level")
+description = "Reduz o intervalo entre pulsos em 18%."
+cooldown_multiplier = 0.82
+area_multiplier = 1.2
+special_effect = &"petrify"
+special_value = 1.7
+
+[sub_resource type="Resource" id="Level_5"]
+script = ExtResource("2_level")
+description = "+75% de dano causado pelo olhar."
+damage_multiplier = 1.75
+cooldown_multiplier = 0.82
+area_multiplier = 1.2
+special_effect = &"petrify"
+special_value = 1.7
+
+[sub_resource type="Resource" id="Level_6"]
+script = ExtResource("2_level")
+description = "+50% de alcance total e petrificação por 2 segundos."
+damage_multiplier = 1.75
+cooldown_multiplier = 0.82
+area_multiplier = 1.5
+special_effect = &"petrify"
+special_value = 2.0
+
+[sub_resource type="Resource" id="Level_7"]
+script = ExtResource("2_level")
+description = "Pulsos 35% mais rápidos e petrificação por 2,2 segundos."
+damage_multiplier = 1.75
+cooldown_multiplier = 0.65
+area_multiplier = 1.5
+special_effect = &"petrify"
+special_value = 2.2
+
+[sub_resource type="Resource" id="Level_8"]
+script = ExtResource("2_level")
+description = "Olhar da Górgona: cone de 120° e petrificação por 3 segundos."
+damage_multiplier = 2.5
+cooldown_multiplier = 0.65
+area_multiplier = 1.65
+special_effect = &"gorgon_gaze"
+special_value = 3.0
+
+[resource]
+script = ExtResource("1_weapon")
+id = &"medusa_head"
+display_name = "Cabeça de Medusa"
+description = "Petrifica inimigos em um cone frontal e causa dano leve."
+base_damage = 4.0
+cooldown = 3.5
+area = 140.0
+projectile_speed = 0.0
+projectile_count = 1
+max_level = 8
+levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])

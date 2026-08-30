@@ -1,10 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/weapons/projectile.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="2_texture"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_proj"]
-radius = 6.0
+radius = 15.0
 
 [node name="Projectile" type="Area2D"]
 collision_layer = 0
@@ -12,10 +11,35 @@ collision_mask = 2
 monitorable = false
 script = ExtResource("1_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.08, 0.08)
-modulate = Color(0.5, 0.7, 1.0, 1)
-texture = ExtResource("2_texture")
+[node name="Trail" type="Line2D" parent="."]
+z_index = -1
+width = 7.0
+default_color = Color(0.25, 0.68, 1, 0.72)
+
+[node name="HammerVisual" type="Node2D" parent="."]
+
+[node name="Handle" type="Polygon2D" parent="HammerVisual"]
+polygon = PackedVector2Array(-4, -4, 4, -4, 4, 21, -4, 21)
+color = Color(0.36, 0.19, 0.09, 1)
+
+[node name="Grip" type="Line2D" parent="HammerVisual"]
+points = PackedVector2Array(-4, 7, 4, 7, -4, 13, 4, 13, -4, 19, 4, 19)
+width = 2.0
+default_color = Color(0.78, 0.5, 0.2, 1)
+
+[node name="HammerHead" type="Polygon2D" parent="HammerVisual"]
+polygon = PackedVector2Array(-20, -15, 17, -15, 21, -9, 18, 2, -18, 2, -22, -7)
+color = Color(0.58, 0.68, 0.8, 1)
+
+[node name="HeadHighlight" type="Line2D" parent="HammerVisual"]
+points = PackedVector2Array(-17, -11, 14, -11, 17, -7)
+width = 3.0
+default_color = Color(0.82, 0.94, 1, 0.95)
+
+[node name="Rune" type="Line2D" parent="HammerVisual"]
+points = PackedVector2Array(-3, -13, 4, -8, -2, -4, 5, 0)
+width = 2.5
+default_color = Color(0.25, 0.8, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_proj")

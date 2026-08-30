@@ -5,67 +5,77 @@
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
-description = "Desfere um golpe direcional em arco."
+description = "Desfere um golpe frontal em arco de alto dano."
 
 [sub_resource type="Resource" id="Level_2"]
 script = ExtResource("2_level")
-description = "+25% de dano."
-damage_multiplier = 1.25
+description = "+15% de área do ataque frontal."
+area_multiplier = 1.15
 
 [sub_resource type="Resource" id="Level_3"]
 script = ExtResource("2_level")
-description = "+20% de alcance."
-damage_multiplier = 1.25
-area_multiplier = 1.2
+description = "Adiciona um golpe traseiro após o ataque frontal."
+area_multiplier = 1.15
+special_effect = &"front_rear_combo"
 
 [sub_resource type="Resource" id="Level_4"]
 script = ExtResource("2_level")
-description = "Reduz o intervalo entre golpes em 15%."
-damage_multiplier = 1.25
+description = "Reduz o intervalo entre ataques em 15%."
 cooldown_multiplier = 0.85
-area_multiplier = 1.2
+area_multiplier = 1.15
+special_effect = &"front_rear_combo"
 
 [sub_resource type="Resource" id="Level_5"]
 script = ExtResource("2_level")
-description = "O dano total passa para +55%."
-damage_multiplier = 1.55
+description = "+35% de área total para os golpes frontal e traseiro."
 cooldown_multiplier = 0.85
-area_multiplier = 1.2
+area_multiplier = 1.35
+special_effect = &"front_rear_combo"
 
 [sub_resource type="Resource" id="Level_6"]
 script = ExtResource("2_level")
-description = "Executa um segundo golpe reverso com 60% do dano."
-damage_multiplier = 1.55
+description = "Executa dois golpes frontais e um golpe traseiro."
 cooldown_multiplier = 0.85
-area_multiplier = 1.2
-special_effect = &"double_slash"
-special_value = 0.6
+area_multiplier = 1.35
+special_effect = &"double_front_rear_combo"
 
 [sub_resource type="Resource" id="Level_7"]
 script = ExtResource("2_level")
-description = "+50% de alcance total e os golpes passam a empurrar inimigos."
-damage_multiplier = 1.55
-cooldown_multiplier = 0.85
-area_multiplier = 1.5
-special_effect = &"double_slash_knockback"
-special_value = 0.6
+description = "Reduz o intervalo total entre ataques em 30%."
+cooldown_multiplier = 0.7
+area_multiplier = 1.35
+special_effect = &"double_front_rear_combo"
 
 [sub_resource type="Resource" id="Level_8"]
 script = ExtResource("2_level")
-description = "Corte do Rei: arco de 150° e segundo golpe com dano total."
-damage_multiplier = 1.55
-cooldown_multiplier = 0.85
-area_multiplier = 1.5
-special_effect = &"royal_slash"
-special_value = 1.0
+description = "+60% de área para toda a sequência."
+cooldown_multiplier = 0.7
+area_multiplier = 1.6
+special_effect = &"double_front_rear_combo"
+
+[sub_resource type="Resource" id="Level_9"]
+script = ExtResource("2_level")
+description = "Executa um golpe frontal e dois golpes traseiros."
+cooldown_multiplier = 0.7
+area_multiplier = 1.6
+special_effect = &"double_rear_front_combo"
+
+[sub_resource type="Resource" id="Level_10"]
+script = ExtResource("2_level")
+description = "Bênção de Avalon: a sequência ganha 10% de roubo de vida."
+cooldown_multiplier = 0.7
+area_multiplier = 1.6
+special_effect = &"royal_life_steal_combo"
+special_value = 0.1
 
 [resource]
 script = ExtResource("1_weapon")
 id = &"excalibur"
 display_name = "Excalibur"
-description = "Desfere golpes em arco na última direção de movimento."
+description = "Espada lendária que desfere ataques frontais em arco de alto dano."
 base_damage = 30.0
 cooldown = 1.5
 area = 1.0
 projectile_speed = 0.0
-levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])
+max_level = 10
+levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8"), SubResource("Level_9"), SubResource("Level_10")])

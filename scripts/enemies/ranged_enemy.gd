@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends EnemyBase
 ## RangedEnemy — Mantém distância do jogador e dispara projéteis.
 
 @export var enemy_data: EnemyData
@@ -6,7 +6,6 @@ extends CharacterBody2D
 var _player: CharacterBody2D
 var _contact_cooldown: float = 0.0
 const CONTACT_COOLDOWN_TIME: float = 0.5
-var _knockback_velocity: Vector2 = Vector2.ZERO
 var _attack_timer: float = 0.0
 
 const FLEE_DISTANCE: float = 150.0
@@ -33,11 +32,13 @@ func _on_damaged(_amount: float, source_pos: Vector2) -> void:
 	tween.tween_property($AnimatedSprite2D, "modulate", Color(0.3, 1.0, 0.3, 1), 0.15)
 	
 	if source_pos != Vector2.ZERO:
-		var dir = source_pos.direction_to(global_position)
-		_knockback_velocity = dir * 200.0
+		apply_knockback_from(source_pos)
 
 
 func _physics_process(delta: float) -> void:
+	if _process_petrification(delta):
+		return
+
 	if not is_instance_valid(_player):
 		_player = _find_player()
 		if not is_instance_valid(_player):
@@ -89,7 +90,7 @@ func reset(pos: Vector2) -> void:
 	global_position = pos
 	velocity = Vector2.ZERO
 	_contact_cooldown = 0.0
-	_knockback_velocity = Vector2.ZERO
+	_reset_combat_effects()
 	var health := get_node_or_null("HealthComponent") as HealthComponent
 	if health:
 		if enemy_data:

@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends EnemyBase
 ## BasicEnemy — persegue o Player, causa dano de contato.
 
 @export var enemy_data: EnemyData
@@ -10,7 +10,6 @@ var _player: CharacterBody2D
 var _contact_cooldown: float = 0.0
 const CONTACT_COOLDOWN_TIME: float = 0.5
 
-var _knockback_velocity: Vector2 = Vector2.ZERO
 var _fallback_texture: Texture2D
 var _fallback_scale: Vector2
 
@@ -31,13 +30,14 @@ func _on_damaged(_amount: float, source_pos: Vector2) -> void:
 	sprite.modulate = Color(1, 0.3, 0.3, 1)
 	tween.tween_property(sprite, "modulate", Color.WHITE, 0.15)
 	
-	# Knockback
 	if source_pos != Vector2.ZERO:
-		var dir = source_pos.direction_to(global_position)
-		_knockback_velocity = dir * 200.0
+		apply_knockback_from(source_pos)
 
 
 func _physics_process(delta: float) -> void:
+	if _process_petrification(delta):
+		return
+
 	if not is_instance_valid(_player):
 		_player = _find_player()
 		if not is_instance_valid(_player):
@@ -68,9 +68,11 @@ func reset(pos: Vector2) -> void:
 	global_position = pos
 	velocity = Vector2.ZERO
 	_contact_cooldown = 0.0
+	_reset_combat_effects()
 	_player = _find_player()
 	_apply_enemy_data()
 	sprite.modulate = Color.WHITE
+	sprite.self_modulate = Color.WHITE
 
 	if is_instance_valid(_player):
 		_update_directional_sprite(global_position.direction_to(_player.global_position))

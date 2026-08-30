@@ -6,7 +6,7 @@ extends CharacterBody2D
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var health_component: HealthComponent = $HealthComponent
 
-var last_direction: Vector2 = Vector2.RIGHT
+var last_direction: Vector2 = Vector2.DOWN
 var _character_data: CharacterData
 var _uses_directional_sprites: bool = false
 

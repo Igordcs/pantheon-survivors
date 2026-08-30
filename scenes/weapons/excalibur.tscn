@@ -1,10 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://scripts/weapons/excalibur.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="2_texture"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
-size = Vector2(80, 20)
 
 [node name="Excalibur" type="Node2D"]
 script = ExtResource("1_script")
@@ -13,12 +9,38 @@ script = ExtResource("1_script")
 collision_layer = 0
 collision_mask = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
-position = Vector2(40, 0)
-scale = Vector2(0.6, 0.15)
-modulate = Color(0.8, 0.9, 1, 1)
-texture = ExtResource("2_texture")
+[node name="AttackVisual" type="Node2D" parent="Hitbox"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(40, 0)
-shape = SubResource("RectangleShape2D_1")
+[node name="ArcArea" type="Polygon2D" parent="Hitbox/AttackVisual"]
+polygon = PackedVector2Array(0, 0, 71.69, -102.4, 87.34, -89.28, 100.36, -74.38, 110.48, -57.54, 117.72, -38.91, 122.09, -19.56, 125, 0, 122.09, 19.56, 117.72, 38.91, 110.48, 57.54, 100.36, 74.38, 87.34, 89.28, 71.69, 102.4)
+color = Color(0.45, 0.68, 1, 0.2)
+
+[node name="OuterSlash" type="Line2D" parent="Hitbox/AttackVisual"]
+points = PackedVector2Array(71.69, -102.4, 87.34, -89.28, 100.36, -74.38, 110.48, -57.54, 117.72, -38.91, 122.09, -19.56, 125, 0, 122.09, 19.56, 117.72, 38.91, 110.48, 57.54, 100.36, 74.38, 87.34, 89.28, 71.69, 102.4)
+width = 13.0
+default_color = Color(1, 0.88, 0.38, 0.58)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="InnerGlow" type="Line2D" parent="Hitbox/AttackVisual"]
+points = PackedVector2Array(61.95, -88.49, 75.48, -77.15, 86.73, -64.28, 95.47, -49.71, 101.7, -33.61, 105.49, -16.9, 108, 0, 105.49, 16.9, 101.7, 33.61, 95.47, 49.71, 86.73, 64.28, 75.48, 77.15, 61.95, 88.49)
+width = 4.0
+default_color = Color(0.82, 0.94, 1, 0.9)
+joint_mode = 2
+
+[node name="SweepBlade" type="Node2D" parent="Hitbox/AttackVisual"]
+
+[node name="BladeGlow" type="Polygon2D" parent="Hitbox/AttackVisual/SweepBlade"]
+polygon = PackedVector2Array(12, -5, 120, -12, 130, 0, 120, 12, 12, 5)
+color = Color(1, 0.8, 0.24, 0.82)
+
+[node name="BladeCore" type="Line2D" parent="Hitbox/AttackVisual/SweepBlade"]
+points = PackedVector2Array(12, 0, 127, 0)
+width = 6.0
+default_color = Color(0.92, 0.98, 1, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
+polygon = PackedVector2Array(0, 0, 71.69, -102.4, 87.34, -89.28, 100.36, -74.38, 110.48, -57.54, 117.72, -38.91, 122.09, -19.56, 125, 0, 122.09, 19.56, 117.72, 38.91, 110.48, 57.54, 100.36, 74.38, 87.34, 89.28, 71.69, 102.4)

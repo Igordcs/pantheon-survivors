@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends EnemyBase
 ## BossEnemy — Inimigo forte com ataques telegrafados, animações e mecânica única.
 
 signal died
@@ -55,12 +55,15 @@ func reset(pos: Vector2) -> void:
 		health_component.current_health = boss_data.max_health
 	_current_state = State.SPAWNING
 	_state_timer = 2.0
+	_reset_combat_effects()
 	telegraph_area.hide()
 	hit_area.monitoring = false
 
 
 func _physics_process(delta: float) -> void:
 	if _current_state == State.DYING:
+		return
+	if _process_combat_effects(delta):
 		return
 		
 	if not is_instance_valid(_player):
@@ -77,6 +80,13 @@ func _physics_process(delta: float) -> void:
 			_process_telegraphing(delta)
 		State.ATTACKING:
 			_process_attacking(delta)
+
+
+func _process_combat_effects(delta: float) -> bool:
+	if _knockback_velocity.length_squared() > 0.1:
+		global_position += _knockback_velocity * delta
+		_knockback_velocity = _knockback_velocity.lerp(Vector2.ZERO, 10.0 * delta)
+	return _process_petrification(delta)
 
 
 func _process_spawning(delta: float) -> void:

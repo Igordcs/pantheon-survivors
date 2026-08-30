@@ -1,5 +1,5 @@
 extends Node2D
-## Excalibur — arma melee direcional com sequência de golpes em níveis altos.
+## Excalibur — ataque amplo que se estende a partir do personagem como um chicote.
 
 signal weapon_upgraded(weapon_id: StringName, new_level: int)
 
@@ -8,26 +8,26 @@ signal weapon_upgraded(weapon_id: StringName, new_level: int)
 var _cooldown_timer: Timer
 var _current_level: int = 1
 var _damage: float = 30.0
-var _arc_degrees: float = 90.0
-var _secondary_attack_multiplier: float = 0.0
-var _applies_knockback: bool = false
-var _active_attack_multiplier: float = 1.0
+var _front_strikes: int = 1
+var _rear_strikes: int = 0
+var _life_steal_ratio: float = 0.0
 var _is_attacking: bool = false
 
 @onready var _hitbox: Area2D = $Hitbox
+@onready var _attack_visual: Node2D = $Hitbox/AttackVisual
+@onready var _sweep_blade: Node2D = $Hitbox/AttackVisual/SweepBlade
 
 
 func _ready() -> void:
 	_cooldown_timer = Timer.new()
-	_cooldown_timer.one_shot = false
-	_cooldown_timer.autostart = true
+	_cooldown_timer.one_shot = true
 	_cooldown_timer.timeout.connect(_on_cooldown_timeout)
 	add_child(_cooldown_timer)
 
 	_hitbox.monitoring = false
 	_hitbox.visible = false
-	_hitbox.body_entered.connect(_on_body_entered)
 	_apply_level_stats()
+	_cooldown_timer.start()
 
 
 func get_weapon_id() -> StringName:
@@ -61,19 +61,22 @@ func _apply_level_stats() -> void:
 
 	_damage = weapon_data.base_damage * level_data.damage_multiplier
 	_hitbox.scale = Vector2.ONE * level_data.area_multiplier
-	_arc_degrees = 90.0
-	_secondary_attack_multiplier = 0.0
-	_applies_knockback = false
+	_front_strikes = 1
+	_rear_strikes = 0
+	_life_steal_ratio = 0.0
 	match level_data.special_effect:
-		&"double_slash":
-			_secondary_attack_multiplier = level_data.special_value
-		&"double_slash_knockback":
-			_secondary_attack_multiplier = level_data.special_value
-			_applies_knockback = true
-		&"royal_slash":
-			_secondary_attack_multiplier = level_data.special_value
-			_applies_knockback = true
-			_arc_degrees = 150.0
+		&"front_rear_combo":
+			_rear_strikes = 1
+		&"double_front_rear_combo":
+			_front_strikes = 2
+			_rear_strikes = 1
+		&"double_rear_front_combo":
+			_front_strikes = 1
+			_rear_strikes = 2
+		&"royal_life_steal_combo":
+			_front_strikes = 1
+			_rear_strikes = 2
+			_life_steal_ratio = level_data.special_value
 
 	if _cooldown_timer:
 		_cooldown_timer.wait_time = maxf(0.2, weapon_data.cooldown * level_data.cooldown_multiplier)
@@ -86,43 +89,77 @@ func _on_cooldown_timeout() -> void:
 
 func _attack_sequence() -> void:
 	_is_attacking = true
-	await _play_slash(false, 1.0)
-	if _secondary_attack_multiplier > 0.0:
-		await get_tree().create_timer(0.08, false).timeout
-		await _play_slash(true, _secondary_attack_multiplier)
+	var player := _get_player()
+	var front_direction := _get_attack_direction(player)
+
+	for index in range(_front_strikes):
+		await _play_strike(front_direction)
+		if index < _front_strikes - 1 or _rear_strikes > 0:
+			await get_tree().create_timer(0.08, false).timeout
+
+	for index in range(_rear_strikes):
+		await _play_strike(-front_direction)
+		if index < _rear_strikes - 1:
+			await get_tree().create_timer(0.08, false).timeout
+
 	_is_attacking = false
+	_cooldown_timer.start()
 
 
-func _play_slash(reverse: bool, damage_multiplier: float) -> void:
-	var player := get_parent().get_parent() as CharacterBody2D
-	var direction := Vector2.RIGHT
-	if player and "last_direction" in player:
-		direction = player.last_direction
-
-	var half_arc := _arc_degrees * 0.5
-	var start_offset := half_arc if reverse else -half_arc
-	var end_offset := -half_arc if reverse else half_arc
-	_hitbox.rotation = direction.angle() + deg_to_rad(start_offset)
-	_active_attack_multiplier = damage_multiplier
-	_hitbox.monitoring = true
+func _play_strike(direction: Vector2) -> void:
+	_hitbox.rotation = direction.angle()
+	_hitbox.modulate = Color.WHITE
+	_attack_visual.scale = Vector2.ONE * 0.82
+	_sweep_blade.rotation = deg_to_rad(-55.0)
 	_hitbox.visible = true
+	_hitbox.monitoring = true
+
+	# A lâmina percorre o arco de cima para baixo, simulando uma espadada rápida.
+	var swing_tween := _sweep_blade.create_tween()
+	swing_tween.tween_property(_sweep_blade, "rotation", deg_to_rad(55.0), 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	swing_tween.parallel().tween_property(_attack_visual, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	await swing_tween.finished
+	_damage_overlapping_enemies()
 
 	var tween := create_tween()
-	tween.tween_property(
-		_hitbox,
-		"rotation",
-		direction.angle() + deg_to_rad(end_offset),
-		0.2
-	)
+	tween.tween_property(_hitbox, "modulate:a", 0.0, 0.12)
 	await tween.finished
 	_hitbox.monitoring = false
 	_hitbox.visible = false
 
 
-func _on_body_entered(body: Node2D) -> void:
-	if not body.is_in_group("enemies") or not body.visible:
+func _damage_overlapping_enemies() -> void:
+	var damage_dealt := 0.0
+	for body in _hitbox.get_overlapping_bodies():
+		if not body.is_in_group("enemies") or not body.visible:
+			continue
+		var health := body.get_node_or_null("HealthComponent") as HealthComponent
+		if not health or not health.is_alive():
+			continue
+		damage_dealt += minf(_damage, health.current_health)
+		health.take_damage(_damage)
+
+	if damage_dealt > 0.0:
+		ScreenShake.shake(0.15)
+		_apply_life_steal(damage_dealt)
+
+
+func _apply_life_steal(damage_dealt: float) -> void:
+	if _life_steal_ratio <= 0.0:
 		return
-	var health := body.get_node_or_null("HealthComponent") as HealthComponent
-	if health and health.is_alive():
-		var source_position := global_position if _applies_knockback else Vector2.ZERO
-		health.take_damage(_damage * _active_attack_multiplier, source_position)
+	var player := _get_player()
+	if not player:
+		return
+	var player_health := player.get_node_or_null("HealthComponent") as HealthComponent
+	if player_health and player_health.is_alive():
+		player_health.heal(damage_dealt * _life_steal_ratio)
+
+
+func _get_player() -> CharacterBody2D:
+	return get_parent().get_parent() as CharacterBody2D
+
+
+func _get_attack_direction(player: CharacterBody2D) -> Vector2:
+	if player and "last_direction" in player and player.last_direction != Vector2.ZERO:
+		return player.last_direction.normalized()
+	return Vector2.RIGHT

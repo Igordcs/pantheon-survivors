@@ -65,6 +65,9 @@ func add_weapon_icon(weapon_id: String) -> void:
 	elif "aura" in weapon_id: icon.color = Color.YELLOW
 	elif "excalibur" in weapon_id: icon.color = Color.WHITE
 	elif "solar" in weapon_id: icon.color = Color.ORANGE
+	elif "poseidon" in weapon_id: icon.color = Color.DODGER_BLUE
+	elif "medusa" in weapon_id: icon.color = Color.MEDIUM_SEA_GREEN
+	elif "zeus" in weapon_id: icon.color = Color.GOLD
 	else: icon.color = Color.GRAY
 	
 	weapons_container.add_child(icon)
