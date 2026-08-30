@@ -6,10 +6,10 @@
 script = ExtResource("1_script")
 id = &"harpy"
 display_name = "Harpia"
-max_health = 20.0
-speed = 135.0
-contact_damage = 8.0
-score_value = 9
-spawn_weight = 0.55
+max_health = 30.0
+speed = 140.0
+contact_damage = 10.0
+score_value = 10
+spawn_weight = 0.8
 visual_size = 64.0
-sprite_directory = "res://assets/sprites/enemies/harpia/Idle/rotations"
+sprite_directory = "res://assets/sprites/enemies/harpia/idle/rotations"

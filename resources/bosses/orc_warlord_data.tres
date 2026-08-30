@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"orc_warlord"
+display_name = "Orc Warlord"
+max_health = 4000.0
+speed = 65.0
+contact_damage = 25.0
+score_value = 1500
+

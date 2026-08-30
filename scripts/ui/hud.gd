@@ -10,8 +10,10 @@ extends Control
 
 @onready var weapons_container: HBoxContainer = $VBoxContainer/BottomBar/WeaponsContainer
 @onready var boss_bar: ProgressBar = $VBoxContainer/TopBar/BossBar
+@onready var boss_warning: Label = $BossWarning
 
 var _kills: int = 0
+var _announcement_tween: Tween
 
 
 func _ready() -> void:
@@ -22,6 +24,29 @@ func show_boss_bar(maximum: float) -> void:
 	boss_bar.max_value = maximum
 	boss_bar.value = maximum
 	boss_bar.show()
+
+
+func show_boss_warning(boss_name: String, duration: float) -> void:
+	_show_announcement("%s APPROACHES" % boss_name.to_upper(), duration, Color(1.0, 0.35, 0.2))
+
+
+func show_horde_event(message: String) -> void:
+	if not message.is_empty():
+		_show_announcement(message, 2.0, Color(1.0, 0.78, 0.3))
+
+
+func _show_announcement(message: String, duration: float, color: Color) -> void:
+	if _announcement_tween and _announcement_tween.is_valid():
+		_announcement_tween.kill()
+	boss_warning.text = message
+	boss_warning.add_theme_color_override("font_color", color)
+	boss_warning.modulate = Color(color.r, color.g, color.b, 0.0)
+	boss_warning.show()
+	_announcement_tween = create_tween()
+	_announcement_tween.tween_property(boss_warning, "modulate:a", 1.0, 0.25)
+	_announcement_tween.tween_interval(maxf(duration - 0.75, 0.0))
+	_announcement_tween.tween_property(boss_warning, "modulate:a", 0.0, 0.5)
+	_announcement_tween.tween_callback(boss_warning.hide)
 
 
 func update_boss_hp(current: float, _maximum: float = 0.0) -> void:

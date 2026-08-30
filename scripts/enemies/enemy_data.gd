@@ -22,6 +22,14 @@ class_name EnemyData
 @export_group("projectile")
 @export var projectile_damage: float = 10.0
 @export var projectile_speed: float = 300.0
+@export_range(0.1, 1.0, 0.05) var projectile_slow_multiplier: float = 1.0
+@export var projectile_slow_duration: float = 0.0
+
+@export_group("Special Movement")
+@export var charge_damage: float = 0.0
+@export var charge_speed: float = 320.0
+@export var charge_cooldown: float = 5.0
+@export var charge_windup: float = 0.75
 
 @export_group("Visual")
 @export_range(16.0, 256.0, 1.0) var visual_size: float = 64.0

@@ -3,7 +3,7 @@ extends EnemyBase
 
 signal died
 
-@export var boss_data: EnemyData = preload("res://resources/enemies/boss_data.tres")
+@export var boss_data: EnemyData = preload("res://resources/bosses/king_slime_data.tres")
 
 enum State { SPAWNING, CHASING, TELEGRAPHING, ATTACKING, DYING }
 
@@ -134,6 +134,9 @@ func _spawn_minion() -> void:
 		minion.reset(spawn_pos)
 	else:
 		minion.global_position = spawn_pos
+	var minion_health := minion.get_node_or_null("HealthComponent") as HealthComponent
+	if minion_health:
+		minion_health.died.connect(minion.queue_free)
 
 
 func _start_telegraph() -> void:
@@ -176,7 +179,7 @@ func _on_hit_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		var health = body.get_node_or_null("HealthComponent") as HealthComponent
 		if health:
-			health.take_damage(50.0, global_position)
+			health.take_damage(boss_data.contact_damage if boss_data else 22.0, global_position)
 			ScreenShake.shake(0.8)
 
 

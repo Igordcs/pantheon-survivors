@@ -1,24 +1,24 @@
 [gd_resource type="Resource" load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/Idle/rotations/south.png" id="2_south"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/Idle/rotations/south-east.png" id="3_south_east"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/Idle/rotations/east.png" id="4_east"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/Idle/rotations/north-east.png" id="5_north_east"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/Idle/rotations/north.png" id="6_north"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/Idle/rotations/north-west.png" id="7_north_west"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/Idle/rotations/west.png" id="8_west"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/Idle/rotations/south-west.png" id="9_south_west"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/idle/rotations/south.png" id="2_south"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/idle/rotations/south-east.png" id="3_south_east"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/idle/rotations/east.png" id="4_east"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/idle/rotations/north-east.png" id="5_north_east"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/idle/rotations/north.png" id="6_north"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/idle/rotations/north-west.png" id="7_north_west"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/idle/rotations/west.png" id="8_west"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/draugr/idle/rotations/south-west.png" id="9_south_west"]
 
 [resource]
 script = ExtResource("1_script")
 id = &"draugr"
 display_name = "Draugr Nórdico"
-max_health = 18.0
-speed = 120.0
+max_health = 24.0
+speed = 115.0
 contact_damage = 8.0
-score_value = 8
-spawn_weight = 0.65
+score_value = 7
+spawn_weight = 1.4
 visual_size = 64.0
 sprite_south = ExtResource("2_south")
 sprite_south_east = ExtResource("3_south_east")

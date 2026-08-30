@@ -1,24 +1,24 @@
 [gd_resource type="Resource" load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/Idle/rotations/south.png" id="2_south"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/Idle/rotations/south-east.png" id="3_south_east"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/Idle/rotations/east.png" id="4_east"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/Idle/rotations/north-east.png" id="5_north_east"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/Idle/rotations/north.png" id="6_north"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/Idle/rotations/north-west.png" id="7_north_west"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/Idle/rotations/west.png" id="8_west"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/Idle/rotations/south-west.png" id="9_south_west"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/idle/rotations/south.png" id="2_south"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/idle/rotations/south-east.png" id="3_south_east"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/idle/rotations/east.png" id="4_east"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/idle/rotations/north-east.png" id="5_north_east"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/idle/rotations/north.png" id="6_north"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/idle/rotations/north-west.png" id="7_north_west"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/idle/rotations/west.png" id="8_west"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/cyclops/idle/rotations/south-west.png" id="9_south_west"]
 
 [resource]
 script = ExtResource("1_script")
 id = &"cyclops"
 display_name = "Ciclope"
-max_health = 80.0
-speed = 55.0
-contact_damage = 18.0
-score_value = 18
-spawn_weight = 0.35
+max_health = 130.0
+speed = 50.0
+contact_damage = 22.0
+score_value = 30
+spawn_weight = 0.15
 visual_size = 64.0
 sprite_south = ExtResource("2_south")
 sprite_south_east = ExtResource("3_south_east")

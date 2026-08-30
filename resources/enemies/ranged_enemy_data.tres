@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource("1")
-id = &"ranged"
-display_name = "Ranged Slime"
-max_health = 20.0
-speed = 60.0
-contact_damage = 5.0
-score_value = 15
-enemy_type = &"ranged"
+id = &"ranged_slime"
+display_name = "Slime Arcano"
+max_health = 26.0
+speed = 65.0
+contact_damage = 4.0
+score_value = 12
+spawn_weight = 0.7
 projectile_damage = 8.0
 projectile_speed = 300.0
 attack_range = 350.0

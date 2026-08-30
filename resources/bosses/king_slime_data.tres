@@ -5,7 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"boss_enemy"
-display_name = "Boss (Deus Caído)"
-max_health = 10.0
-contact_damage = 30.0
+display_name = "King Slime"
+max_health = 1500.0
+speed = 25.0
+contact_damage = 18.0
 score_value = 1000

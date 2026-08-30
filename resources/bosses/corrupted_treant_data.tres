@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"corrupted_treant"
+display_name = "Corrupted Treant"
+max_health = 8000.0
+speed = 0.0
+contact_damage = 30.0
+score_value = 2500
+

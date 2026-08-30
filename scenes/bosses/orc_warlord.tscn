@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/mythic_boss.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2_health"]
+[ext_resource type="Resource" path="res://resources/bosses/orc_warlord_data.tres" id="3_data"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/tank_enemy.tscn" id="4_minion"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 28.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2"]
+radius = 120.0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_1"]
+
+[node name="OrcWarlord" type="CharacterBody2D" groups=["bosses", "enemies"]]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_script")
+boss_data = ExtResource("3_data")
+attack_mode = 0
+idle_directory = "res://assets/sprites/bosses/orc_warlord/run"
+attack_directory = "res://assets/sprites/bosses/orc_warlord/attack"
+death_directory = "res://assets/sprites/bosses/orc_warlord/dead"
+visual_size = 112.0
+attack_radius = 120.0
+attack_damage = 32.0
+attack_cooldown = 4.2
+telegraph_duration = 0.95
+charge_speed = 460.0
+summon_interval = 9.0
+minion_scenes = Array[PackedScene]([ExtResource("4_minion")])
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_health")
+
+[node name="Telegraph" type="Polygon2D" parent="."]
+top_level = true
+polygon = PackedVector2Array(120, 0, 110.866, 45.922, 84.853, 84.853, 45.922, 110.866, 0, 120, -45.922, 110.866, -84.853, 84.853, -110.866, 45.922, -120, 0, -110.866, -45.922, -84.853, -84.853, -45.922, -110.866, 0, -120, 45.922, -110.866, 84.853, -84.853, 110.866, -45.922)
+color = Color(0.95, 0.15, 0.08, 0.28)

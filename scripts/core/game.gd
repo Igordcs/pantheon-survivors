@@ -55,6 +55,7 @@ func _ready() -> void:
 		
 	level_up_panel.option_chosen.connect(_on_upgrade_option_chosen)
 	spawn_director.time_updated.connect(hud.update_time)
+	spawn_director.horde_event_started.connect(hud.show_horde_event)
 	enemy_spawner.kill_scored.connect(hud.add_kill)
 	
 	# Conectar RunManager
@@ -62,6 +63,7 @@ func _ready() -> void:
 	run_manager.run_ended.connect(_on_run_ended)
 	run_manager.boss_fight_started.connect(_on_boss_fight_started)
 	run_manager.boss_fight_ended.connect(_on_boss_fight_ended)
+	run_manager.boss_warning_started.connect(hud.show_boss_warning)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -107,8 +109,7 @@ func _on_chest_collected(_chest: Chest) -> void:
 		level_up_panel.show_options([opt])
 	else:
 		print("Nenhuma evolução disponível. Você encontrou Ouro!")
-		if run_manager._current_state == RunManager.State.BOSS_FIGHT:
-			run_manager.trigger_victory()
+		run_manager.complete_boss_reward()
 
 
 func _on_run_ended(is_victory: bool, stats: Dictionary) -> void:
@@ -134,8 +135,7 @@ func _on_upgrade_option_chosen(option: UpgradeOption) -> void:
 		if recipe:
 			upgrade_system.apply_evolution(recipe)
 			hud.add_weapon_icon(recipe.evolved_weapon.id)
-			if run_manager._current_state == RunManager.State.BOSS_FIGHT:
-				run_manager.trigger_victory()
+			run_manager.complete_boss_reward()
 		return
 		
 	upgrade_system.apply_option(option)

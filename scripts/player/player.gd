@@ -10,6 +10,8 @@ var last_direction: Vector2 = Vector2.DOWN
 var _character_data: CharacterData
 var _uses_directional_sprites: bool = false
 var _world_generator: WorldGenerator
+var _temporary_slow_multiplier: float = 1.0
+var _temporary_slow_timer: float = 0.0
 
 var _boss_fight_active: bool = false
 var _boss_fight_center: Vector2 = Vector2.ZERO
@@ -27,12 +29,15 @@ func _on_damaged(_amount: float, _source_pos: Vector2) -> void:
 	AudioManager.play_sfx("player_hit")
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	_temporary_slow_timer = maxf(_temporary_slow_timer - delta, 0.0)
+	if _temporary_slow_timer <= 0.0:
+		_temporary_slow_multiplier = 1.0
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var terrain_speed_multiplier := 1.0
 	if is_instance_valid(_world_generator):
 		terrain_speed_multiplier = _world_generator.get_movement_speed_multiplier_at(global_position)
-	velocity = input_dir * speed * terrain_speed_multiplier
+	velocity = input_dir * speed * terrain_speed_multiplier * _temporary_slow_multiplier
 	move_and_slide()
 	
 	# Boss fight boundary: clamp position to camera view (1280x720 with 1.6 zoom)
@@ -55,6 +60,11 @@ func _physics_process(_delta: float) -> void:
 
 func setup_world_generator(world_generator: WorldGenerator) -> void:
 	_world_generator = world_generator
+
+
+func apply_temporary_slow(multiplier: float, duration: float) -> void:
+	_temporary_slow_multiplier = minf(_temporary_slow_multiplier, clampf(multiplier, 0.1, 1.0))
+	_temporary_slow_timer = maxf(_temporary_slow_timer, duration)
 
 
 func _load_character_data() -> void:

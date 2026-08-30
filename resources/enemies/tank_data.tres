@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1")
-id = &"tank"
-display_name = "Tank ORC"
-max_health = 150.0
-speed = 40.0
-contact_damage = 25.0
-score_value = 25
-enemy_type = &"tank"
+id = &"orc"
+display_name = "Orc"
+max_health = 180.0
+speed = 45.0
+contact_damage = 26.0
+score_value = 35
+spawn_weight = 0.12

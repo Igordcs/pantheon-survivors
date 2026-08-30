@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/mythic_boss.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2_health"]
+[ext_resource type="Resource" path="res://resources/bosses/corrupted_treant_data.tres" id="3_data"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/bat_enemy.tscn" id="4_minion"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 34.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2"]
+radius = 135.0
+
+[node name="CorruptedTreant" type="CharacterBody2D" groups=["bosses", "enemies"]]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_script")
+boss_data = ExtResource("3_data")
+attack_mode = 1
+idle_directory = "res://assets/sprites/bosses/corrupted_treant/ground_up"
+attack_directory = "res://assets/sprites/bosses/corrupted_treant/attack"
+visual_size = 128.0
+attack_radius = 135.0
+attack_damage = 38.0
+attack_cooldown = 3.8
+telegraph_duration = 1.2
+summon_interval = 7.5
+minion_scenes = Array[PackedScene]([ExtResource("4_minion")])
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_health")
+
+[node name="Telegraph" type="Polygon2D" parent="."]
+top_level = true
+polygon = PackedVector2Array(135, 0, 124.721, 51.66, 95.459, 95.459, 51.66, 124.721, 0, 135, -51.66, 124.721, -95.459, 95.459, -124.721, 51.66, -135, 0, -124.721, -51.66, -95.459, -95.459, -51.66, -124.721, 0, -135, 51.66, -124.721, 95.459, -95.459, 124.721, -51.66)
+color = Color(0.45, 0.08, 0.06, 0.3)

@@ -1,7 +1,7 @@
 extends SceneTree
 
 func _init() -> void:
-	var tex = Image.load_from_file("res://assets/sprites/characters/vampire/Run/Vampires2_Run_full.png")
+	var tex = Image.load_from_file("res://assets/sprites/characters/vampire/run/Vampires2_Run_full.png")
 	if tex:
 		print("Dimensions: ", tex.get_width(), "x", tex.get_height())
 	else:

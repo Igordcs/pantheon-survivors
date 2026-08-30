@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource("1")
-id = &"healer"
-display_name = "Healer Slime"
-max_health = 40.0
-speed = 70.0
+id = &"healer_slime"
+display_name = "Slime Curandeiro"
+max_health = 45.0
+speed = 60.0
 contact_damage = 5.0
-score_value = 20
-enemy_type = &"healer"
-heal_amount = 10.0
+score_value = 18
+spawn_weight = 0.25
+heal_amount = 8.0
 heal_interval = 3.0
 heal_range = 200.0
