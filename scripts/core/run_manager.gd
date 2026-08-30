@@ -15,17 +15,21 @@ enum State { PLAYING, BOSS_WARNING, BOSS_FIGHT, BOSS_REWARD, VICTORY, DEFEAT }
 @export var enemy_spawner: EnemySpawner
 @export var boss_encounters: Array[BossEncounterData] = []
 @export_range(0.0, 1.0, 0.05) var horde_keep_ratio_during_boss: float = 0.45
+@export var boss_selection_seed: int = 0
 
 var _current_state := State.PLAYING
 var _current_encounter_index: int = 0
 var _bosses_defeated: int = 0
 var _boss_instance: Node2D
 var boss_position := Vector2.ZERO
+var _boss_rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
 	if boss_encounters.is_empty():
 		boss_encounters = _default_boss_schedule()
+	_configure_boss_rng()
+	_resolve_boss_candidates()
 
 
 func _process(_delta: float) -> void:
@@ -46,7 +50,8 @@ func _begin_boss_warning(encounter: BossEncounterData) -> void:
 	state_changed.emit("BOSS_WARNING")
 	spawn_director.set_progression_paused(true)
 	enemy_spawner.stop_spawning()
-	enemy_spawner.reduce_active_horde(horde_keep_ratio_during_boss)
+	var keep_ratio := 0.0 if encounter.is_final_boss else horde_keep_ratio_during_boss
+	enemy_spawner.reduce_active_horde(keep_ratio)
 	boss_warning_started.emit(encounter.display_name, encounter.warning_duration)
 	print("WARNING: %s approaches!" % encounter.display_name)
 	await get_tree().create_timer(encounter.warning_duration).timeout
@@ -69,8 +74,16 @@ func _spawn_boss(encounter: BossEncounterData) -> void:
 	boss_position = spawn_pos
 	if _boss_instance.has_signal("died"):
 		_boss_instance.died.connect(_on_boss_died)
+	_configure_horde_for_boss(encounter)
 	boss_spawned.emit(_boss_instance)
 	boss_fight_started.emit(spawn_pos)
+
+
+func _configure_horde_for_boss(encounter: BossEncounterData) -> void:
+	if encounter.is_final_boss:
+		enemy_spawner.stop_spawning()
+	else:
+		enemy_spawner.resume_spawning()
 
 
 func _on_boss_died() -> void:
@@ -147,32 +160,107 @@ func _find_player() -> CharacterBody2D:
 func _default_boss_schedule() -> Array[BossEncounterData]:
 	var result: Array[BossEncounterData] = []
 	result.append(_encounter(
-		&"king_slime", "King Slime", 180.0,
-		preload("res://scenes/bosses/king_slime.tscn"), false
+		180.0,
+		[_candidate(
+			&"king_slime", "King Slime",
+			preload("res://scenes/bosses/king_slime.tscn")
+		)],
+		false
 	))
 	result.append(_encounter(
-		&"orc_warlord", "Orc Warlord", 390.0,
-		preload("res://scenes/bosses/orc_warlord.tscn"), false
+		390.0,
+		[
+			_candidate(
+				&"orc_warlord", "Orc Warlord",
+				preload("res://scenes/bosses/orc_warlord.tscn")
+			),
+			_candidate(
+				&"cerberus", "Cerberus",
+				preload("res://scenes/bosses/cerberus.tscn")
+			),
+		],
+		false
 	))
 	result.append(_encounter(
-		&"corrupted_treant", "Corrupted Treant", 600.0,
-		preload("res://scenes/bosses/corrupted_treant.tscn"), true
+		600.0,
+		[
+			_candidate(
+				&"corrupted_treant", "Corrupted Treant",
+				preload("res://scenes/bosses/corrupted_treant.tscn")
+			),
+			_candidate(
+				&"jormungandr", "Jormungandr",
+				preload("res://scenes/bosses/jormungandr.tscn")
+			),
+		],
+		true
 	))
 	return result
 
 
 func _encounter(
-	id: StringName,
-	display_name: String,
 	trigger_time: float,
-	scene: PackedScene,
+	candidates: Array[BossCandidateData],
 	is_final: bool
 ) -> BossEncounterData:
 	var result := BossEncounterData.new()
-	result.id = id
-	result.display_name = display_name
 	result.trigger_time = trigger_time
-	result.boss_scene = scene
+	result.candidates = candidates
 	result.warning_duration = 3.0
 	result.is_final_boss = is_final
 	return result
+
+
+func _candidate(
+	id: StringName,
+	display_name: String,
+	scene: PackedScene,
+	weight: float = 1.0
+) -> BossCandidateData:
+	var result := BossCandidateData.new()
+	result.id = id
+	result.display_name = display_name
+	result.boss_scene = scene
+	result.selection_weight = weight
+	return result
+
+
+func _configure_boss_rng() -> void:
+	if boss_selection_seed == 0:
+		_boss_rng.randomize()
+		boss_selection_seed = int(_boss_rng.seed)
+	else:
+		_boss_rng.seed = boss_selection_seed
+	print("RunManager: boss selection seed = %d" % boss_selection_seed)
+
+
+func _resolve_boss_candidates() -> void:
+	for encounter in boss_encounters:
+		if encounter.candidates.is_empty():
+			continue
+		var selected := _pick_weighted_candidate(encounter.candidates)
+		if selected == null:
+			push_error("RunManager: boss encounter at %.1f has no valid candidate." % encounter.trigger_time)
+			continue
+		encounter.id = selected.id
+		encounter.display_name = selected.display_name
+		encounter.boss_scene = selected.boss_scene
+		print("RunManager: selected %s for %.1f seconds." % [selected.display_name, encounter.trigger_time])
+
+
+func _pick_weighted_candidate(candidates: Array[BossCandidateData]) -> BossCandidateData:
+	var total_weight := 0.0
+	for candidate in candidates:
+		if candidate and candidate.boss_scene:
+			total_weight += maxf(candidate.selection_weight, 0.0)
+	if total_weight <= 0.0:
+		return null
+
+	var roll := _boss_rng.randf_range(0.0, total_weight)
+	for candidate in candidates:
+		if not candidate or not candidate.boss_scene:
+			continue
+		roll -= maxf(candidate.selection_weight, 0.0)
+		if roll <= 0.0:
+			return candidate
+	return candidates.back()

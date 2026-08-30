@@ -9,9 +9,12 @@ enum State { SPAWNING, CHASING, TELEGRAPHING, ATTACKING, DYING }
 
 @export var boss_data: EnemyData
 @export var attack_mode := AttackMode.CHARGE
+@export_dir var spawn_directory: String
 @export_dir var idle_directory: String
 @export_dir var attack_directory: String
 @export_dir var death_directory: String
+@export var spawn_duration: float = 1.5
+@export var idle_last_frame_only: bool = false
 @export var visual_size: float = 112.0
 @export var attack_radius: float = 110.0
 @export var attack_damage: float = 30.0
@@ -38,6 +41,7 @@ var _second_phase := false
 
 func _ready() -> void:
 	_build_animations()
+	_state_timer = spawn_duration
 	health_component.max_health = boss_data.max_health
 	health_component.reset()
 	health_component.died.connect(_on_died)
@@ -45,7 +49,11 @@ func _ready() -> void:
 	_player = _find_player()
 	telegraph.hide()
 	_summon_timer = summon_interval
-	sprite.play(&"IDLE")
+	if sprite.sprite_frames.has_animation(&"SPAWN") \
+			and sprite.sprite_frames.get_frame_count(&"SPAWN") > 0:
+		sprite.play(&"SPAWN")
+	else:
+		sprite.play(&"IDLE")
 	var final_scale := scale
 	scale = Vector2.ZERO
 	create_tween().tween_property(self, "scale", final_scale, 1.1).set_trans(Tween.TRANS_BACK)
@@ -196,7 +204,8 @@ func _on_died() -> void:
 func _build_animations() -> void:
 	var frames := SpriteFrames.new()
 	frames.remove_animation(&"default")
-	_add_animation(frames, &"IDLE", idle_directory, 6.0, true)
+	_add_animation(frames, &"SPAWN", spawn_directory, 6.0, false)
+	_add_animation(frames, &"IDLE", idle_directory, 6.0, true, idle_last_frame_only)
 	_add_animation(frames, &"ATTACK", attack_directory, 9.0, false)
 	_add_animation(frames, &"DEAD", death_directory, 8.0, false)
 	sprite.sprite_frames = frames
@@ -212,7 +221,8 @@ func _add_animation(
 	animation_name: StringName,
 	directory_path: String,
 	fps: float,
-	looped: bool
+	looped: bool,
+	last_frame_only: bool = false
 ) -> void:
 	if directory_path.is_empty():
 		return
@@ -221,11 +231,18 @@ func _add_animation(
 	frames.add_animation(animation_name)
 	frames.set_animation_speed(animation_name, fps)
 	frames.set_animation_loop(animation_name, looped)
+	var image_files: Array[String] = []
 	for file in files:
 		if file.get_extension().to_lower() != "png":
 			continue
 		if "copy" in file.to_lower() or "-001" in file:
 			continue
+		image_files.append(file)
+	if last_frame_only and not image_files.is_empty():
+		var last_file: String = image_files.back()
+		image_files.clear()
+		image_files.append(last_file)
+	for file in image_files:
 		var texture := load(directory_path.path_join(file)) as Texture2D
 		if texture:
 			frames.add_frame(animation_name, texture)

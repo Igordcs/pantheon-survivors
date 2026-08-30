@@ -62,6 +62,10 @@ func resume_spawning() -> void:
 		_spawn_timer.start()
 
 
+func is_spawning() -> bool:
+	return is_instance_valid(_spawn_timer) and not _spawn_timer.is_stopped()
+
+
 func setup_world_generator(world_generator: WorldGenerator) -> void:
 	_world_generator = world_generator
 

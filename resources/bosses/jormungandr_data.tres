@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1")
-id = &"corrupted_treant"
-display_name = "Corrupted Treant"
-max_health = 8000.0
-speed = 38.0
+id = &"jormungandr"
+display_name = "Jormungandr"
+max_health = 9500.0
+speed = 58.0
 contact_damage = 30.0
-score_value = 2500
+score_value = 3000
