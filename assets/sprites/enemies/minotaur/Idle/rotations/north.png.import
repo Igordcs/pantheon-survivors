@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://tha74g4017jk"
-path="res://.godot/imported/north.png-c35752fbff30b70b63970d1355e10071.ctex"
+path="res://.godot/imported/north.png-bf6da6c65aea5b3036619c792ed1965e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/minotaur/idle/rotations/north.png"
-dest_files=["res://.godot/imported/north.png-c35752fbff30b70b63970d1355e10071.ctex"]
+source_file="res://assets/sprites/enemies/minotaur/Idle/rotations/north.png"
+dest_files=["res://.godot/imported/north.png-bf6da6c65aea5b3036619c792ed1965e.ctex"]
 
 [params]
 

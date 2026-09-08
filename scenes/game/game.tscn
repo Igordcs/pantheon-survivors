@@ -1,58 +1,57 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene format=3 uid="uid://s06mfk03o8jg"]
 
-[ext_resource type="Script" path="res://scripts/core/game.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
-[ext_resource type="Script" path="res://scripts/spawning/enemy_spawner.gd" id="3_spawner"]
-[ext_resource type="PackedScene" path="res://scenes/enemies/basic_enemy.tscn" id="4_enemy"]
-[ext_resource type="Script" path="res://scripts/progression/upgrade_system.gd" id="5_upgrade"]
+[ext_resource type="Script" uid="uid://vx3f7tu2fg78" path="res://scripts/core/game.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://don4noo083j8k" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="Script" uid="uid://l6wvbudkniqy" path="res://scripts/spawning/enemy_spawner.gd" id="3_spawner"]
+[ext_resource type="PackedScene" uid="uid://ccgxj7ckwdj6m" path="res://scenes/enemies/basic_enemy.tscn" id="4_enemy"]
+[ext_resource type="Script" uid="uid://dgv04dj0my3o3" path="res://scripts/progression/upgrade_system.gd" id="5_upgrade"]
 [ext_resource type="PackedScene" path="res://scenes/ui/level_up_panel.tscn" id="6_levelup"]
-[ext_resource type="Script" path="res://scripts/spawning/spawn_director.gd" id="7_director"]
+[ext_resource type="Script" uid="uid://dif78kxjpt2ss" path="res://scripts/spawning/spawn_director.gd" id="7_director"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="8_hud"]
-[ext_resource type="Script" path="res://scripts/core/run_manager.gd" id="9_runmanager"]
+[ext_resource type="Script" uid="uid://36hhcff5n64k" path="res://scripts/core/run_manager.gd" id="9_runmanager"]
 [ext_resource type="PackedScene" path="res://scenes/ui/results_panel.tscn" id="10_resultspanel"]
 [ext_resource type="PackedScene" path="res://scenes/ui/pause_panel.tscn" id="11_pausepanel"]
 [ext_resource type="PackedScene" path="res://scenes/world/world.tscn" id="12_world"]
 [ext_resource type="PackedScene" path="res://scenes/ui/damage_feedback.tscn" id="13_damage_feedback"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" unique_id=37594761]
 script = ExtResource("1_script")
 
-[node name="World" type="Node2D" parent="."]
+[node name="World" type="Node2D" parent="." unique_id=124516170]
 
-[node name="Environment" parent="World" instance=ExtResource("12_world")]
+[node name="Environment" parent="World" unique_id=197008920 instance=ExtResource("12_world")]
 
-[node name="Player" parent="World" instance=ExtResource("2_player")]
+[node name="Player" parent="World" unique_id=698788507 instance=ExtResource("2_player")]
 
-[node name="Enemies" type="Node2D" parent="World"]
+[node name="Enemies" type="Node2D" parent="World" unique_id=1620599743]
 
-[node name="Items" type="Node2D" parent="World"]
+[node name="Items" type="Node2D" parent="World" unique_id=2059873668]
 
-[node name="EnemySpawner" type="Node" parent="."]
+[node name="EnemySpawner" type="Node" parent="." unique_id=1333111058]
 script = ExtResource("3_spawner")
 enemy_scene = ExtResource("4_enemy")
-max_enemies = 50
 spawn_interval = 1.5
 
-[node name="SpawnDirector" type="Node" parent="." node_paths=PackedStringArray("spawner")]
+[node name="SpawnDirector" type="Node" parent="." unique_id=995845637 node_paths=PackedStringArray("spawner")]
 script = ExtResource("7_director")
 spawner = NodePath("../EnemySpawner")
 
-[node name="RunManager" type="Node" parent="." node_paths=PackedStringArray("spawn_director", "enemy_spawner")]
+[node name="RunManager" type="Node" parent="." unique_id=1241189319 node_paths=PackedStringArray("spawn_director", "enemy_spawner")]
 script = ExtResource("9_runmanager")
 spawn_director = NodePath("../SpawnDirector")
 enemy_spawner = NodePath("../EnemySpawner")
 
-[node name="UpgradeSystem" type="Node" parent="."]
+[node name="UpgradeSystem" type="Node" parent="." unique_id=2085428199]
 script = ExtResource("5_upgrade")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1128601222]
 
-[node name="HUD" parent="CanvasLayer" instance=ExtResource("8_hud")]
+[node name="HUD" parent="CanvasLayer" unique_id=1861208464 instance=ExtResource("8_hud")]
 
-[node name="LevelUpPanel" parent="CanvasLayer" instance=ExtResource("6_levelup")]
+[node name="LevelUpPanel" parent="CanvasLayer" unique_id=658343620 instance=ExtResource("6_levelup")]
 
-[node name="ResultsPanel" parent="CanvasLayer" instance=ExtResource("10_resultspanel")]
+[node name="ResultsPanel" parent="CanvasLayer" unique_id=1586385055 instance=ExtResource("10_resultspanel")]
 
-[node name="PausePanel" parent="CanvasLayer" instance=ExtResource("11_pausepanel")]
+[node name="PausePanel" parent="CanvasLayer" unique_id=1845792035 instance=ExtResource("11_pausepanel")]
 
-[node name="DamageFeedback" parent="CanvasLayer" instance=ExtResource("13_damage_feedback")]
+[node name="DamageFeedback" parent="CanvasLayer" unique_id=299502967 instance=ExtResource("13_damage_feedback")]

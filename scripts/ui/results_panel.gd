@@ -37,5 +37,6 @@ func show_results(is_victory: bool, stats: Dictionary, time_str: String, kills: 
 
 
 func _on_restart_pressed() -> void:
+	MusicManager.play_menu_music()
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")

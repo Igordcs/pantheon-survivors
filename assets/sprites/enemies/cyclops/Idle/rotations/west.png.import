@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bt85pb5cuu706"
-path="res://.godot/imported/west.png-ea3397bddbf73b0678a7b4ef523bd8ac.ctex"
+path="res://.godot/imported/west.png-a04cf6eb3284f50d9f2182d92074e5f0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/cyclops/idle/rotations/west.png"
-dest_files=["res://.godot/imported/west.png-ea3397bddbf73b0678a7b4ef523bd8ac.ctex"]
+source_file="res://assets/sprites/enemies/cyclops/Idle/rotations/west.png"
+dest_files=["res://.godot/imported/west.png-a04cf6eb3284f50d9f2182d92074e5f0.ctex"]
 
 [params]
 

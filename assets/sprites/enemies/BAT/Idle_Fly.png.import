@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d3bxjncanrbfd"
-path="res://.godot/imported/Idle_Fly.png-3054301605db0c6252c6a31ec44f4f23.ctex"
+path="res://.godot/imported/Idle_Fly.png-18243d7c8c8b7bd2503801bcc6282930.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/bat/Idle_Fly.png"
-dest_files=["res://.godot/imported/Idle_Fly.png-3054301605db0c6252c6a31ec44f4f23.ctex"]
+source_file="res://assets/sprites/enemies/BAT/Idle_Fly.png"
+dest_files=["res://.godot/imported/Idle_Fly.png-18243d7c8c8b7bd2503801bcc6282930.ctex"]
 
 [params]
 

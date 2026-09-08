@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0lj6sa24n4oj"
-path="res://.godot/imported/01.png-80f19dde508f748ae4d46f8ec532efb5.ctex"
+path="res://.godot/imported/01.png-6916f7d49ae923ccddce7ef571b0c3fd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/orc/idle/01.png"
-dest_files=["res://.godot/imported/01.png-80f19dde508f748ae4d46f8ec532efb5.ctex"]
+source_file="res://assets/sprites/enemies/ORC/idle/01.png"
+dest_files=["res://.godot/imported/01.png-6916f7d49ae923ccddce7ef571b0c3fd.ctex"]
 
 [params]
 

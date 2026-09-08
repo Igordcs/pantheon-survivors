@@ -18,6 +18,7 @@ var _active_boss: Node2D
 
 
 func _ready() -> void:
+	MusicManager.play_game_music()
 	print("Pantheon Survivors — Game started")
 	
 	if not player:
@@ -132,6 +133,7 @@ func _on_player_damaged(amount: float, _source_position: Vector2) -> void:
 
 
 func _on_player_level_up(new_level: int) -> void:
+	MusicManager.play_level_up_sfx()
 	hud.update_level(new_level)
 	var options = upgrade_system.generate_options(3)
 	if options.is_empty():
@@ -162,10 +164,12 @@ func _on_upgrade_option_chosen(option: UpgradeOption) -> void:
 
 
 func _on_boss_fight_started(_boss_pos: Vector2) -> void:
+	MusicManager.play_boss_music()
 	if is_instance_valid(_active_boss):
 		game_camera.focus_boss(_active_boss)
 
 
 func _on_boss_fight_ended() -> void:
+	MusicManager.play_game_music()
 	game_camera.release_boss()
 	_active_boss = null
