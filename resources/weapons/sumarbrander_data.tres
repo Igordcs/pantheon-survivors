@@ -1,0 +1,91 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/Sumarbrander.webp" id="3_icon"]
+
+[sub_resource type="Resource" id="Level_1"]
+script = ExtResource("2_level")
+description = "A espada viva paira ao redor do mestre, cortando o mais próximo em alcance curto."
+special_effect = &"summon_guard"
+special_value = 1.0
+
+[sub_resource type="Resource" id="Level_2"]
+script = ExtResource("2_level")
+description = "+25% de dano e velocidade de ataque aumentada."
+damage_multiplier = 1.25
+special_effect = &"summon_guard"
+special_value = 1.0
+
+[sub_resource type="Resource" id="Level_3"]
+script = ExtResource("2_level")
+description = "A segunda lâmina entra em órbita e ataca o mesmo alvo em sequência."
+damage_multiplier = 1.35
+cooldown_multiplier = 0.9
+projectile_count = 2
+special_effect = &"summon_guard"
+special_value = 1.0
+
+[sub_resource type="Resource" id="Level_4"]
+script = ExtResource("2_level")
+description = "A paz dos deuses deixa a espada mais agressiva e menos lenta."
+damage_multiplier = 1.45
+cooldown_multiplier = 0.85
+area_multiplier = 1.15
+projectile_count = 2
+special_effect = &"summon_guard"
+special_value = 1.5
+
+[sub_resource type="Resource" id="Level_5"]
+script = ExtResource("2_level")
+description = "O corte se torna uma onda de energia ao redor do mestre em ataques em grupo."
+damage_multiplier = 1.55
+cooldown_multiplier = 0.8
+area_multiplier = 1.2
+projectile_count = 3
+special_effect = &"summon_guard"
+special_value = 2.0
+
+[sub_resource type="Resource" id="Level_6"]
+script = ExtResource("2_level")
+description = "Três espadas vivas agora defendem o campo e mantêm a trajetória de assalto."
+damage_multiplier = 1.7
+cooldown_multiplier = 0.75
+area_multiplier = 1.3
+projectile_count = 3
+special_effect = &"summon_guard"
+special_value = 2.0
+
+[sub_resource type="Resource" id="Level_7"]
+script = ExtResource("2_level")
+description = "A espada cresce em ferocidade e se aproxima dos grupos antes de qualquer ataque."
+damage_multiplier = 1.85
+cooldown_multiplier = 0.7
+area_multiplier = 1.4
+projectile_count = 4
+special_effect = &"summon_guard"
+special_value = 2.5
+
+[sub_resource type="Resource" id="Level_8"]
+script = ExtResource("2_level")
+description = "Um guarda divino completo: quatro espadas fluem ao redor do mestre e devem o campo de batalha."
+damage_multiplier = 2.15
+cooldown_multiplier = 0.65
+area_multiplier = 1.5
+projectile_count = 4
+special_effect = &"summon_guard"
+special_value = 3.0
+
+[resource]
+script = ExtResource("1_weapon")
+id = &"sumarbrander"
+display_name = "Sumarbrander"
+icon = ExtResource("3_icon")
+description = "Uma espada mágica viva que flutua ao redor do mestre, avançando contra grupos de inimigos e desembainhando cortes divinos."
+base_damage = 15.0
+cooldown = 0.8
+area = 150.0
+projectile_speed = 220.0
+projectile_count = 1
+max_level = 8
+levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])

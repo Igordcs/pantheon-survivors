@@ -9,7 +9,10 @@ const AVAILABLE_WEAPONS = [
 	preload("res://resources/weapons/solar_disk_data.tres"),
 	preload("res://resources/weapons/poseidon_trident_data.tres"),
 	preload("res://resources/weapons/medusa_head_data.tres"),
-	preload("res://resources/weapons/zeus_lightning_data.tres")
+	preload("res://resources/weapons/zeus_lightning_data.tres"),
+	preload("res://resources/weapons/anubis_curse.tres"),
+	preload("res://resources/weapons/gungnir_data.tres"),
+	preload("res://resources/weapons/sumarbrander_data.tres")
 ]
 
 const AVAILABLE_RELICS = [
@@ -103,10 +106,10 @@ func apply_option(option: UpgradeOption) -> void:
 	else:
 		if not is_instance_valid(_player_weapons):
 			return
-			
+		
 		if option.is_new_weapon:
 			# Instanciar nova arma
-			var scene_path = "res://scenes/weapons/%s.tscn" % option.item_data.id
+			var scene_path = _resolve_weapon_scene_path(option.item_data.id)
 			if ResourceLoader.exists(scene_path):
 				var weapon_scene = load(scene_path) as PackedScene
 				if weapon_scene:
@@ -178,3 +181,15 @@ func _get_weapon(weapon_id: StringName) -> Node:
 		if child.has_method("get_weapon_id") and child.get_weapon_id() == weapon_id:
 			return child
 	return null
+
+
+func _resolve_weapon_scene_path(weapon_id: StringName) -> String:
+	var scene_path := "res://scenes/weapons/%s.tscn" % weapon_id
+	if ResourceLoader.exists(scene_path):
+		return scene_path
+	
+	var alt_scene_path := "res://scenes/weapons/%s.tscn" % String(weapon_id).replace("_", "")
+	if ResourceLoader.exists(alt_scene_path):
+		return alt_scene_path
+	
+	return scene_path
