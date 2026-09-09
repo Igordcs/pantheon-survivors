@@ -19,6 +19,10 @@ func collect() -> int:
 	if _collected:
 		return 0
 	_collected = true
+	
+	# Dispara o efeito sonoro de coleta
+	MusicManager.play_xp_sfx()
+	
 	visible = false
 	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)

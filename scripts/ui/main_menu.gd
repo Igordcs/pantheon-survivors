@@ -15,18 +15,46 @@ extends Control
 func _ready() -> void:
 	MusicManager.play_menu_music()
 	
-	play_button.pressed.connect(_on_play_pressed)
-	settings_button.pressed.connect(_on_settings_pressed)
-	quit_button.pressed.connect(_on_quit_pressed)
+	play_button.pressed.connect(func():
+		MusicManager.play_ui_click()
+		_on_play_pressed()
+	)
+	settings_button.pressed.connect(func():
+		MusicManager.play_ui_click()
+		_on_settings_pressed()
+	)
+	quit_button.pressed.connect(func():
+		MusicManager.play_ui_click()
+		_on_quit_pressed()
+	)
 	
-	close_settings_button.pressed.connect(_on_close_settings_pressed)
+	# Clique no botão Voltar das configurações
+	close_settings_button.pressed.connect(func():
+		MusicManager.play_ui_click()
+		_on_close_settings_pressed()
+	)
+	
+	# Clique na caixinha de Tela Cheia
+	fullscreen_check.toggled.connect(func(toggled_on: bool):
+		MusicManager.play_ui_click()
+		_on_fullscreen_toggled(toggled_on)
+	)
+	
+	# Som ao interagir com os Sliders de Volume (ao arrastar/soltar o ponteiro)
+	master_slider.drag_ended.connect(func(_value_changed: bool):
+		MusicManager.play_ui_click()
+	)
+	music_slider.drag_ended.connect(func(_value_changed: bool):
+		MusicManager.play_ui_click()
+	)
+	
+	# Alteração contínua de volume real
 	master_slider.value_changed.connect(_on_master_slider_changed)
 	music_slider.value_changed.connect(_on_music_slider_changed)
-	fullscreen_check.toggled.connect(_on_fullscreen_toggled)
 	
 	_init_audio_settings()
 	_animate_title_pulse()
-
+	
 func _animate_title_pulse() -> void:
 	var tween = create_tween().set_loops()
 	tween.tween_property(title_label, "modulate", Color(1.15, 1.05, 0.75), 1.6).set_trans(Tween.TRANS_SINE)

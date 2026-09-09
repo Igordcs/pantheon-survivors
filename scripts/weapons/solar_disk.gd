@@ -14,11 +14,21 @@ var _disk_scale: float = 1.0
 var _pulse_damage_multiplier: float = 0.0
 var _disks: Array[Area2D] = []
 
+# Controle de frequência para o áudio não estourar em hordas cheias
+var _last_hit_sound_time: float = 0.0
+const SFX_COOLDOWN: float = 0.08
+
 @onready var _disk_template: Area2D = $DiskArea
 
 
 func _ready() -> void:
 	_disks.append(_disk_template)
+	
+	# Garante que o disco inicial também esteja conectado ao evento de colisão
+	var hit_callback := Callable(self, "_on_disk_area_body_entered")
+	if not _disk_template.body_entered.is_connected(hit_callback):
+		_disk_template.body_entered.connect(hit_callback)
+		
 	_apply_level_stats()
 
 
@@ -101,6 +111,14 @@ func _on_disk_area_body_entered(body: Node2D) -> void:
 	var health := body.get_node_or_null("HealthComponent") as HealthComponent
 	if health and health.is_alive():
 		health.take_damage(_damage, global_position)
+		_play_hit_sound_throttled()
+
+
+func _play_hit_sound_throttled() -> void:
+	var current_time := Time.get_ticks_msec() / 1000.0
+	if current_time - _last_hit_sound_time >= SFX_COOLDOWN:
+		_last_hit_sound_time = current_time
+		MusicManager.play_solar_disk_sfx()
 
 
 func _emit_solar_pulse() -> void:
@@ -116,6 +134,8 @@ func _emit_solar_pulse() -> void:
 		if health and health.is_alive():
 			health.take_damage(pulse_damage, global_position)
 
+	# Efeito sonoro acompanhando o pulso em anel
+	MusicManager.play_solar_disk_sfx()
 	_spawn_pulse_vfx(pulse_radius)
 	ScreenShake.shake(0.25)
 

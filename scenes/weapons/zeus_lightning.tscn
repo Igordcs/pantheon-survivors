@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://drinafu6luq67"]
 
-[ext_resource type="Script" path="res://scripts/weapons/zeus_lightning.gd" id="1_script"]
-[ext_resource type="Resource" path="res://resources/weapons/zeus_lightning_data.tres" id="2_data"]
+[ext_resource type="Script" uid="uid://dd2coprc7mfxy" path="res://scripts/weapons/zeus_lightning.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://bgd0erjdjrfv3" path="res://resources/weapons/zeus_lightning_data.tres" id="2_data"]
 
-[node name="ZeusLightning" type="Node2D"]
+[node name="ZeusLightning" type="Node2D" unique_id=779324281]
 script = ExtResource("1_script")
 weapon_data = ExtResource("2_data")

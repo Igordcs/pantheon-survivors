@@ -1,8 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://oa1t7v4dhhuu"]
+[gd_scene format=3 uid="uid://oa1t7v4dhhuu"]
 
-[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/sprites/menu_bg_pixel.jpg" id="2_bg"]
-[ext_resource type="FontFile" path="res://assets/fonts/PressStart2P-Regular.ttf" id="3_font"]
+[ext_resource type="Script" uid="uid://ixdj0mv0nn6m" path="res://scripts/ui/main_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cgixhss2engb" path="res://assets/sprites/menu_bg_pixel.jpg" id="2_bg"]
+[ext_resource type="FontFile" uid="uid://ctatsqbofgfn5" path="res://assets/fonts/PressStart2P-Regular.ttf" id="3_font"]
+
+[sub_resource type="Curve" id="Curve_embers"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
 content_margin_left = 16.0
@@ -27,12 +31,8 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 0.82, 0.2, 1)
-shadow_size = 6
 shadow_color = Color(1, 0.6, 0, 0.4)
-
-[sub_resource type="Curve" id="Curve_embers"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 0, 0]
-point_count = 2
+shadow_size = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
 bg_color = Color(0.06, 0.05, 0.1, 0.98)
@@ -41,10 +41,10 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 border_color = Color(1, 0.8, 0.2, 1)
-shadow_size = 16
 shadow_color = Color(0, 0, 0, 0.9)
+shadow_size = 16
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=1196501010]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,7 +53,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=653095274]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -65,7 +65,7 @@ texture = ExtResource("2_bg")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="EmberParticles" type="CPUParticles2D" parent="."]
+[node name="EmberParticles" type="CPUParticles2D" parent="." unique_id=1409792757]
 position = Vector2(640, 720)
 amount = 45
 lifetime = 3.5
@@ -83,7 +83,7 @@ scale_amount_max = 5.5
 scale_amount_curve = SubResource("Curve_embers")
 color = Color(1, 0.6, 0.15, 0.7)
 
-[node name="TopTitleContainer" type="VBoxContainer" parent="."]
+[node name="TopTitleContainer" type="VBoxContainer" parent="." unique_id=1760646379]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -95,31 +95,31 @@ offset_bottom = 145.0
 grow_horizontal = 2
 theme_override_constants/separation = 8
 
-[node name="TitleLabel" type="Label" parent="TopTitleContainer"]
+[node name="TitleLabel" type="Label" parent="TopTitleContainer" unique_id=216599085]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_font")
 theme_override_colors/font_color = Color(1, 0.88, 0.3, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.2, 0.08, 0.02, 1)
 theme_override_constants/shadow_offset_x = 4
 theme_override_constants/shadow_offset_y = 5
 theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 38
 text = "PANTHEON SURVIVORS"
 horizontal_alignment = 1
 
-[node name="SubtitleLabel" type="Label" parent="TopTitleContainer"]
+[node name="SubtitleLabel" type="Label" parent="TopTitleContainer" unique_id=585470096]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_font")
 theme_override_colors/font_color = Color(0.9, 0.8, 0.65, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 14
 text = "- A IRA DOS DEUSES CAIDOS -"
 horizontal_alignment = 1
 
-[node name="BottomButtons" type="HBoxContainer" parent="."]
+[node name="BottomButtons" type="HBoxContainer" parent="." unique_id=919565634]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -135,49 +135,49 @@ grow_vertical = 0
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="PlayButton" type="Button" parent="BottomButtons"]
+[node name="PlayButton" type="Button" parent="BottomButtons" unique_id=810229502]
 custom_minimum_size = Vector2(180, 46)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_colors/font_hover_color = Color(1, 0.9, 0.4, 1)
-theme_override_colors/font_focus_color = Color(1, 0.9, 0.4, 1)
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_focus_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_hover_color = Color(1, 0.9, 0.4, 1)
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
 text = "JOGAR"
 
-[node name="SettingsButton" type="Button" parent="BottomButtons"]
+[node name="SettingsButton" type="Button" parent="BottomButtons" unique_id=562261055]
 custom_minimum_size = Vector2(210, 46)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_colors/font_hover_color = Color(1, 0.9, 0.4, 1)
-theme_override_colors/font_focus_color = Color(1, 0.9, 0.4, 1)
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_focus_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_hover_color = Color(1, 0.9, 0.4, 1)
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
 text = "OPCOES"
 
-[node name="QuitButton" type="Button" parent="BottomButtons"]
+[node name="QuitButton" type="Button" parent="BottomButtons" unique_id=206276571]
 custom_minimum_size = Vector2(160, 46)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_colors/font_hover_color = Color(1, 0.4, 0.4, 1)
-theme_override_colors/font_focus_color = Color(1, 0.4, 0.4, 1)
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_focus_color = Color(1, 0.4, 0.4, 1)
+theme_override_colors/font_hover_color = Color(1, 0.4, 0.4, 1)
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
 text = "SAIR"
 
-[node name="VersionLabel" type="Label" parent="."]
+[node name="VersionLabel" type="Label" parent="." unique_id=1382817674]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -187,12 +187,12 @@ offset_top = -24.0
 offset_right = 160.0
 offset_bottom = -8.0
 grow_vertical = 0
-theme_override_fonts/font = ExtResource("3_font")
 theme_override_colors/font_color = Color(0.6, 0.55, 0.7, 0.7)
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 10
 text = "v0.1.0 Alpha"
 
-[node name="SettingsModal" type="Panel" parent="."]
+[node name="SettingsModal" type="Panel" parent="." unique_id=624816696]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -208,7 +208,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsModal"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsModal" unique_id=363361104]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -221,55 +221,55 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 16
 
-[node name="SettingsTitle" type="Label" parent="SettingsModal/VBoxContainer"]
+[node name="SettingsTitle" type="Label" parent="SettingsModal/VBoxContainer" unique_id=1229129483]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_font")
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 18
 text = "CONFIGURACOES"
 horizontal_alignment = 1
 
-[node name="MasterVolBox" type="VBoxContainer" parent="SettingsModal/VBoxContainer"]
+[node name="MasterVolBox" type="VBoxContainer" parent="SettingsModal/VBoxContainer" unique_id=1076703876]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsModal/VBoxContainer/MasterVolBox"]
+[node name="Label" type="Label" parent="SettingsModal/VBoxContainer/MasterVolBox" unique_id=289913311]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 12
 text = "Volume Geral"
 
-[node name="MasterSlider" type="HSlider" parent="SettingsModal/VBoxContainer/MasterVolBox"]
+[node name="MasterSlider" type="HSlider" parent="SettingsModal/VBoxContainer/MasterVolBox" unique_id=1382603767]
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 0.8
 
-[node name="MusicVolBox" type="VBoxContainer" parent="SettingsModal/VBoxContainer"]
+[node name="MusicVolBox" type="VBoxContainer" parent="SettingsModal/VBoxContainer" unique_id=1607006334]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsModal/VBoxContainer/MusicVolBox"]
+[node name="Label" type="Label" parent="SettingsModal/VBoxContainer/MusicVolBox" unique_id=928584970]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 12
 text = "Volume da Musica"
 
-[node name="MusicSlider" type="HSlider" parent="SettingsModal/VBoxContainer/MusicVolBox"]
+[node name="MusicSlider" type="HSlider" parent="SettingsModal/VBoxContainer/MusicVolBox" unique_id=544063306]
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 0.8
 
-[node name="FullscreenCheck" type="CheckBox" parent="SettingsModal/VBoxContainer"]
+[node name="FullscreenCheck" type="CheckBox" parent="SettingsModal/VBoxContainer" unique_id=1510814813]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 12
 text = "Tela Cheia"
 
-[node name="CloseSettingsButton" type="Button" parent="SettingsModal/VBoxContainer"]
+[node name="CloseSettingsButton" type="Button" parent="SettingsModal/VBoxContainer" unique_id=160254056]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_font_sizes/font_size = 14
 text = "VOLTAR"

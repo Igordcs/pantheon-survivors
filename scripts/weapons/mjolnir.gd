@@ -72,7 +72,14 @@ func _apply_level_stats() -> void:
 
 
 func _on_cooldown_timeout() -> void:
-	for target in _find_closest_enemies(_target_count):
+	var targets := _find_closest_enemies(_target_count)
+	if targets.is_empty():
+		return
+
+	# Toca o som de arremesso/trovão uma vez quando há alvos válidos
+	MusicManager.play_mjolnir_sfx()
+
+	for target in targets:
 		_fire_at(target)
 
 

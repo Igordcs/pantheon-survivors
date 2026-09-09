@@ -128,6 +128,10 @@ func _strike_from_sky(
 	var impact_position := target.global_position
 	var sky_position := _get_sky_position(impact_position)
 	await _play_falling_bolt(sky_position, impact_position)
+	
+	# Dispara o estrondo elétrico de Zeus no momento exato do impacto no solo
+	MusicManager.play_zeus_lightning_sfx()
+	
 	if _is_valid_target(target):
 		impact_position = target.global_position
 		_damage_target(target, strike_damage, hit_enemies)

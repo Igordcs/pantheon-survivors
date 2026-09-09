@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://1nuhq71w5jm"]
 
-[ext_resource type="Script" path="res://scripts/weapons/poseidon_trident.gd" id="1_script"]
-[ext_resource type="Resource" path="res://resources/weapons/poseidon_trident_data.tres" id="2_data"]
+[ext_resource type="Script" uid="uid://cyj232v332nfw" path="res://scripts/weapons/poseidon_trident.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://dbsykh4b821e2" path="res://resources/weapons/poseidon_trident_data.tres" id="2_data"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/water_wave.tscn" id="3_wave"]
 
-[node name="PoseidonTrident" type="Node2D"]
+[node name="PoseidonTrident" type="Node2D" unique_id=280099075]
 script = ExtResource("1_script")
 weapon_data = ExtResource("2_data")
 wave_scene = ExtResource("3_wave")

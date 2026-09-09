@@ -17,6 +17,9 @@ func _ready() -> void:
 
 
 func flash_damage(_damage_amount: float = 0.0) -> void:
+	# Dispara o efeito sonoro de dano do player sincronizado com a vinheta vermelha
+	MusicManager.play_player_hurt_sfx()
+
 	if _shader_material == null:
 		return
 	if _fade_tween and _fade_tween.is_valid():

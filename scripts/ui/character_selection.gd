@@ -14,8 +14,18 @@ var _unlocked_chars = []
 
 
 func _ready() -> void:
-	start_button.pressed.connect(_on_start_pressed)
-	back_button.pressed.connect(_on_back_pressed)
+	MusicManager.play_menu_music()
+	
+	start_button.pressed.connect(func():
+		MusicManager.play_ui_click()
+		_on_start_pressed()
+	)
+	
+	back_button.pressed.connect(func():
+		MusicManager.play_ui_click()
+		_on_back_pressed()
+	)
+	
 	character_list.item_selected.connect(_on_item_selected)
 	
 	_load_characters()
@@ -59,7 +69,7 @@ func _load_characters() -> void:
 				
 	if character_list.get_item_count() > 0:
 		character_list.select(0)
-		_on_item_selected(0)
+		_update_character_details(0)
 
 
 func _select_relative_character(step: int) -> void:
@@ -75,6 +85,11 @@ func _select_relative_character(step: int) -> void:
 
 
 func _on_item_selected(index: int) -> void:
+	MusicManager.play_ui_click()
+	_update_character_details(index)
+
+
+func _update_character_details(index: int) -> void:
 	var char_id = character_list.get_item_metadata(index) as StringName
 	Global.selected_character_id = char_id
 	

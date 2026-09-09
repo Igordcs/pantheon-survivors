@@ -77,6 +77,10 @@ func _on_cooldown_timeout() -> void:
 	var target := _find_closest_enemy()
 	if not target or not wave_scene:
 		return
+
+	# Dispara o áudio do jato de onda aquática
+	MusicManager.play_poseidon_trident_sfx()
+
 	var base_direction := global_position.direction_to(target.global_position)
 	for index in range(_wave_count):
 		var centered_index := float(index) - (float(_wave_count - 1) * 0.5)

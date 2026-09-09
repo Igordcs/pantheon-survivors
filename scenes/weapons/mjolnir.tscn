@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://57lecl6pwwfj"]
 
-[ext_resource type="Script" path="res://scripts/weapons/mjolnir.gd" id="1_script"]
-[ext_resource type="Resource" path="res://resources/weapons/mjolnir_data.tres" id="2_data"]
+[ext_resource type="Script" uid="uid://ddo5wvcd6aiy3" path="res://scripts/weapons/mjolnir.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://cuh7l31nlwc6a" path="res://resources/weapons/mjolnir_data.tres" id="2_data"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/projectile.tscn" id="3_projectile"]
 
-[node name="Mjolnir" type="Node2D"]
+[node name="Mjolnir" type="Node2D" unique_id=400813473]
 script = ExtResource("1_script")
 weapon_data = ExtResource("2_data")
 projectile_scene = ExtResource("3_projectile")

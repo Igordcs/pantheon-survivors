@@ -65,6 +65,9 @@ func _on_cooldown_timeout() -> void:
 	var facing_direction := _get_facing_direction()
 	_spawn_petrification_vfx(facing_direction)
 
+	# Dispara o sibilo/olhar petrificante da Medusa sincronizado com o cone
+	MusicManager.play_medusa_sfx()
+
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		var enemy_body := enemy as CharacterBody2D
 		if not is_instance_valid(enemy_body) or not enemy_body.visible:

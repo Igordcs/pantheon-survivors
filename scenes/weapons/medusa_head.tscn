@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://b8skr1iuxtbqt"]
 
-[ext_resource type="Script" path="res://scripts/weapons/medusa_head.gd" id="1_script"]
-[ext_resource type="Resource" path="res://resources/weapons/medusa_head_data.tres" id="2_data"]
+[ext_resource type="Script" uid="uid://c7enhxd4k2vya" path="res://scripts/weapons/medusa_head.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://ch3ce2an7j2lr" path="res://resources/weapons/medusa_head_data.tres" id="2_data"]
 
-[node name="MedusaHead" type="Node2D"]
+[node name="MedusaHead" type="Node2D" unique_id=376245106]
 script = ExtResource("1_script")
 weapon_data = ExtResource("2_data")

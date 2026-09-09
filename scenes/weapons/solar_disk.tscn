@@ -1,24 +1,24 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://bgnh1ois3ce6l"]
 
-[ext_resource type="Script" path="res://scripts/weapons/solar_disk.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/sprites/weapons/solar_disk.png" id="2_texture"]
+[ext_resource type="Script" uid="uid://bym5fhprayxye" path="res://scripts/weapons/solar_disk.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://ddej77yiprasy" path="res://assets/sprites/weapons/solar_disk.png" id="2_texture"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 16.0
 
-[node name="SolarDisk" type="Node2D"]
+[node name="SolarDisk" type="Node2D" unique_id=39666408]
 script = ExtResource("1_script")
 
-[node name="DiskArea" type="Area2D" parent="."]
+[node name="DiskArea" type="Area2D" parent="." unique_id=1488869130]
 collision_layer = 0
 collision_mask = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="DiskArea"]
+[node name="Sprite2D" type="Sprite2D" parent="DiskArea" unique_id=465856475]
 texture_filter = 2
 scale = Vector2(0.18, 0.18)
 texture = ExtResource("2_texture")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DiskArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DiskArea" unique_id=115847722]
 shape = SubResource("CircleShape2D_1")
 
 [connection signal="body_entered" from="DiskArea" to="." method="_on_disk_area_body_entered"]

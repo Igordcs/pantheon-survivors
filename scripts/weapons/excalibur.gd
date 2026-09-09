@@ -107,6 +107,9 @@ func _attack_sequence() -> void:
 
 
 func _play_strike(direction: Vector2) -> void:
+	# Dispara o som de corte no instante do movimento da lâmina
+	MusicManager.play_excalibur_sfx()
+
 	_hitbox.rotation = direction.angle()
 	_hitbox.modulate = Color.WHITE
 	_attack_visual.scale = Vector2.ONE * 0.82
