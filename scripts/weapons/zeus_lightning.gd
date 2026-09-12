@@ -111,6 +111,8 @@ func _attack_random_targets() -> void:
 func _get_candidates() -> Array[CharacterBody2D]:
 	var candidates: Array[CharacterBody2D] = []
 	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if not is_instance_valid(enemy):
+			continue
 		var enemy_body := enemy as CharacterBody2D
 		if not _is_valid_target(enemy_body):
 			continue

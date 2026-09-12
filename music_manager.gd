@@ -112,8 +112,20 @@ func play_player_hurt_sfx() -> void:
 		sfx_player.stream = SFX_PLAYER_HURT
 		sfx_player.volume_db = -4.0 # volume com presença para avisar perigo
 		sfx_player.pitch_scale = randf_range(0.95, 1.05)
+func play_punisher_shot_sfx() -> void:
+	if sfx_player:
+		sfx_player.stream = SFX_POSEIDON_TRIDENT
+		sfx_player.volume_db = -8.0
+		sfx_player.pitch_scale = randf_range(1.4, 1.7)
 		sfx_player.play()
-		
+
+func play_grenade_explosion_sfx() -> void:
+	if sfx_player:
+		sfx_player.stream = SFX_MJOLNIR
+		sfx_player.volume_db = -3.0
+		sfx_player.pitch_scale = randf_range(0.65, 0.8)
+		sfx_player.play()
+
 func play_music(stream: AudioStream, volume_db: float = -10.0) -> void:
 	if player == null:
 		return

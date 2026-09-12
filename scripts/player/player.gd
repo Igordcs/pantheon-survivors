@@ -85,6 +85,11 @@ func _load_character_data() -> void:
 			# Instancia a arma inicial
 			if char_data.starting_weapon:
 				_instantiate_weapon(char_data.starting_weapon.id)
+			
+			# Punisher: instancia a granada junto com a arma base
+			if char_id == "punisher":
+				_instantiate_weapon(&"punisher_grenade")
+
 			return
 
 	push_error("Character data not found or invalid for id: %s" % char_id)

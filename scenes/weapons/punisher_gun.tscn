@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/punisher_gun.gd" id="1_script"]
+[ext_resource type="Resource" path="res://resources/weapons/punisher_gun_data.tres" id="2_data"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/punisher_bullet.tscn" id="3_projectile"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/m4a4.png" id="4_gun_tex"]
+
+[node name="PunisherGun" type="Node2D"]
+script = ExtResource("1_script")
+weapon_data = ExtResource("2_data")
+projectile_scene = ExtResource("3_projectile")
+
+[node name="GunPivot" type="Node2D" parent="."]
+
+[node name="GunSprite" type="Sprite2D" parent="GunPivot"]
+texture_filter = 1
+position = Vector2(8, 0)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("4_gun_tex")
+
+[node name="Muzzle" type="Marker2D" parent="GunPivot"]
+position = Vector2(20, -1)

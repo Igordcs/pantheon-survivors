@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/m4a4.png" id="3_icon"]
+
+[sub_resource type="Resource" id="Level_1"]
+script = ExtResource("2_level")
+description = "Dispara balas automáticas contra o inimigo mais próximo."
+
+[sub_resource type="Resource" id="Level_2"]
+script = ExtResource("2_level")
+description = "+25% de dano por bala."
+damage_multiplier = 1.25
+
+[sub_resource type="Resource" id="Level_3"]
+script = ExtResource("2_level")
+description = "Dispara 2 balas por ciclo, atingindo múltiplos alvos."
+damage_multiplier = 1.35
+projectile_count = 2
+
+[sub_resource type="Resource" id="Level_4"]
+script = ExtResource("2_level")
+description = "Cadência de tiro aumentada em 15%."
+damage_multiplier = 1.45
+cooldown_multiplier = 0.85
+projectile_count = 2
+
+[sub_resource type="Resource" id="Level_5"]
+script = ExtResource("2_level")
+description = "3 balas por ciclo com maior dano."
+damage_multiplier = 1.6
+cooldown_multiplier = 0.8
+projectile_count = 3
+
+[sub_resource type="Resource" id="Level_6"]
+script = ExtResource("2_level")
+description = "Rajada dupla: cada disparo solta 2 tiros em sequência rápida."
+damage_multiplier = 1.7
+cooldown_multiplier = 0.75
+projectile_count = 3
+special_effect = &"gun_burst"
+special_value = 2.0
+
+[sub_resource type="Resource" id="Level_7"]
+script = ExtResource("2_level")
+description = "4 balas por rajada com maior alcance e dano."
+damage_multiplier = 1.85
+cooldown_multiplier = 0.7
+area_multiplier = 1.2
+projectile_count = 4
+special_effect = &"gun_burst"
+special_value = 2.0
+
+[sub_resource type="Resource" id="Level_8"]
+script = ExtResource("2_level")
+description = "Arsenal completo: 5 balas em rajada tripla devastadora."
+damage_multiplier = 2.2
+cooldown_multiplier = 0.6
+area_multiplier = 1.3
+projectile_count = 5
+special_effect = &"gun_burst"
+special_value = 3.0
+
+[resource]
+script = ExtResource("1_weapon")
+id = &"punisher_gun"
+display_name = "Arma do Justiceiro"
+description = "Uma arma automática que dispara balas certeiras contra os inimigos mais próximos."
+icon = ExtResource("3_icon")
+base_damage = 18.0
+cooldown = 0.5
+area = 500.0
+projectile_speed = 700.0
+projectile_count = 1
+max_level = 8
+levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])

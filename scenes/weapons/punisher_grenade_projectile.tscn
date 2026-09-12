@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/punisher_grenade_projectile.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/granade.png" id="2_texture"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_grenade"]
+radius = 8.0
+
+[node name="PunisherGrenadeProjectile" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_script")
+
+[node name="GrenadeVisual" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="GrenadeVisual"]
+texture_filter = 1
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("2_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_grenade")

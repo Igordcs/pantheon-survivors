@@ -15,6 +15,12 @@ const AVAILABLE_WEAPONS = [
 	preload("res://resources/weapons/sumarbrander_data.tres")
 ]
 
+# Armas exclusivas do Punisher — só aparecem no pool se o personagem atual for o Punisher
+const PUNISHER_EXCLUSIVE_WEAPONS = [
+	preload("res://resources/weapons/punisher_gun_data.tres"),
+	preload("res://resources/weapons/punisher_grenade_data.tres")
+]
+
 const AVAILABLE_RELICS = [
 	preload("res://resources/relics/thor_relic_data.tres"),
 	preload("res://resources/relics/speed_relic_data.tres")
@@ -44,7 +50,13 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 	var pool: Array[Resource] = []
 	
 	# Construir o pool de possibilidades (Armas)
-	for data in AVAILABLE_WEAPONS:
+	var weapon_pool: Array = []
+	weapon_pool.append_array(AVAILABLE_WEAPONS)
+	# Inclui armas exclusivas do Punisher se for o personagem atual
+	if Global.selected_character_id == &"punisher":
+		weapon_pool.append_array(PUNISHER_EXCLUSIVE_WEAPONS)
+
+	for data in weapon_pool:
 		# Não oferece armas base se elas já foram evoluídas! (Simplificação: checa se está no player)
 		var current_lvl := _get_weapon_level(data.id)
 		# Só adiciona no pool se não tem a arma, ou se tem e não tá no level maximo
