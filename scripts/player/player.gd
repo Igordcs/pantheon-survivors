@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
-@export var speed: float = 200.0
+@export var speed: float = 170.0
 @export_range(32.0, 192.0, 1.0) var character_visual_height: float = 80.0
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var health_component: HealthComponent = $HealthComponent
 
 var last_direction: Vector2 = Vector2.DOWN
@@ -54,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	# Update facing direction
 	if input_dir != Vector2.ZERO:
 		last_direction = input_dir.normalized()
-		_update_character_direction(last_direction)
+	_update_character_animation(last_direction, input_dir != Vector2.ZERO)
 
 
 func setup_world_generator(world_generator: WorldGenerator) -> void:
@@ -98,28 +98,59 @@ func _load_character_data() -> void:
 func _apply_character_visual(char_data: CharacterData) -> void:
 	_character_data = char_data
 	_uses_directional_sprites = char_data.has_directional_gameplay_sprites()
-	_update_character_direction(Vector2.DOWN)
+	sprite.sprite_frames = SpriteFrames.new()
+	sprite.sprite_frames.remove_animation(&"default")
+	_update_character_animation(Vector2.DOWN, false)
 
 
-func _update_character_direction(direction: Vector2) -> void:
+func _update_character_animation(direction: Vector2, is_moving: bool) -> void:
 	if not _character_data:
 		return
 
-	var character_texture := _character_data.get_gameplay_sprite(direction)
-	if not character_texture:
+	var direction_name := DirectionalSpriteHelper.get_direction_name(direction)
+	var state_name := "walk" if is_moving and _character_data.has_walk_animation() else "idle"
+	var animation_name := StringName("%s_%s" % [state_name, direction_name])
+	_ensure_character_animation(animation_name, direction, state_name == "walk")
+	if not sprite.sprite_frames.has_animation(animation_name):
 		sprite.visible = false
 		push_warning("Character has no gameplay sprite: %s" % _character_data.id)
 		return
 
-	if sprite.texture != character_texture:
-		sprite.texture = character_texture
-		_apply_character_visual_size(character_texture)
-
-	sprite.hframes = 1
-	sprite.vframes = 1
-	sprite.frame = 0
 	sprite.visible = true
 	sprite.flip_h = false if _uses_directional_sprites else direction.x < 0.0
+	if sprite.animation != animation_name or not sprite.is_playing():
+		sprite.play(animation_name)
+	var character_texture := sprite.sprite_frames.get_frame_texture(animation_name, 0)
+	if character_texture:
+		_apply_character_visual_size(character_texture)
+
+
+func _ensure_character_animation(
+	animation_name: StringName,
+	direction: Vector2,
+	is_walk: bool
+) -> void:
+	if sprite.sprite_frames.has_animation(animation_name):
+		return
+
+	var textures: Array[Texture2D] = []
+	if is_walk:
+		textures = _character_data.get_walk_frames(direction)
+	else:
+		var idle_texture := _character_data.get_gameplay_sprite(direction)
+		if idle_texture:
+			textures.append(idle_texture)
+	if textures.is_empty():
+		return
+
+	sprite.sprite_frames.add_animation(animation_name)
+	sprite.sprite_frames.set_animation_loop(animation_name, true)
+	sprite.sprite_frames.set_animation_speed(
+		animation_name,
+		_character_data.walk_animation_speed if is_walk else 1.0
+	)
+	for texture in textures:
+		sprite.sprite_frames.add_frame(animation_name, texture)
 
 
 func _apply_character_visual_size(character_texture: Texture2D) -> void:

@@ -32,6 +32,35 @@ static func load_directory(directory_path: String) -> Dictionary:
 	return sprites
 
 
+static func load_animation_directory(directory_path: String) -> Dictionary:
+	var animations: Dictionary = {}
+	if directory_path.is_empty():
+		return animations
+
+	var normalized_path := directory_path.trim_suffix("/")
+	for direction_name in DIRECTION_NAMES:
+		var direction_path := normalized_path.path_join(String(direction_name))
+		if not DirAccess.dir_exists_absolute(direction_path):
+			continue
+
+		var file_names := DirAccess.get_files_at(direction_path)
+		file_names.sort()
+		var textures: Array[Texture2D] = []
+		for file_name in file_names:
+			if file_name.get_extension().to_lower() != "png":
+				continue
+			var texture_path := direction_path.path_join(file_name)
+			if not ResourceLoader.exists(texture_path):
+				continue
+			var texture := load(texture_path) as Texture2D
+			if texture:
+				textures.append(texture)
+		if not textures.is_empty():
+			animations[direction_name] = textures
+
+	return animations
+
+
 static func get_direction_name(direction: Vector2) -> StringName:
 	if direction.is_zero_approx():
 		return &"south"
