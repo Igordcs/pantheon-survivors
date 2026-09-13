@@ -10,6 +10,7 @@ class_name CharacterData
 @export_dir var gameplay_sprite_directory: String = ""
 @export_dir var walk_sprite_directory: String = ""
 @export_range(1.0, 30.0, 0.5) var walk_animation_speed: float = 8.0
+@export_range(0.0, 256.0, 1.0) var gameplay_reference_height: float = 0.0
 @export var starting_weapon: WeaponData
 @export var base_health: float = 100.0
 @export var base_speed: float = 170.0

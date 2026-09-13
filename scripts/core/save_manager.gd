@@ -6,8 +6,8 @@ signal unlock_changed(category: StringName, content_id: StringName)
 signal settings_changed
 
 const SAVE_PATH := "user://save_data.json"
-const SAVE_VERSION := 3
-const INITIAL_CHARACTER_IDS := ["eirik", "arthur", "neferu", "perseus"]
+const SAVE_VERSION := 4
+const INITIAL_CHARACTER_IDS := ["eirik", "neferu", "perseus"]
 const INITIAL_WEAPON_IDS := ["mjolnir"]
 
 var save_path: String = SAVE_PATH
@@ -18,7 +18,7 @@ var save_data: Dictionary = {
 	"currency": 0,
 	"unlocked_weapons": ["mjolnir"],
 	"unlocked_relics": ["speed_relic"],
-	"unlocked_characters": ["eirik", "arthur", "neferu", "perseus"],
+	"unlocked_characters": ["eirik", "neferu", "perseus"],
 	"unlocked_items": [],
 	"settings": {
 		"master_volume": 0.8,
@@ -193,6 +193,8 @@ func try_purchase(shop_item: ShopItemData) -> bool:
 	if shop_item.id == &"punisher":
 		_unlock(&"weapon", &"punisher_gun", false)
 		_unlock(&"weapon", &"punisher_grenade", false)
+	elif shop_item.id == &"kratos":
+		_unlock(&"weapon", &"blades_of_chaos", false)
 	if not save_game():
 		save_data = previous_unlocks
 		return false
@@ -201,6 +203,8 @@ func try_purchase(shop_item: ShopItemData) -> bool:
 	if shop_item.id == &"punisher":
 		unlock_changed.emit(&"weapon", &"punisher_gun")
 		unlock_changed.emit(&"weapon", &"punisher_grenade")
+	elif shop_item.id == &"kratos":
+		unlock_changed.emit(&"weapon", &"blades_of_chaos")
 	return true
 
 
@@ -239,6 +243,7 @@ func load_game() -> void:
 
 
 func _migrate_save() -> void:
+	var previous_version := int(save_data.get("save_version", 0))
 	var defaults := _make_defaults()
 	for key in defaults:
 		if not save_data.has(key):
@@ -254,6 +259,10 @@ func _migrate_save() -> void:
 			if not id.is_empty() and id not in normalized:
 				normalized.append(id)
 		save_data[key] = normalized
+	if previous_version < 4:
+		var characters: Array = save_data.get("unlocked_characters", [])
+		characters.erase("arthur")
+		save_data["unlocked_characters"] = characters
 	var weapons: Array = save_data.get("unlocked_weapons", [])
 	if "anubiscurse" in weapons and "anubis_curse" not in weapons:
 		weapons.append("anubis_curse")

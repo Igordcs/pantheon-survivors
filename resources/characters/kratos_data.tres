@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/progression/character_data.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/weapons/blades_of_chaos_data.tres" id="2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/kratos/Idle/rotations/south.png" id="3"]
+
+[resource]
+script = ExtResource("1")
+id = &"kratos"
+display_name = "Kratos, o Fantasma de Esparta"
+description = "Um guerreiro espartano marcado pela guerra e armado com lâminas acorrentadas."
+portrait = ExtResource("3")
+gameplay_sprite = ExtResource("3")
+gameplay_sprite_directory = "res://assets/sprites/characters/kratos/Idle/rotations"
+walk_sprite_directory = "res://assets/sprites/characters/kratos/Walk"
+walk_animation_speed = 8.0
+gameplay_reference_height = 64.0
+starting_weapon = ExtResource("2")
+base_health = 150.0
+base_speed = 160.0
+passive_description = "Muito resistente e especializado em controlar linhas com fogo."

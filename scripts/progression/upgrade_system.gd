@@ -21,6 +21,10 @@ const PUNISHER_EXCLUSIVE_WEAPONS = [
 	preload("res://resources/weapons/punisher_grenade_data.tres")
 ]
 
+const KRATOS_EXCLUSIVE_WEAPONS = [
+	preload("res://resources/weapons/blades_of_chaos_data.tres")
+]
+
 const SHOP_WEAPON_IDS: Array[StringName] = [
 	&"anubis_curse",
 	&"gungnir",
@@ -90,6 +94,8 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 	# Inclui armas exclusivas do Punisher se for o personagem atual
 	if Global.selected_character_id == &"punisher":
 		weapon_pool.append_array(PUNISHER_EXCLUSIVE_WEAPONS)
+	elif Global.selected_character_id == &"kratos":
+		weapon_pool.append_array(KRATOS_EXCLUSIVE_WEAPONS)
 
 	for data in weapon_pool:
 		# Não oferece armas base se elas já foram evoluídas! (Simplificação: checa se está no player)

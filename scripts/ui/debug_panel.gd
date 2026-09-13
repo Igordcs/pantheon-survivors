@@ -9,7 +9,7 @@ var _was_paused := false
 
 const CHARACTERS := [
 	["Eirik", &"eirik"], ["Arthur", &"arthur"], ["Neferu", &"neferu"],
-	["Perseus", &"perseus"], ["Justiceiro", &"punisher"],
+	["Perseus", &"perseus"], ["Justiceiro", &"punisher"], ["Kratos", &"kratos"],
 ]
 
 

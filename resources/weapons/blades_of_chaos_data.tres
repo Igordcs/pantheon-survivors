@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/blades_of_chaos.png" id="3"]
+
+[sub_resource type="Resource" id="Level1"]
+script = ExtResource("2")
+description = "Arremessa duas lâminas acorrentadas e incendeia o chão por 1 segundo."
+
+[sub_resource type="Resource" id="Level2"]
+script = ExtResource("2")
+description = "+25% de dano."
+damage_multiplier = 1.25
+
+[sub_resource type="Resource" id="Level3"]
+script = ExtResource("2")
+description = "+20% de alcance para encontrar inimigos."
+damage_multiplier = 1.25
+area_multiplier = 1.2
+
+[sub_resource type="Resource" id="Level4"]
+script = ExtResource("2")
+description = "Reduz o intervalo entre golpes em 15%."
+damage_multiplier = 1.25
+area_multiplier = 1.2
+cooldown_multiplier = 0.85
+
+[sub_resource type="Resource" id="Level5"]
+script = ExtResource("2")
+description = "As trilhas de fogo causam mais dano."
+damage_multiplier = 1.4
+area_multiplier = 1.2
+cooldown_multiplier = 0.85
+special_value = 0.08
+
+[sub_resource type="Resource" id="Level6"]
+script = ExtResource("2")
+description = "+25% de alcance e +50% de dano total."
+damage_multiplier = 1.5
+area_multiplier = 1.45
+cooldown_multiplier = 0.85
+special_value = 0.08
+
+[sub_resource type="Resource" id="Level7"]
+script = ExtResource("2")
+description = "Reduz novamente o intervalo entre golpes."
+damage_multiplier = 1.5
+area_multiplier = 1.45
+cooldown_multiplier = 0.7
+special_value = 0.1
+
+[sub_resource type="Resource" id="Level8"]
+script = ExtResource("2")
+description = "Lâminas divinas: +90% de dano e fogo intensificado."
+damage_multiplier = 1.9
+area_multiplier = 1.55
+cooldown_multiplier = 0.7
+special_value = 0.15
+
+[resource]
+script = ExtResource("1")
+id = &"blades_of_chaos"
+display_name = "Lâminas do Caos"
+icon = ExtResource("3")
+description = "Duas lâminas acorrentadas caem sobre o inimigo mais próximo e deixam duas linhas de fogo de tamanho fixo no impacto."
+base_damage = 14.0
+cooldown = 2.4
+area = 260.0
+projectile_speed = 520.0
+projectile_count = 2
+levels = Array[ExtResource("2")]([SubResource("Level1"), SubResource("Level2"), SubResource("Level3"), SubResource("Level4"), SubResource("Level5"), SubResource("Level6"), SubResource("Level7"), SubResource("Level8")])

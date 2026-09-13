@@ -25,8 +25,9 @@ func _test_catalog() -> void:
 	var characters := ShopCatalog.get_products(ShopItemData.Category.CHARACTER)
 	var weapons := ShopCatalog.get_products(ShopItemData.Category.WEAPON)
 	var items := ShopCatalog.get_products(ShopItemData.Category.ITEM)
-	if characters.size() != 1 or characters[0].id != &"punisher":
-		_fail("Character catalog should contain only the Punisher.")
+	if characters.size() != 3 or characters[0].id != &"punisher" \
+			or characters[1].id != &"arthur" or characters[2].id != &"kratos":
+		_fail("Character catalog should contain the Punisher, King Arthur and Kratos.")
 	var weapon_ids: Array[StringName] = []
 	for product in weapons:
 		weapon_ids.append(product.id)
@@ -93,8 +94,9 @@ func _test_save_and_purchases() -> void:
 	var manager := SAVE_MANAGER_SCRIPT.new()
 	manager.save_path = TEST_SAVE_PATH
 	add_child(manager)
-	if manager.get_currency() != 0 or manager.has_unlocked_character("punisher"):
-		_fail("A new save should start with zero coins and the Punisher locked.")
+	if manager.get_currency() != 0 or manager.has_unlocked_character("punisher") \
+			or manager.has_unlocked_character("arthur") or manager.has_unlocked_character("kratos"):
+		_fail("A new save should start with zero coins and all shop characters locked.")
 	if not manager.add_currency(100):
 		_fail("Positive currency should be accepted.")
 	if manager.add_currency(0) or manager.add_currency(-1):
@@ -129,7 +131,7 @@ func _test_legacy_save_migration() -> void:
 	var file := FileAccess.open(TEST_SAVE_PATH, FileAccess.WRITE)
 	file.store_string(JSON.stringify({
 		"currency": -5,
-		"unlocked_characters": ["eirik", "punisher", "punisher"],
+		"unlocked_characters": ["eirik", "arthur", "punisher", "punisher"],
 		"unlocked_weapons": ["mjolnir", "anubiscurse", "anubiscurse"],
 		"custom_safe_field": "preserve",
 	}))
@@ -141,6 +143,8 @@ func _test_legacy_save_migration() -> void:
 		_fail("Migration should normalize negative currency.")
 	if not manager.has_unlocked_character("punisher"):
 		_fail("Migration should preserve an unlocked Punisher.")
+	if manager.has_unlocked_character("arthur"):
+		_fail("Version 4 migration should move Arthur out of the free character roster.")
 	if not manager.is_unlocked(&"weapon", &"anubis_curse") \
 			or manager.is_unlocked(&"weapon", &"anubiscurse"):
 		_fail("Migration should normalize the Anubis Curse ID.")

@@ -161,7 +161,9 @@ func _ensure_character_animation(
 
 
 func _apply_character_visual_size(character_texture: Texture2D) -> void:
-	var texture_height := float(character_texture.get_height())
+	var texture_height := _character_data.gameplay_reference_height \
+		if _character_data and _character_data.gameplay_reference_height > 0.0 \
+		else float(character_texture.get_height())
 	if texture_height > 0.0:
 		var scale_factor := character_visual_height / texture_height
 		sprite.scale = Vector2.ONE * scale_factor

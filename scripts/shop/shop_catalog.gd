@@ -2,6 +2,8 @@ extends RefCounted
 class_name ShopCatalog
 
 const PRODUCTS: Array[ShopItemData] = [
+	preload("res://resources/shop/arthur_shop_item.tres"),
+	preload("res://resources/shop/kratos_shop_item.tres"),
 	preload("res://resources/shop/punisher_shop_item.tres"),
 	preload("res://resources/shop/anubis_curse_shop_item.tres"),
 	preload("res://resources/shop/gungnir_shop_item.tres"),

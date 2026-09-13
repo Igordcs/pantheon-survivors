@@ -6,6 +6,7 @@ const ANIMATED_CHARACTER_IDS: Array[StringName] = [
 	&"arthur",
 	&"perseus",
 	&"neferu",
+	&"kratos",
 ]
 
 var _failures: int = 0
@@ -60,6 +61,11 @@ func _validate_player_animation(character_id: StringName) -> void:
 		_fail("%s should play walk_east while moving right." % character_id)
 	if animated_sprite.sprite_frames.get_frame_count(&"walk_east") != 6:
 		_fail("%s walk_east animation should contain 6 frames." % character_id)
+	if character_id == &"kratos":
+		var east_scale := animated_sprite.scale
+		player.call("_update_character_animation", Vector2.DOWN, true)
+		if not animated_sprite.scale.is_equal_approx(east_scale):
+			_fail("Kratos should keep the same visual scale while walking south.")
 
 	player.call("_update_character_animation", Vector2.RIGHT, false)
 	if animated_sprite.animation != &"idle_east":

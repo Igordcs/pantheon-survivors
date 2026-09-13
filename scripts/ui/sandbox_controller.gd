@@ -1,7 +1,7 @@
 extends CanvasLayer
 ## Runtime sandbox toolbox, initialized only for development runs.
 
-const CHARACTERS := {"Eirik": &"eirik", "Arthur": &"arthur", "Neferu": &"neferu", "Perseus": &"perseus", "Justiceiro": &"punisher"}
+const CHARACTERS := {"Eirik": &"eirik", "Arthur": &"arthur", "Neferu": &"neferu", "Perseus": &"perseus", "Justiceiro": &"punisher", "Kratos": &"kratos"}
 const WEAPONS := {
 	"Mjolnir": "res://resources/weapons/mjolnir_data.tres", "Excalibur": "res://resources/weapons/excalibur_data.tres",
 	"Disco Solar": "res://resources/weapons/solar_disk_data.tres", "Tridente de Poseidon": "res://resources/weapons/poseidon_trident_data.tres",
@@ -9,6 +9,7 @@ const WEAPONS := {
 	"Maldição de Anúbis": "res://resources/weapons/anubis_curse.tres", "Gungnir": "res://resources/weapons/gungnir_data.tres",
 	"Sumarbrander": "res://resources/weapons/sumarbrander_data.tres", "Arma do Justiceiro": "res://resources/weapons/punisher_gun_data.tres",
 	"Granada do Justiceiro": "res://resources/weapons/punisher_grenade_data.tres",
+	"Lâminas do Caos": "res://resources/weapons/blades_of_chaos_data.tres",
 }
 const ITEMS := {"Relíquia da Velocidade": "res://resources/relics/speed_relic_data.tres"}
 const ENEMIES := {
