@@ -48,6 +48,38 @@ func get_obtained_relics() -> Array[RelicData]:
 	return _obtained_relics.duplicate()
 
 
+func debug_grant_weapon(data: WeaponData) -> bool:
+	if not data or not is_instance_valid(_player_weapons):
+		return false
+	var existing := _get_weapon(data.id)
+	if existing:
+		if existing.has_method("upgrade"):
+			existing.upgrade()
+		return true
+	var scene_path := _resolve_weapon_scene_path(data.id)
+	if not ResourceLoader.exists(scene_path):
+		return false
+	var scene := load(scene_path) as PackedScene
+	if not scene:
+		return false
+	_player_weapons.add_child(scene.instantiate())
+	return true
+
+
+func debug_grant_relic(data: RelicData) -> bool:
+	if not data or _has_relic(data.id):
+		return false
+	var option := UpgradeOption.new()
+	option.item_data = data
+	option.is_relic = true
+	apply_option(option)
+	return true
+
+
+func debug_reset_inventory() -> void:
+	_obtained_relics.clear()
+
+
 func generate_options(count: int = 3) -> Array[UpgradeOption]:
 	var options: Array[UpgradeOption] = []
 	var pool: Array[Resource] = []

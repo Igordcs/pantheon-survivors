@@ -95,6 +95,13 @@ func _load_character_data() -> void:
 	push_error("Character data not found or invalid for id: %s" % char_id)
 
 
+func debug_switch_character(character_id: StringName) -> void:
+	Global.selected_character_id = character_id
+	for weapon in $WeaponHolder.get_children():
+		weapon.free()
+	_load_character_data()
+
+
 func _apply_character_visual(char_data: CharacterData) -> void:
 	_character_data = char_data
 	_uses_directional_sprites = char_data.has_directional_gameplay_sprites()

@@ -108,6 +108,11 @@ func add_weapon_icon(
 	weapons_container.add_child(icon)
 
 
+func clear_inventory_icons() -> void:
+	for child in weapons_container.get_children():
+		child.free()
+
+
 func _get_placeholder_color(item_id: StringName) -> Color:
 	var id_text := str(item_id)
 	if "mjolnir" in id_text:

@@ -14,6 +14,7 @@ extends Control
 @onready var title_label: Label = $TopTitleContainer/TitleLabel
 
 func _ready() -> void:
+	Global.sandbox_mode = false
 	MusicManager.play_menu_music()
 	
 	play_button.pressed.connect(func():

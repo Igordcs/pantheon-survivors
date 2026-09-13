@@ -14,6 +14,7 @@ extends Node2D
 @onready var world_generator: WorldGenerator = $World/Environment
 @onready var game_camera: GameCameraController = $World/Player/Camera2D
 @onready var loot_manager: LootManager = $LootManager
+@onready var sandbox_controller := $SandboxController
 
 var _active_boss: Node2D
 var _coins_collected_this_run: int = 0
@@ -80,6 +81,12 @@ func _ready() -> void:
 	run_manager.boss_fight_started.connect(_on_boss_fight_started)
 	run_manager.boss_fight_ended.connect(_on_boss_fight_ended)
 	run_manager.boss_warning_started.connect(hud.show_boss_warning)
+	if Global.sandbox_mode:
+		spawn_director.set_progression_paused(true)
+		enemy_spawner.stop_spawning()
+		sandbox_controller.setup(self, player, upgrade_system, hud)
+	else:
+		sandbox_controller.queue_free()
 
 
 func _unhandled_input(event: InputEvent) -> void:
