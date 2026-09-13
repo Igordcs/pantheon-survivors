@@ -79,6 +79,8 @@ func _get_item_icon(item_data: Resource) -> Texture2D:
 		return (item_data as WeaponData).icon
 	if item_data is RelicData:
 		return (item_data as RelicData).icon
+	if item_data is ItemData:
+		return (item_data as ItemData).icon
 	return null
 
 

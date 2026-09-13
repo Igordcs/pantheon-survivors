@@ -12,7 +12,8 @@ const AVAILABLE_WEAPONS = [
 	preload("res://resources/weapons/zeus_lightning_data.tres"),
 	preload("res://resources/weapons/anubis_curse.tres"),
 	preload("res://resources/weapons/gungnir_data.tres"),
-	preload("res://resources/weapons/sumarbrander_data.tres")
+	preload("res://resources/weapons/sumarbrander_data.tres"),
+	preload("res://resources/weapons/leviathan_axe_data.tres")
 ]
 
 # Armas exclusivas do Punisher — só aparecem no pool se o personagem atual for o Punisher
@@ -29,23 +30,26 @@ const SHOP_WEAPON_IDS: Array[StringName] = [
 	&"anubis_curse",
 	&"gungnir",
 	&"sumarbrander",
+	&"leviathan_axe",
 ]
 
-const AVAILABLE_RELICS = [
-	preload("res://resources/relics/speed_relic_data.tres")
-]
+# As Sandálias de Hermes agora são um item de loja com progressão própria.
+# A antiga relíquia de velocidade não entra mais no pool da run.
+const AVAILABLE_RELICS = []
 
 const EVOLUTION_RECIPES = []
 
 var _player_weapons: Node2D
 var _obtained_relics: Array[RelicData] = []
 var _player: CharacterBody2D
+var _item_controller: ItemEffectController
 
 
 func setup(weapon_holder: Node2D) -> void:
 	_player_weapons = weapon_holder
 	if weapon_holder:
 		_player = weapon_holder.get_parent() as CharacterBody2D
+		_item_controller = _player.get_node_or_null("ItemEffectController") as ItemEffectController
 
 
 func get_obtained_relics() -> Array[RelicData]:
@@ -116,6 +120,19 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 	for relic in AVAILABLE_RELICS:
 		if not _has_relic(relic.id):
 			pool.append(relic)
+
+	# Fundamentais são encontrados durante a run e não pertencem à loja.
+	if _item_controller:
+		for item in ItemCatalog.get_fundamentals():
+			if _item_controller.get_item_level(item.id) < item.max_level:
+				pool.append(item)
+
+	# Poderes especiais e sinergias equipados podem ter progressão própria.
+	if _item_controller:
+		for item_id in SaveManager.get_equipped_items():
+			var item := ItemCatalog.get_item(item_id)
+			if item and _item_controller.get_item_level(item.id) < item.max_level:
+				pool.append(item)
 			
 	# Escolher até 'count' opções sem duplicatas
 	pool.shuffle()
@@ -147,6 +164,14 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 			opt.is_relic = true
 			opt.display_text = "Relíquia: %s" % data.display_name
 			opt.description_text = data.description
+		elif data is ItemData:
+			opt.is_item = true
+			var item := data as ItemData
+			var item_level := _item_controller.get_item_level(item.id)
+			opt.current_level = item_level
+			opt.display_text = ("Novo Item: %s" % item.display_name) if item_level == 0 \
+				else ("Item: %s Lv %d" % [item.display_name, item_level + 1])
+			opt.description_text = item.get_level_description(item_level + 1)
 			
 		options.append(opt)
 		
@@ -154,7 +179,14 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 
 
 func apply_option(option: UpgradeOption) -> void:
-	if option.is_relic:
+	if option.is_item:
+		if _item_controller:
+			var item := option.item_data as ItemData
+			if _item_controller.get_item_level(item.id) == 0:
+				_item_controller.debug_grant_item(item)
+			else:
+				_item_controller.upgrade_item(item.id)
+	elif option.is_relic:
 		_obtained_relics.append(option.item_data as RelicData)
 		print("Relíquia obtida: ", option.item_data.display_name)
 		# Efeitos passivos poderiam ser aplicados aqui

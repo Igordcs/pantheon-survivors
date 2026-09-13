@@ -1,10 +1,11 @@
-[gd_scene format=3 uid="uid://don4noo083j8k"]
+[gd_scene load_steps=9 format=3 uid="uid://don4noo083j8k"]
 
 [ext_resource type="Script" uid="uid://cc2pwx0n8v015" path="res://scripts/player/player.gd" id="1_script"]
 [ext_resource type="Script" uid="uid://rpi6bjtolxtp" path="res://scripts/combat/health_component.gd" id="3_health"]
 [ext_resource type="Script" uid="uid://clxgf7qrmu808" path="res://scripts/progression/experience_component.gd" id="5_exp"]
 [ext_resource type="Script" uid="uid://bmsbqsv3bhycr" path="res://scripts/player/pickup_area.gd" id="6_pickup"]
 [ext_resource type="Script" path="res://scripts/camera/game_camera_controller.gd" id="7_camera"]
+[ext_resource type="Script" path="res://scripts/items/item_effect_controller.gd" id="8_items"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 16.0
@@ -45,3 +46,6 @@ position = Vector2(-1, -1)
 shape = SubResource("CircleShape2D_Pickup")
 
 [node name="WeaponHolder" type="Node2D" parent="."]
+
+[node name="ItemEffectController" type="Node" parent="."]
+script = ExtResource("8_items")

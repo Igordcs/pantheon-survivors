@@ -3,6 +3,7 @@ class_name EnemyBase
 ## Comportamentos de combate compartilhados por todos os inimigos.
 
 const PETRIFIED_COLOR := Color(0.55, 0.62, 0.68, 1.0)
+const FROZEN_COLOR := Color(0.35, 0.78, 1.0, 1.0)
 
 var _knockback_velocity: Vector2 = Vector2.ZERO
 var _petrification_timer: float = 0.0
@@ -19,6 +20,15 @@ func apply_petrification(duration: float) -> void:
 	var visual := _get_effect_visual()
 	if visual:
 		visual.self_modulate = PETRIFIED_COLOR
+
+
+func apply_freeze(duration: float) -> void:
+	_petrification_timer = maxf(_petrification_timer, duration)
+	_knockback_velocity = Vector2.ZERO
+	velocity = Vector2.ZERO
+	var visual := _get_effect_visual()
+	if visual:
+		visual.self_modulate = FROZEN_COLOR
 
 
 func _process_petrification(delta: float) -> bool:

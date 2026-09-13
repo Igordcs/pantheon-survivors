@@ -10,16 +10,22 @@ extends Control
 @onready var back_button: Button = $Margin/VBox/BackButton
 
 var _category := ShopItemData.Category.CHARACTER
+var _loadout_label: Label
 
 
 func _ready() -> void:
 	MusicManager.play_menu_music()
+	_loadout_label = Label.new()
+	_loadout_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	$Margin/VBox.add_child(_loadout_label)
+	$Margin/VBox.move_child(_loadout_label, 2)
 	characters_button.pressed.connect(_show_category.bind(ShopItemData.Category.CHARACTER))
 	weapons_button.pressed.connect(_show_category.bind(ShopItemData.Category.WEAPON))
 	items_button.pressed.connect(_show_category.bind(ShopItemData.Category.ITEM))
 	back_button.pressed.connect(_go_back)
 	SaveManager.currency_changed.connect(_on_currency_changed)
 	_update_currency()
+	_update_loadout_label()
 	_show_category(_category)
 	characters_button.grab_focus()
 
@@ -32,6 +38,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _show_category(category: int) -> void:
 	_category = category
+	if _loadout_label: _update_loadout_label()
 	characters_button.button_pressed = category == ShopItemData.Category.CHARACTER
 	weapons_button.button_pressed = category == ShopItemData.Category.WEAPON
 	items_button.button_pressed = category == ShopItemData.Category.ITEM
@@ -77,11 +84,23 @@ func _create_product_card(product: ShopItemData) -> Control:
 
 func _purchase(product: ShopItemData) -> void:
 	MusicManager.play_ui_click()
+	if product.category == ShopItemData.Category.ITEM and SaveManager.is_unlocked(&"item", product.id):
+		if product.id in SaveManager.get_equipped_items():
+			SaveManager.unequip_item(product.id)
+			feedback_label.text = "%s removido do loadout." % product.display_name
+		elif SaveManager.equip_item(product.id):
+			feedback_label.text = "%s equipado." % product.display_name
+		else:
+			feedback_label.text = "Os três slots já estão ocupados. Remova um item primeiro."
+		_update_loadout_label()
+		_refresh_buttons()
+		return
 	if SaveManager.try_purchase(product):
 		feedback_label.text = "%s adquirido!" % product.display_name
 	else:
 		feedback_label.text = "Moedas insuficientes ou conteúdo já adquirido."
 	_update_currency()
+	_update_loadout_label()
 	_refresh_buttons()
 
 
@@ -117,8 +136,12 @@ func _configure_vertical_focus() -> void:
 func _update_purchase_button(button: Button, product: ShopItemData) -> void:
 	var category := _category_name(product.category)
 	if SaveManager.is_unlocked(category, product.id):
-		button.text = "ADQUIRIDO"
-		button.disabled = true
+		if product.category == ShopItemData.Category.ITEM:
+			button.text = "REMOVER" if product.id in SaveManager.get_equipped_items() else "EQUIPAR"
+			button.disabled = false
+		else:
+			button.text = "ADQUIRIDO"
+			button.disabled = true
 		button.add_theme_color_override("font_disabled_color", Color(0.65, 0.65, 0.65))
 	else:
 		button.text = "COMPRAR\n%d moedas" % product.price
@@ -127,6 +150,16 @@ func _update_purchase_button(button: Button, product: ShopItemData) -> void:
 			"font_disabled_color",
 			Color(1.0, 0.35, 0.25) if button.disabled else Color.WHITE
 		)
+
+
+func _update_loadout_label() -> void:
+	var names: Array[String] = []
+	for id in SaveManager.get_equipped_items():
+		var item := ItemCatalog.get_item(id)
+		if item: names.append(item.display_name)
+	while names.size() < 3: names.append("Vazio")
+	_loadout_label.text = "ITENS EQUIPADOS: [1] %s   [2] %s   [3] %s" % names
+	_loadout_label.visible = _category == ShopItemData.Category.ITEM
 
 
 func _on_currency_changed(_balance: int) -> void:

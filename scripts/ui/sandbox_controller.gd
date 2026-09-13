@@ -10,8 +10,8 @@ const WEAPONS := {
 	"Sumarbrander": "res://resources/weapons/sumarbrander_data.tres", "Arma do Justiceiro": "res://resources/weapons/punisher_gun_data.tres",
 	"Granada do Justiceiro": "res://resources/weapons/punisher_grenade_data.tres",
 	"Lâminas do Caos": "res://resources/weapons/blades_of_chaos_data.tres",
+	"Machado Leviatã": "res://resources/weapons/leviathan_axe_data.tres",
 }
-const ITEMS := {"Relíquia da Velocidade": "res://resources/relics/speed_relic_data.tres"}
 const ENEMIES := {
 	"Morcego": ["res://scenes/enemies/bat_enemy.tscn", "res://resources/enemies/bat_data.tres"],
 	"Draugr": ["res://scenes/enemies/basic_enemy.tscn", "res://resources/enemies/draugr_data.tres"],
@@ -73,8 +73,10 @@ func _build_ui() -> void:
 	_add_button(box, "Trocar personagem", _switch_character)
 	_weapon_select = _add_selector(box, WEAPONS)
 	_add_button(box, "Adicionar / melhorar arma", _grant_weapon)
-	_item_select = _add_selector(box, ITEMS)
-	_add_button(box, "Adicionar item", _grant_item)
+	var item_options := {}
+	for item in ItemCatalog.get_all(): item_options[item.display_name] = item.id
+	_item_select = _add_selector(box, item_options)
+	_add_button(box, "Adicionar / melhorar item", _grant_item)
 	_enemy_select = _add_selector(box, ENEMIES)
 	_add_button(box, "Spawnar inimigo", _spawn_enemy)
 	_boss_select = _add_selector(box, BOSSES)
@@ -127,9 +129,10 @@ func _grant_weapon() -> void:
 
 
 func _grant_item() -> void:
-	var path := _item_select.get_item_metadata(_item_select.selected) as String
-	var data := load(path) as RelicData
-	_status.text = "%s adicionada." % data.display_name if _upgrade_system.debug_grant_relic(data) else "Item já equipado."
+	var id := _item_select.get_item_metadata(_item_select.selected) as StringName
+	var data := ItemCatalog.get_item(id)
+	var controller := _player.get_node_or_null("ItemEffectController") as ItemEffectController
+	_status.text = "%s adicionado ou melhorado." % data.display_name if controller and controller.debug_grant_item(data) else "Item já está no nível máximo."
 
 
 func _spawn_enemy() -> void:

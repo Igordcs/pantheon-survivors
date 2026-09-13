@@ -113,6 +113,11 @@ func _update_character_details(index: int) -> void:
 			data.description,
 			data.passive_description,
 		]
+		var equipped_names: Array[String] = []
+		for item_id in SaveManager.get_equipped_items():
+			var equipped_item := ItemCatalog.get_item(item_id)
+			if equipped_item: equipped_names.append(equipped_item.display_name)
+		info_label.text += "\n\nItens: %s" % (", ".join(equipped_names) if not equipped_names.is_empty() else "Nenhum")
 		weapon_icon.texture = starting_weapon_icon
 		weapon_icon.visible = starting_weapon_icon != null
 		weapon_text.text = "Arma inicial: %s\n%s" % [weapon_name, weapon_description]

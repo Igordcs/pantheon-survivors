@@ -31,6 +31,8 @@ func get_xp_requirement_for_level(level: int) -> int:
 func add_xp(amount: int) -> void:
 	if amount <= 0:
 		return
+	var controller := get_parent().get_node_or_null("ItemEffectController") as ItemEffectController
+	if controller: amount = maxi(roundi(amount * controller.get_xp_multiplier()), 1)
 	current_xp += amount
 	var needed := xp_for_next_level()
 	while current_xp >= needed:
