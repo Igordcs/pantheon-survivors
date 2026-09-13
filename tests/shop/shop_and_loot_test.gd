@@ -13,6 +13,7 @@ func _ready() -> void:
 	_test_catalog_validation()
 	_test_save_and_purchases()
 	_test_legacy_save_migration()
+	_test_settings_persistence()
 	await _test_coin_pooling()
 	_test_coin_single_collection()
 	if _failures == 0:
@@ -146,7 +147,33 @@ func _test_legacy_save_migration() -> void:
 	if manager.save_data.get("custom_safe_field") != "preserve" \
 			or not manager.save_data.has("unlocked_items"):
 		_fail("Migration should preserve safe unknown data and add new keys.")
+	if manager.get_master_volume() != 0.8 or manager.get_music_volume() != 0.8 \
+			or manager.is_fullscreen_enabled():
+		_fail("Migration should add safe default settings to legacy saves.")
 	manager.free()
+	_remove_test_save()
+
+
+func _test_settings_persistence() -> void:
+	_remove_test_save()
+	var manager := SAVE_MANAGER_SCRIPT.new()
+	manager.save_path = TEST_SAVE_PATH
+	manager.apply_runtime_settings = false
+	add_child(manager)
+	manager.set_master_volume(0.35)
+	manager.set_music_volume(0.6)
+	manager.set_fullscreen_enabled(true)
+	manager.free()
+
+	var reloaded := SAVE_MANAGER_SCRIPT.new()
+	reloaded.save_path = TEST_SAVE_PATH
+	reloaded.apply_runtime_settings = false
+	add_child(reloaded)
+	if not is_equal_approx(reloaded.get_master_volume(), 0.35) \
+			or not is_equal_approx(reloaded.get_music_volume(), 0.6) \
+			or not reloaded.is_fullscreen_enabled():
+		_fail("Audio and fullscreen settings should survive a save reload.")
+	reloaded.free()
 	_remove_test_save()
 
 

@@ -3,13 +3,15 @@ extends Node
 
 signal currency_changed(new_balance: int)
 signal unlock_changed(category: StringName, content_id: StringName)
+signal settings_changed
 
 const SAVE_PATH := "user://save_data.json"
-const SAVE_VERSION := 2
+const SAVE_VERSION := 3
 const INITIAL_CHARACTER_IDS := ["eirik", "arthur", "neferu", "perseus"]
 const INITIAL_WEAPON_IDS := ["mjolnir"]
 
 var save_path: String = SAVE_PATH
+var apply_runtime_settings := true
 
 var save_data: Dictionary = {
 	"save_version": SAVE_VERSION,
@@ -18,11 +20,18 @@ var save_data: Dictionary = {
 	"unlocked_relics": ["speed_relic"],
 	"unlocked_characters": ["eirik", "arthur", "neferu", "perseus"],
 	"unlocked_items": [],
+	"settings": {
+		"master_volume": 0.8,
+		"music_volume": 0.8,
+		"fullscreen": false,
+	},
 }
 
 
 func _ready() -> void:
 	load_game()
+	if apply_runtime_settings:
+		apply_settings.call_deferred()
 
 
 func _make_defaults() -> Dictionary:
@@ -33,7 +42,108 @@ func _make_defaults() -> Dictionary:
 		"unlocked_relics": ["speed_relic"],
 		"unlocked_characters": INITIAL_CHARACTER_IDS.duplicate(),
 		"unlocked_items": [],
+		"settings": {
+			"master_volume": 0.8,
+			"music_volume": 0.8,
+			"fullscreen": false,
+		},
 	}
+
+
+func get_master_volume() -> float:
+	return clampf(float(_get_settings().get("master_volume", 0.8)), 0.0, 1.0)
+
+
+func get_music_volume() -> float:
+	return clampf(float(_get_settings().get("music_volume", 0.8)), 0.0, 1.0)
+
+
+func is_fullscreen_enabled() -> bool:
+	return bool(_get_settings().get("fullscreen", false))
+
+
+func set_master_volume(value: float) -> bool:
+	return _set_setting("master_volume", clampf(value, 0.0, 1.0))
+
+
+func set_music_volume(value: float) -> bool:
+	return _set_setting("music_volume", clampf(value, 0.0, 1.0))
+
+
+func set_fullscreen_enabled(enabled: bool) -> bool:
+	return _set_setting("fullscreen", enabled)
+
+
+func apply_settings() -> void:
+	_apply_master_volume(get_master_volume())
+	_apply_music_volume(get_music_volume())
+	_apply_fullscreen(is_fullscreen_enabled())
+
+
+func _get_settings() -> Dictionary:
+	var stored = save_data.get("settings", {})
+	if not (stored is Dictionary):
+		stored = {}
+		save_data["settings"] = stored
+	return stored
+
+
+func _set_setting(key: String, value: Variant) -> bool:
+	var settings := _get_settings()
+	var previous_value = settings.get(key)
+	settings[key] = value
+	save_data["settings"] = settings
+	if apply_runtime_settings:
+		_apply_setting(key, value)
+	if not save_game():
+		settings[key] = previous_value
+		save_data["settings"] = settings
+		if apply_runtime_settings:
+			_apply_setting(key, previous_value)
+		return false
+	settings_changed.emit()
+	return true
+
+
+func _apply_setting(key: String, value: Variant) -> void:
+	match key:
+		"master_volume": _apply_master_volume(float(value))
+		"music_volume": _apply_music_volume(float(value))
+		"fullscreen": _apply_fullscreen(bool(value))
+
+
+func _apply_master_volume(value: float) -> void:
+	var master_bus_idx := AudioServer.get_bus_index("Master")
+	if master_bus_idx == -1:
+		return
+	AudioServer.set_bus_volume_db(master_bus_idx, linear_to_db(maxf(value, 0.0001)))
+	AudioServer.set_bus_mute(master_bus_idx, value <= 0.001)
+
+
+func _apply_music_volume(value: float) -> void:
+	var music_manager := get_node_or_null("/root/MusicManager")
+	if music_manager and music_manager.has_method("set_music_volume"):
+		music_manager.set_music_volume(value)
+
+
+func _apply_fullscreen(enabled: bool) -> void:
+	if enabled:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+		var mode := DisplayServer.window_get_mode()
+		if mode != DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN \
+				and mode != DisplayServer.WINDOW_MODE_FULLSCREEN:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		return
+
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	var viewport_width := int(ProjectSettings.get_setting("display/window/size/viewport_width", 1280))
+	var viewport_height := int(ProjectSettings.get_setting("display/window/size/viewport_height", 720))
+	var window_size := Vector2i(viewport_width, viewport_height)
+	DisplayServer.window_set_size(window_size)
+	var screen := DisplayServer.window_get_current_screen()
+	var screen_position := DisplayServer.screen_get_position(screen)
+	var screen_size := DisplayServer.screen_get_size(screen)
+	DisplayServer.window_set_position(screen_position + (screen_size - window_size) / 2)
 
 
 func get_currency() -> int:
@@ -149,6 +259,12 @@ func _migrate_save() -> void:
 		weapons.append("anubis_curse")
 	weapons.erase("anubiscurse")
 	save_data["unlocked_weapons"] = weapons
+	var stored_settings = save_data.get("settings", {})
+	var settings: Dictionary = stored_settings if stored_settings is Dictionary else {}
+	settings["master_volume"] = clampf(float(settings.get("master_volume", 0.8)), 0.0, 1.0)
+	settings["music_volume"] = clampf(float(settings.get("music_volume", 0.8)), 0.0, 1.0)
+	settings["fullscreen"] = bool(settings.get("fullscreen", false))
+	save_data["settings"] = settings
 
 
 func _unlock(category: StringName, content_id: StringName, persist: bool) -> bool:

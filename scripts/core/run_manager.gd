@@ -192,6 +192,10 @@ func _default_boss_schedule() -> Array[BossEncounterData]:
 				&"jormungandr", "Jormungandr",
 				preload("res://scenes/bosses/jormungandr.tscn")
 			),
+			_candidate(
+				&"fenrir", "Fenrir",
+				preload("res://scenes/bosses/fenrir.tscn")
+			),
 		],
 		true
 	))

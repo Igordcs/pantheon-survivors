@@ -12,6 +12,6 @@ contact_damage = 4.0
 score_value = 12
 spawn_weight = 0.7
 projectile_damage = 8.0
-projectile_speed = 300.0
+projectile_speed = 220.0
 attack_range = 350.0
 attack_cooldown = 2.0

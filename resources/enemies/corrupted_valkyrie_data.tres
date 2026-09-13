@@ -1,0 +1,19 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"corrupted_valkyrie"
+display_name = "Corrupted Valkyrie"
+max_health = 360.0
+speed = 68.0
+contact_damage = 20.0
+score_value = 70
+spawn_weight = 0.045
+charge_damage = 34.0
+charge_speed = 260.0
+charge_cooldown = 5.5
+charge_windup = 0.9
+visual_size = 68.0
+sprite_directory = "res://assets/sprites/enemies/corrupted_valkyrie/Idle/rotations"

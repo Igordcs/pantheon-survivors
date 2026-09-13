@@ -9,6 +9,7 @@ var _distance_traveled: float = 0.0
 var _slow_multiplier: float = 1.0
 var _slow_duration: float = 0.0
 var _blocked: bool = false
+var _pulse_time: float = 0.0
 
 
 func _ready() -> void:
@@ -17,6 +18,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_pulse_time += delta
+	var pulse := lerpf(0.92, 1.06, (sin(_pulse_time * 9.0) + 1.0) * 0.5)
+	scale = Vector2.ONE * pulse
 	var motion := direction * speed * delta
 	position += motion
 	_distance_traveled += motion.length()
@@ -30,6 +34,10 @@ func setup(dir: Vector2, spd: float, dmg: float, max_dist: float = 600.0) -> voi
 	damage = dmg
 	max_distance = max_dist
 	rotation = direction.angle()
+	_distance_traveled = 0.0
+	_blocked = false
+	monitoring = true
+	set_physics_process(true)
 
 
 func set_status_effect(slow_multiplier: float, slow_duration: float) -> void:

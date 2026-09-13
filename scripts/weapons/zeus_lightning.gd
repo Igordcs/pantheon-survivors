@@ -100,8 +100,9 @@ func _attack_random_targets() -> void:
 			var target := _find_chain_target(origin, candidates, hit_enemies)
 			if not target:
 				break
+			var target_position := target.global_position
 			_strike_target(origin, target, strike_damage, hit_enemies)
-			origin = target.global_position
+			origin = target_position
 			strike_damage *= _chain_damage_multiplier
 
 	_is_attacking = false
@@ -146,9 +147,12 @@ func _strike_target(
 	strike_damage: float,
 	hit_enemies: Array[Node2D]
 ) -> void:
+	if not _is_valid_target(target):
+		return
+	var impact_position := target.global_position
 	if not _damage_target(target, strike_damage, hit_enemies):
 		return
-	_spawn_lightning_vfx(origin, target.global_position, 6.0, 0.2)
+	_spawn_lightning_vfx(origin, impact_position, 6.0, 0.2)
 
 
 func _damage_target(
@@ -156,6 +160,8 @@ func _damage_target(
 	strike_damage: float,
 	hit_enemies: Array[Node2D]
 ) -> bool:
+	if not _is_valid_target(target):
+		return false
 	var health := target.get_node_or_null("HealthComponent") as HealthComponent
 	if not health or not health.is_alive():
 		return false
@@ -181,10 +187,15 @@ func _find_chain_target(
 	return closest
 
 
-func _is_valid_target(enemy: CharacterBody2D) -> bool:
-	if not is_instance_valid(enemy) or not enemy.visible:
+func _is_valid_target(enemy: Variant) -> bool:
+	# Keep this parameter untyped: a freed Object fails typed argument validation
+	# before this function can call is_instance_valid().
+	if not is_instance_valid(enemy) or not (enemy is CharacterBody2D):
 		return false
-	var health := enemy.get_node_or_null("HealthComponent") as HealthComponent
+	var enemy_body := enemy as CharacterBody2D
+	if not enemy_body.visible or enemy_body.is_queued_for_deletion():
+		return false
+	var health := enemy_body.get_node_or_null("HealthComponent") as HealthComponent
 	return health == null or health.is_alive()
 
 

@@ -6,45 +6,45 @@ Base movement speeds for playable characters, regular enemies and bosses were re
 
 ## Enemy roster
 
-| Enemy | Role | HP | Speed | Damage | XP | Rarity / debut |
-| --- | --- | ---: | ---: | ---: | ---: | --- |
-| Bat | Swarm | 12 | 119 | 5 | 4 | Common, 00:00 |
-| Draugr | Basic melee | 24 | 98 | 8 | 7 | Common, 00:00 |
-| Harpy | Fast flanker | 30 | 119 | 10 | 10 | Uncommon, 01:00 |
-| Arcane Slime | Ranged | 26 | 55 | 8 projectile | 12 | Uncommon, 02:00 |
-| Healer Slime | Support | 45 | 51 | 5 | 18 | Rare, 03:00 |
-| Medusa | Ranged control | 55 | 64 | 10 projectile + slow | 20 | Rare, 03:00 |
-| Mummy | Heavy ranged | 70 | 51 | 14 projectile | 22 | Rare, 05:00 |
-| Cyclops | Heavy melee | 130 | 43 | 22 | 30 | Very rare, 05:00 |
-| Orc | Tank | 180 | 38 | 26 | 35 | Very rare, 06:30 |
-| Minotaur | Charger / elite event | 260 | 60 | 30 / 40 charge | 60 | Event, 07:30 |
+| Enemy        | Role                  |  HP | Speed |               Damage |  XP | Rarity / debut   |
+| ------------ | --------------------- | --: | ----: | -------------------: | --: | ---------------- |
+| Bat          | Swarm                 |  12 |   119 |                    5 |   4 | Common, 00:00    |
+| Draugr       | Basic melee           |  24 |    98 |                    8 |   7 | Common, 00:00    |
+| Harpy        | Fast flanker          |  30 |   119 |                   10 |  10 | Uncommon, 01:00  |
+| Arcane Slime | Ranged                |  26 |    55 |         8 projectile |  12 | Uncommon, 02:00  |
+| Healer Slime | Support               |  45 |    51 |                    5 |  18 | Rare, 03:00      |
+| Medusa       | Ranged control        |  55 |    64 | 10 projectile + slow |  20 | Rare, 03:00      |
+| Mummy        | Heavy ranged          |  70 |    51 |        14 projectile |  22 | Rare, 05:00      |
+| Cyclops      | Heavy melee           | 130 |    43 |                   22 |  30 | Very rare, 05:00 |
+| Orc          | Tank                  | 180 |    38 |                   26 |  35 | Very rare, 06:30 |
+| Minotaur     | Charger / elite event | 260 |    60 |       30 / 40 charge |  60 | Event, 07:30     |
 
 ## Timeline
 
-| Time | Pressure change |
-| --- | --- |
-| 00:00–01:00 | Bat and Draugr introduction, cap 25 |
-| 01:00–02:00 | Harpies and a 30-Bat swarm event at 01:30, cap 40 |
+| Time        | Pressure change                                              |
+| ----------- | ------------------------------------------------------------ |
+| 00:00–01:00 | Bat and Draugr introduction, cap 25                          |
+| 01:00–02:00 | Harpies and a 30-Bat swarm event at 01:30, cap 40            |
 | 02:00–03:00 | Ranged Slimes and a 12-Slime surround event at 02:30, cap 55 |
-| 03:00 | King Slime encounter |
-| 03:00–05:00 | Medusa and Healer Slime, cap 80 |
-| 05:00–06:30 | Mummy and Cyclops, cap 110 |
-| 06:30 | Random medium boss: Orc Warlord or Cerberus |
-| 06:30–08:00 | Orcs join, first Minotaur event at 07:30, cap 150 |
-| 08:00–10:00 | Full roster and a final 50-Bat swarm at 09:00, cap 220 |
-| 10:00 | Random final boss: Corrupted Treant or Jormungandr |
+| 03:00       | King Slime encounter                                         |
+| 03:00–05:00 | Medusa and Healer Slime, cap 80                              |
+| 05:00–06:30 | Mummy and Cyclops, cap 110                                   |
+| 06:30       | Random medium boss: Orc Warlord or Cerberus                  |
+| 06:30–08:00 | Orcs join, first Minotaur event at 07:30, cap 150            |
+| 08:00–10:00 | Full roster and a final 50-Bat swarm at 09:00, cap 220       |
+| 10:00       | Random final boss: Corrupted Treant or Jormungandr           |
 
 Horde events request substantially larger groups than routine spawn batches. They still respect the active-enemy cap of the current phase and each enemy type's simultaneous cap, so the actual spawned count can be lower when the battlefield is already full. Bats allow up to 80 simultaneous instances and ranged Slimes up to 24, preventing their species cap from prematurely reducing the configured event.
 
 ## Bosses
 
-| Boss | HP | Speed | Damage | Difficulty | Main behavior | Result |
-| --- | ---: | ---: | --- | --- | --- | --- |
-| King Slime | 1,500 | Stationary | 18 | 2/5 | Frontal strike and ranged/support Slime summons | Chest, then resume |
-| Orc Warlord | 4,000 | 55 | 25 contact / 32 charge | 4/5 | Targeted charge, Orc summons and faster phase two | Chest, then resume |
-| Cerberus | 3,600 | 61 | 24 contact / 28 breath / 38 leap | 4/5 | Three infernal breath cones and a targeted crushing leap | Chest, then resume |
-| Corrupted Treant | 8,000 | 32 | 30 contact / 38 eruption | 5/5 | Slow pursuit, targeted ground eruptions, Bat summons and faster phase two | Chest, then victory |
-| Jormungandr | 9,500 | 49 | 30 contact / 45 bite / 14 impact / 8 poison tick / 12 magic | 5/5 | Emerging bite, poison spit and a radial magic barrage | Chest, then victory |
+| Boss             |    HP |      Speed | Damage                                                      | Difficulty | Main behavior                                                             | Result              |
+| ---------------- | ----: | ---------: | ----------------------------------------------------------- | ---------- | ------------------------------------------------------------------------- | ------------------- |
+| King Slime       | 1,500 | Stationary | 18                                                          | 2/5        | Frontal strike and ranged/support Slime summons                           | Chest, then resume  |
+| Orc Warlord      | 4,000 |         55 | 25 contact / 32 charge                                      | 4/5        | Targeted charge, Orc summons and faster phase two                         | Chest, then resume  |
+| Cerberus         | 3,600 |         61 | 24 contact / 28 breath / 38 leap                            | 4/5        | Three infernal breath cones and a targeted crushing leap                  | Chest, then resume  |
+| Corrupted Treant | 8,000 |         32 | 30 contact / 38 eruption                                    | 5/5        | Slow pursuit, targeted ground eruptions, Bat summons and faster phase two | Chest, then victory |
+| Jormungandr      | 9,500 |         49 | 30 contact / 45 bite / 14 impact / 8 poison tick / 12 magic | 5/5        | Emerging bite, poison spit and a radial magic barrage                     | Chest, then victory |
 
 ## Boss selection
 
@@ -94,3 +94,12 @@ The telegraphs are intentionally separate from damage resolution: warning shapes
 The Solar Disk damages enemies and destroys hostile projectiles that touch an orbiting disk. This applies to regular ranged shots, Jormungandr's arcing poison spits and its radial magic barrage. Ground hazards, melee contact and telegraphed area attacks are not projectiles and cannot be blocked. The weapon starts with one disk and can reach a hard maximum of three disks.
 
 Balance values are intentionally isolated between `EnemyData` combat resources and `EnemySpawnEntry` horde configuration. This allows tuning enemy combat without accidentally changing its frequency, and vice versa.
+
+## Late-run enemy and Fenrir update
+
+- Arcane Slime projectiles now travel at 220 pixels per second, use an 8-pixel collision radius and have a purple gelatinous core, cyan glint and short trail.
+- Normal-wave spawn weights were reduced from 0.70 to 0.6 for Arcane Slimes and from 0.25 to 0.20 for Healer Slimes. The dedicated Slime event remains unchanged.
+- Ammit enters at 05:00 as a 480-HP, 40-speed tank. It resists 60% of normal knockback and is capped at six active instances.
+- Corrupted Valkyrie enters at 06:30 with 360 HP. Its 260-speed charge locks direction after a 0.9-second purple corridor telegraph; no more than eight may be active.
+- Fenrir joins Corrupted Treant and Jormungandr in the equally weighted 10:00 final-boss pool. It has 10,500 HP and uses Devouring Charge, sequential Gleipnir ruptures, two hollow Howl of Ragnarok rings and the second-phase Moon Hunt.
+- Fenrir moves 12% faster and attacks every 3 seconds below half health. Consecutive attacks cannot repeat, and none of its effects trigger screen shake.

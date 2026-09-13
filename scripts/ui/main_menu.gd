@@ -79,24 +79,15 @@ func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 func _init_audio_settings() -> void:
-	var master_bus_idx = AudioServer.get_bus_index("Master")
-	if master_bus_idx != -1:
-		master_slider.value = db_to_linear(AudioServer.get_bus_volume_db(master_bus_idx))
-	var is_fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
-	fullscreen_check.button_pressed = is_fullscreen
+	master_slider.set_value_no_signal(SaveManager.get_master_volume())
+	music_slider.set_value_no_signal(SaveManager.get_music_volume())
+	fullscreen_check.set_pressed_no_signal(SaveManager.is_fullscreen_enabled())
 
 func _on_master_slider_changed(value: float) -> void:
-	var master_bus_idx = AudioServer.get_bus_index("Master")
-	if master_bus_idx != -1:
-		AudioServer.set_bus_volume_db(master_bus_idx, linear_to_db(value))
-		AudioServer.set_bus_mute(master_bus_idx, value <= 0.01)
+	SaveManager.set_master_volume(value)
 
 func _on_music_slider_changed(value: float) -> void:
-	if MusicManager and MusicManager.player:
-		MusicManager.player.volume_db = linear_to_db(value) - 4.0
+	SaveManager.set_music_volume(value)
 
 func _on_fullscreen_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	SaveManager.set_fullscreen_enabled(toggled_on)

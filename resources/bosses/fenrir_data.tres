@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"fenrir"
+display_name = "Fenrir"
+max_health = 10500.0
+speed = 58.0
+contact_damage = 32.0
+score_value = 3500
+visual_size = 144.0
+sprite_directory = "res://assets/sprites/bosses/fenrir/Idle/rotations"

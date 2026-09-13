@@ -19,6 +19,8 @@ const SFX_PLAYER_HURT = preload("res://assets/audio/sfx/player_hurt.wav")
 		
 var player: AudioStreamPlayer
 var sfx_player: AudioStreamPlayer
+var _music_volume_linear := 0.8
+var _current_base_volume_db := -10.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -30,8 +32,21 @@ func _ready() -> void:
 	sfx_player = AudioStreamPlayer.new()
 	sfx_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(sfx_player)
+	_music_volume_linear = SaveManager.get_music_volume()
 	
 	play_menu_music()
+
+func set_music_volume(value: float) -> void:
+	_music_volume_linear = clampf(value, 0.0, 1.0)
+	_apply_music_volume()
+
+func _apply_music_volume() -> void:
+	if not player:
+		return
+	if _music_volume_linear <= 0.001:
+		player.volume_db = -80.0
+	else:
+		player.volume_db = _current_base_volume_db + linear_to_db(_music_volume_linear)
 
 func play_menu_music() -> void:
 	play_music(MENU_THEME, -10.0)
@@ -129,10 +144,11 @@ func play_grenade_explosion_sfx() -> void:
 func play_music(stream: AudioStream, volume_db: float = -10.0) -> void:
 	if player == null:
 		return
+	_current_base_volume_db = volume_db
+	_apply_music_volume()
 	if player.stream == stream and player.playing:
 		return
 	player.stream = stream
-	player.volume_db = volume_db
 	player.play()
 
 func stop_music() -> void:

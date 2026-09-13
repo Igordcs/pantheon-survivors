@@ -35,6 +35,8 @@ func _ready() -> void:
 	_enemy_scenes[&"healer"] = preload("res://scenes/enemies/healer_enemy.tscn")
 	_enemy_scenes[&"directional_ranged"] = preload("res://scenes/enemies/directional_ranged_enemy.tscn")
 	_enemy_scenes[&"charger"] = preload("res://scenes/enemies/charger_enemy.tscn")
+	_enemy_scenes[&"ammit"] = preload("res://scenes/enemies/ammit.tscn")
+	_enemy_scenes[&"corrupted_valkyrie"] = preload("res://scenes/enemies/corrupted_valkyrie.tscn")
 
 	_spawn_timer = Timer.new()
 	_spawn_timer.wait_time = spawn_interval

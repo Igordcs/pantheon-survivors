@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"ammit"
+display_name = "Ammit"
+max_health = 480.0
+speed = 40.0
+contact_damage = 28.0
+score_value = 80
+spawn_weight = 0.035
+visual_size = 72.0
+sprite_directory = "res://assets/sprites/enemies/ammit/Idle/rotations"

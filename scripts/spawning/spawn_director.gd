@@ -76,22 +76,24 @@ func _generate_default_progression() -> void:
 	var bat := _entry("res://resources/enemies/bat_data.tres", &"bat", 1.6, 0.5, 2, 5, 80)
 	var draugr := _entry("res://resources/enemies/draugr_data.tres", &"melee", 1.4, 1.0, 1, 3, 0)
 	var harpy := _entry("res://resources/enemies/harpy_data.tres", &"melee", 0.8, 1.25, 1, 3, 18)
-	var ranged_slime := _entry("res://resources/enemies/ranged_enemy_data.tres", &"ranged", 0.7, 1.5, 1, 2, 24)
-	var healer_slime := _entry("res://resources/enemies/healer_enemy_data.tres", &"healer", 0.25, 2.5, 1, 1, 6)
+	var ranged_slime := _entry("res://resources/enemies/ranged_enemy_data.tres", &"ranged", 0.6, 1.5, 1, 2, 24)
+	var healer_slime := _entry("res://resources/enemies/healer_enemy_data.tres", &"healer", 0.2, 2.5, 1, 1, 6)
 	var medusa := _entry("res://resources/enemies/medusa_data.tres", &"directional_ranged", 0.35, 3.0, 1, 2, 8)
 	var mummy := _entry("res://resources/enemies/mummy_data.tres", &"directional_ranged", 0.3, 3.0, 1, 2, 10)
 	var cyclops := _entry("res://resources/enemies/cyclops_data.tres", &"melee", 0.15, 4.0, 1, 1, 10)
 	var orc := _entry("res://resources/enemies/tank_data.tres", &"tank", 0.12, 5.0, 1, 1, 8)
 	var minotaur := _entry("res://resources/enemies/minotaur_data.tres", &"charger", 0.04, 8.0, 1, 1, 1)
+	var ammit := _entry("res://resources/enemies/ammit_data.tres", &"ammit", 0.035, 5.5, 1, 1, 6)
+	var valkyrie := _entry("res://resources/enemies/corrupted_valkyrie_data.tres", &"corrupted_valkyrie", 0.045, 5.0, 1, 2, 8)
 
 	waves = [
 		_wave(60.0, 0.8, 25, 1.2, 4, [bat, draugr]),
 		_wave(60.0, 0.7, 40, 1.8, 5, [bat, draugr, harpy]),
 		_wave(60.0, 0.6, 55, 2.6, 6, [bat, draugr, harpy, ranged_slime]),
 		_wave(120.0, 0.55, 80, 3.8, 7, [draugr, harpy, ranged_slime, healer_slime, medusa]),
-		_wave(90.0, 0.45, 110, 5.2, 8, [draugr, harpy, ranged_slime, healer_slime, medusa, mummy, cyclops]),
-		_wave(90.0, 0.35, 150, 7.0, 10, [harpy, ranged_slime, healer_slime, medusa, mummy, cyclops, orc]),
-		_wave(120.0, 0.25, 220, 10.0, 12, [bat, draugr, harpy, ranged_slime, healer_slime, medusa, mummy, cyclops, orc, minotaur]),
+		_wave(90.0, 0.45, 110, 5.2, 8, [draugr, harpy, ranged_slime, healer_slime, medusa, mummy, cyclops, ammit]),
+		_wave(90.0, 0.35, 150, 7.0, 10, [harpy, ranged_slime, healer_slime, medusa, mummy, cyclops, orc, ammit, valkyrie]),
+		_wave(120.0, 0.25, 220, 10.0, 12, [bat, draugr, harpy, ranged_slime, healer_slime, medusa, mummy, cyclops, orc, minotaur, ammit, valkyrie]),
 	]
 
 	horde_events = [
