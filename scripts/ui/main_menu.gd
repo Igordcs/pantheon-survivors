@@ -1,5 +1,8 @@
 extends Control
 
+const STORY_INTRO_SCENE := "res://scenes/ui/story_intro.tscn"
+const CHARACTER_SELECTION_SCENE := "res://scenes/ui/character_selection.tscn"
+
 @onready var play_button: Button = $BottomButtons/PlayButton
 @onready var shop_button: Button = $BottomButtons/ShopButton
 @onready var settings_button: Button = $BottomButtons/SettingsButton
@@ -67,7 +70,13 @@ func _animate_title_pulse() -> void:
 	tween.tween_property(title_label, "modulate", Color(0.95, 0.8, 0.35), 1.6).set_trans(Tween.TRANS_SINE)
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/ui/character_selection.tscn")
+	get_tree().change_scene_to_file(_resolve_play_scene())
+
+
+## A introdução narrativa abre sempre, mesmo em saves que já a viram. O save continua
+## registrando `intro_seen`; basta voltar a consultá-lo aqui para pulá-la de novo.
+func _resolve_play_scene() -> String:
+	return STORY_INTRO_SCENE
 
 func _on_settings_pressed() -> void:
 	settings_modal.show()

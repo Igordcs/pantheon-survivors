@@ -7,7 +7,7 @@ signal loadout_changed
 signal settings_changed
 
 const SAVE_PATH := "user://save_data.json"
-const SAVE_VERSION := 5
+const SAVE_VERSION := 6
 const INITIAL_CHARACTER_IDS := ["eirik", "neferu", "perseus"]
 const INITIAL_WEAPON_IDS := ["mjolnir"]
 
@@ -22,6 +22,7 @@ var save_data: Dictionary = {
 	"unlocked_characters": ["eirik", "neferu", "perseus"],
 	"unlocked_items": [],
 	"equipped_items": [],
+	"intro_seen": false,
 	"settings": {
 		"master_volume": 0.8,
 		"music_volume": 0.8,
@@ -45,6 +46,7 @@ func _make_defaults() -> Dictionary:
 		"unlocked_characters": INITIAL_CHARACTER_IDS.duplicate(),
 		"unlocked_items": [],
 		"equipped_items": [],
+		"intro_seen": false,
 		"settings": {
 			"master_volume": 0.8,
 			"music_volume": 0.8,
@@ -181,6 +183,20 @@ func _apply_fullscreen(enabled: bool) -> void:
 	DisplayServer.window_set_position(screen_position + (screen_size - window_size) / 2)
 
 
+func has_seen_intro() -> bool:
+	return bool(save_data.get("intro_seen", false))
+
+
+func set_intro_seen() -> bool:
+	if has_seen_intro():
+		return true
+	save_data["intro_seen"] = true
+	if not save_game():
+		save_data["intro_seen"] = false
+		return false
+	return true
+
+
 func get_currency() -> int:
 	return maxi(int(save_data.get("currency", 0)), 0)
 
@@ -301,6 +317,7 @@ func _migrate_save() -> void:
 		if item_id in unlocked_items and ItemCatalog.is_shop_item(StringName(item_id)) and item_id not in valid_equipped and valid_equipped.size() < 3:
 			valid_equipped.append(item_id)
 	save_data["equipped_items"] = valid_equipped
+	save_data["intro_seen"] = bool(save_data.get("intro_seen", false))
 	if previous_version < 4:
 		var characters: Array = save_data.get("unlocked_characters", [])
 		characters.erase("arthur")
