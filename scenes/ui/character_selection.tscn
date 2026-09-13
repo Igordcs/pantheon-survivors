@@ -50,6 +50,7 @@ horizontal_alignment = 1
 [node name="ItemList" type="ItemList" parent="VBoxContainer" unique_id=2114734969]
 custom_minimum_size = Vector2(0, 145)
 layout_mode = 2
+size_flags_horizontal = 4
 max_columns = 4
 same_column_width = true
 fixed_column_width = 260

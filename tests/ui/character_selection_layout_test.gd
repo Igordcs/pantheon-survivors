@@ -14,14 +14,32 @@ func _run_test() -> void:
 	await get_tree().process_frame
 
 	var character_list := selection.get_node("VBoxContainer/ItemList") as ItemList
-	if character_list.get_item_count() != 4:
-		_fail("The initial selection should show all four characters.")
-	if character_list.max_columns != 4:
-		_fail("The initial characters should use four horizontal columns.")
+	var unlocked_count: int = SaveManager.save_data.get("unlocked_characters", []).size()
+	if character_list.get_item_count() != unlocked_count:
+		_fail("The selection should show every unlocked character.")
+	var expected_columns := mini(unlocked_count, selection.MAX_CHARACTER_COLUMNS)
+	if character_list.max_columns != expected_columns:
+		_fail("The characters should use one column each, up to the row limit.")
 	if character_list.fixed_icon_size.x < 96 or character_list.fixed_icon_size.y < 96:
 		_fail("Character selection portraits should be at least 96 pixels.")
-	if character_list.size.x < 1000.0 or character_list.size.y < 140.0:
-		_fail("Character selection should use the available screen area.")
+	if character_list.size.x < expected_columns * character_list.fixed_column_width:
+		_fail("The character row should be wide enough to fit its columns on a single line.")
+
+	# A caixa de seleção precisa de folgas iguais em cima e embaixo.
+	var item_rect := character_list.get_item_rect(0)
+	if item_rect.size.y < 120.0:
+		_fail("The character row should stay tall enough for a portrait and its name.")
+	var top_gap := item_rect.position.y
+	var bottom_gap := character_list.size.y - item_rect.end.y
+	if top_gap < 0.0 or absf(top_gap - bottom_gap) > 1.0:
+		_fail("The selection highlight should leave the same gap above and below it.")
+
+	# A fileira precisa ficar centralizada, e não encostada à esquerda.
+	var row := character_list.get_parent() as Control
+	var left_gap := character_list.position.x
+	var right_gap := row.size.x - (character_list.position.x + character_list.size.x)
+	if left_gap < 0.0 or absf(left_gap - right_gap) > 1.0:
+		_fail("The character row should be horizontally centred on the screen.")
 	if selection.get_node_or_null("VBoxContainer/DetailsContainer/Portrait") != null:
 		_fail("The duplicated large character portrait should be removed from the details.")
 

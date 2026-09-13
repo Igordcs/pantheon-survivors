@@ -1,6 +1,8 @@
 extends Control
 ## CharacterSelection — Tela para escolher o personagem antes da Run.
 
+const MAX_CHARACTER_COLUMNS := 4
+
 @onready var character_list: ItemList = $VBoxContainer/ItemList
 @onready var start_button: Button = $VBoxContainer/ButtonsContainer/StartButton
 @onready var back_button: Button = $VBoxContainer/ButtonsContainer/BackButton
@@ -67,9 +69,48 @@ func _load_characters() -> void:
 				character_list.add_item(data.display_name, data.portrait)
 				character_list.set_item_metadata(character_list.get_item_count() - 1, char_id)
 				
+	_center_character_columns()
+
 	if character_list.get_item_count() > 0:
 		character_list.select(0)
 		_update_character_details(0)
+
+
+## A ItemList encosta as colunas à esquerda quando sobra espaço. Ajustando a largura
+## mínima ao número real de personagens, o SHRINK_CENTER da cena centraliza a fileira.
+func _center_character_columns() -> void:
+	var item_count := character_list.get_item_count()
+	if item_count <= 0:
+		return
+	var columns := mini(item_count, MAX_CHARACTER_COLUMNS)
+	character_list.max_columns = columns
+	# O espaçamento entre colunas, as bordas do painel e a barra de rolagem também
+	# ocupam largura; sem reservá-los, a última coluna quebra para uma segunda linha.
+	var extra := float((columns - 1) * character_list.get_theme_constant("h_separation"))
+	var panel := character_list.get_theme_stylebox("panel")
+	if panel:
+		extra += panel.get_margin(SIDE_LEFT) + panel.get_margin(SIDE_RIGHT)
+	var scrollbar := character_list.get_v_scroll_bar()
+	if scrollbar:
+		extra += scrollbar.get_combined_minimum_size().x
+	character_list.custom_minimum_size.x = columns * character_list.fixed_column_width + extra
+	character_list.custom_minimum_size.y = _row_height()
+
+
+## Altura exata de uma fileira. A altura fixa da cena sobrava abaixo da linha, e essa
+## sobra aparecia como uma margem maior embaixo da caixa de seleção do personagem.
+func _row_height() -> float:
+	var height := float(character_list.fixed_icon_size.y)
+	height += character_list.get_theme_constant("icon_margin")
+	height += character_list.get_theme_constant("line_separation")
+	height += character_list.get_theme_constant("v_separation")
+	var font := character_list.get_theme_font("font")
+	if font:
+		height += font.get_height(character_list.get_theme_font_size("font_size"))
+	var panel := character_list.get_theme_stylebox("panel")
+	if panel:
+		height += panel.get_margin(SIDE_TOP) + panel.get_margin(SIDE_BOTTOM)
+	return height
 
 
 func _select_relative_character(step: int) -> void:
