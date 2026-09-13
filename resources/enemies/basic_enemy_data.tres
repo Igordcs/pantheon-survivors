@@ -7,6 +7,6 @@ script = ExtResource("1")
 id = &"basic_enemy"
 display_name = "Normal"
 max_health = 30.0
-speed = 80.0
+speed = 68.0
 contact_damage = 10.0
 score_value = 10

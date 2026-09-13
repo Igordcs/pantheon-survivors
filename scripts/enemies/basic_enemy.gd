@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 		if not is_instance_valid(_player):
 			return
 
-	var spd := enemy_data.speed if enemy_data else 80.0
+	var spd := enemy_data.speed if enemy_data else 68.0
 	var direction := global_position.direction_to(_player.global_position)
 	_update_directional_sprite(direction)
 	

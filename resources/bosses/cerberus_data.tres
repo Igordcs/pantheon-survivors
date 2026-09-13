@@ -7,6 +7,6 @@ script = ExtResource("1")
 id = &"cerberus"
 display_name = "Cerberus"
 max_health = 3600.0
-speed = 72.0
+speed = 61.0
 contact_damage = 24.0
 score_value = 1800

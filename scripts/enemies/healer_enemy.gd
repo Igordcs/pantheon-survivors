@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 			return
 
 	var wounded_ally = _find_wounded_ally()
-	var spd := enemy_data.speed if enemy_data else 70.0
+	var spd := enemy_data.speed if enemy_data else 60.0
 	
 	if wounded_ally:
 		# Persegue o aliado ferido

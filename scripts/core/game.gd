@@ -24,8 +24,6 @@ func _ready() -> void:
 	if not player:
 		push_error("Game: Player node not found at World/Player!")
 		return
-	if game_camera:
-		ScreenShake.set_camera(game_camera)
 	if not world_generator.initial_spawn_position.is_equal_approx(player.global_position):
 		world_generator.initial_spawn_position = player.global_position
 		world_generator.generate_world()

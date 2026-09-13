@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
-description = "Cria 1 disco que orbita o herói."
+description = "Cria 1 disco que orbita o herói, fere inimigos e bloqueia projéteis hostis."
 
 [sub_resource type="Resource" id="Level_2"]
 script = ExtResource("2_level")
@@ -44,7 +44,7 @@ projectile_count = 2
 
 [sub_resource type="Resource" id="Level_7"]
 script = ExtResource("2_level")
-description = "Adiciona um terceiro disco orbital."
+description = "Adiciona o terceiro e último disco orbital."
 damage_multiplier = 1.6
 area_multiplier = 1.15
 speed_multiplier = 1.2
@@ -65,8 +65,8 @@ script = ExtResource("1_weapon")
 id = &"solar_disk"
 display_name = "Disco Solar"
 icon = ExtResource("3_icon")
-description = "Orbita o herói e fere inimigos que tocam sua lâmina solar."
-base_damage = 10.0
+description = "Orbita o herói, fere inimigos e bloqueia projéteis hostis."
+base_damage = 14.0
 cooldown = 0.5
 area = 100.0
 projectile_speed = 3.0

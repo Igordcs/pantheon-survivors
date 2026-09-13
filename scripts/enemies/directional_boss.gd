@@ -33,7 +33,6 @@ func _ready() -> void:
 	create_tween().tween_property(self, "scale", final_scale, 0.85).set_trans(
 		Tween.TRANS_BACK
 	).set_ease(Tween.EASE_OUT)
-	ScreenShake.shake(0.35)
 
 
 func _physics_process(delta: float) -> void:
@@ -118,7 +117,6 @@ func _on_died() -> void:
 	_is_dying = true
 	stop_movement()
 	_cleanup_behavior()
-	ScreenShake.shake(1.0)
 	var tween := create_tween()
 	tween.tween_property(sprite, "self_modulate", Color(1.0, 0.4, 0.25), 0.15)
 	tween.tween_property(sprite, "modulate:a", 0.0, 0.45)

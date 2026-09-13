@@ -14,5 +14,5 @@ gameplay_sprite = ExtResource("3_portrait")
 gameplay_sprite_directory = "res://assets/sprites/characters/punisher/Idle/rotations"
 starting_weapon = ExtResource("2_weapon")
 base_health = 120.0
-base_speed = 210.0
+base_speed = 179.0
 passive_description = "Armado até os dentes. Começa com arma de fogo e granadas explosivas."

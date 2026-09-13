@@ -143,7 +143,6 @@ func _damage_overlapping_enemies() -> void:
 		health.take_damage(_damage)
 
 	if damage_dealt > 0.0:
-		ScreenShake.shake(0.15)
 		_apply_life_steal(damage_dealt)
 
 

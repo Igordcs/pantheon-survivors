@@ -73,10 +73,10 @@ func _update_time_ui() -> void:
 
 
 func _generate_default_progression() -> void:
-	var bat := _entry("res://resources/enemies/bat_data.tres", &"bat", 1.6, 0.5, 2, 5, 30)
+	var bat := _entry("res://resources/enemies/bat_data.tres", &"bat", 1.6, 0.5, 2, 5, 80)
 	var draugr := _entry("res://resources/enemies/draugr_data.tres", &"melee", 1.4, 1.0, 1, 3, 0)
 	var harpy := _entry("res://resources/enemies/harpy_data.tres", &"melee", 0.8, 1.25, 1, 3, 18)
-	var ranged_slime := _entry("res://resources/enemies/ranged_enemy_data.tres", &"ranged", 0.7, 1.5, 1, 2, 12)
+	var ranged_slime := _entry("res://resources/enemies/ranged_enemy_data.tres", &"ranged", 0.7, 1.5, 1, 2, 24)
 	var healer_slime := _entry("res://resources/enemies/healer_enemy_data.tres", &"healer", 0.25, 2.5, 1, 1, 6)
 	var medusa := _entry("res://resources/enemies/medusa_data.tres", &"directional_ranged", 0.35, 3.0, 1, 2, 8)
 	var mummy := _entry("res://resources/enemies/mummy_data.tres", &"directional_ranged", 0.3, 3.0, 1, 2, 10)
@@ -95,10 +95,10 @@ func _generate_default_progression() -> void:
 	]
 
 	horde_events = [
-		_event(90.0, bat, 12, "A swarm of bats approaches!"),
-		_event(150.0, ranged_slime, 6, "Ranged slimes surround the battlefield!"),
+		_event(90.0, bat, 30, "A swarm of bats approaches!"),
+		_event(150.0, ranged_slime, 12, "Ranged slimes surround the battlefield!"),
 		_event(450.0, minotaur, 1, "A Minotaur has entered the horde!"),
-		_event(540.0, bat, 20, "The final horde is gathering!"),
+		_event(540.0, bat, 50, "The final horde is gathering!"),
 	]
 
 

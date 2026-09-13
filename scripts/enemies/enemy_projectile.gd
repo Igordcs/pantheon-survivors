@@ -8,9 +8,11 @@ var max_distance: float = 600.0
 var _distance_traveled: float = 0.0
 var _slow_multiplier: float = 1.0
 var _slow_duration: float = 0.0
+var _blocked: bool = false
 
 
 func _ready() -> void:
+	add_to_group(&"enemy_projectiles")
 	body_entered.connect(_on_body_entered)
 
 
@@ -35,7 +37,18 @@ func set_status_effect(slow_multiplier: float, slow_duration: float) -> void:
 	_slow_duration = maxf(slow_duration, 0.0)
 
 
+func block() -> void:
+	if _blocked:
+		return
+	_blocked = true
+	monitoring = false
+	set_physics_process(false)
+	queue_free()
+
+
 func _on_body_entered(body: Node2D) -> void:
+	if _blocked:
+		return
 	if not body.is_in_group("player"):
 		return
 	var health := body.get_node_or_null("HealthComponent") as HealthComponent

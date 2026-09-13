@@ -4,6 +4,5 @@ class_name HordeEventData
 
 @export var trigger_time: float = 60.0
 @export var entry: EnemySpawnEntry
-@export_range(1, 40, 1) var group_size: int = 1
+@export_range(1, 100, 1) var group_size: int = 1
 @export var announcement: String = ""
-

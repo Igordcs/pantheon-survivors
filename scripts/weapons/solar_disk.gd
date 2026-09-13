@@ -1,5 +1,5 @@
 extends Node2D
-## Disco Solar — mantém orbitadores igualmente espaçados ao redor do Player.
+## Disco Solar — causa dano e bloqueia projéteis hostis com até três orbitadores.
 
 signal weapon_upgraded(weapon_id: StringName, new_level: int)
 
@@ -13,6 +13,9 @@ var _damage: float = 10.0
 var _disk_scale: float = 1.0
 var _pulse_damage_multiplier: float = 0.0
 var _disks: Array[Area2D] = []
+
+const MAX_DISK_COUNT: int = 3
+const PROJECTILE_BLOCK_RADIUS: float = 22.0
 
 # Controle de frequência para o áudio não estourar em hordas cheias
 var _last_hit_sound_time: float = 0.0
@@ -32,7 +35,7 @@ func _ready() -> void:
 	_apply_level_stats()
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	_angle += _rotation_speed * delta
 	if _angle >= TAU:
 		_angle = fmod(_angle, TAU)
@@ -44,6 +47,8 @@ func _process(delta: float) -> void:
 		var disk_angle := _angle + (TAU * float(index) / float(disk_count))
 		_disks[index].position = Vector2.from_angle(disk_angle) * _orbit_radius
 
+	_block_enemy_projectiles()
+
 
 func get_weapon_id() -> StringName:
 	return weapon_data.id if weapon_data else &"solar_disk"
@@ -51,6 +56,10 @@ func get_weapon_id() -> StringName:
 
 func get_current_level() -> int:
 	return _current_level
+
+
+func get_disk_count() -> int:
+	return _disks.size()
 
 
 func get_next_upgrade_description() -> String:
@@ -92,6 +101,7 @@ func _apply_level_stats() -> void:
 
 
 func _sync_disk_count(target_count: int) -> void:
+	target_count = clampi(target_count, 1, MAX_DISK_COUNT)
 	while _disks.size() < target_count:
 		var new_disk := _disk_template.duplicate() as Area2D
 		add_child(new_disk)
@@ -103,6 +113,24 @@ func _sync_disk_count(target_count: int) -> void:
 	while _disks.size() > target_count:
 		var removed_disk: Area2D = _disks.pop_back()
 		removed_disk.queue_free()
+
+
+func _block_enemy_projectiles() -> void:
+	var block_radius_squared := PROJECTILE_BLOCK_RADIUS * PROJECTILE_BLOCK_RADIUS
+	for projectile_node in get_tree().get_nodes_in_group(&"enemy_projectiles"):
+		var projectile := projectile_node as Node2D
+		if not is_instance_valid(projectile) or projectile.is_queued_for_deletion():
+			continue
+		for disk in _disks:
+			if disk.global_position.distance_squared_to(projectile.global_position) \
+					> block_radius_squared:
+				continue
+			if projectile.has_method(&"block"):
+				projectile.call(&"block")
+			else:
+				projectile.queue_free()
+			_play_hit_sound_throttled()
+			break
 
 
 func _on_disk_area_body_entered(body: Node2D) -> void:
@@ -137,7 +165,6 @@ func _emit_solar_pulse() -> void:
 	# Efeito sonoro acompanhando o pulso em anel
 	MusicManager.play_solar_disk_sfx()
 	_spawn_pulse_vfx(pulse_radius)
-	ScreenShake.shake(0.25)
 
 
 func _spawn_pulse_vfx(radius: float) -> void:

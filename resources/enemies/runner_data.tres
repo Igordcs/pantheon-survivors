@@ -7,6 +7,6 @@ script = ExtResource("1")
 id = &"runner_enemy"
 display_name = "Runner"
 max_health = 10.0
-speed = 140.0
+speed = 119.0
 contact_damage = 5.0
 score_value = 5

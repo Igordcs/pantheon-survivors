@@ -57,7 +57,6 @@ func _ready() -> void:
 	var final_scale := scale
 	scale = Vector2.ZERO
 	create_tween().tween_property(self, "scale", final_scale, 1.1).set_trans(Tween.TRANS_BACK)
-	ScreenShake.shake(0.35)
 
 
 func _physics_process(delta: float) -> void:
@@ -122,7 +121,6 @@ func _process_telegraphing() -> void:
 	else:
 		_state_timer = 0.35
 		_apply_area_damage(_target_position)
-	ScreenShake.shake(0.65)
 
 
 func _process_attack(_delta: float) -> void:
@@ -172,7 +170,6 @@ func _update_phase() -> void:
 	if not _second_phase and health_component.current_health <= health_component.max_health * 0.5:
 		_second_phase = true
 		sprite.modulate = Color(1.0, 0.65, 0.65)
-		ScreenShake.shake(0.45)
 
 
 func _on_damaged(_amount: float, _source_pos: Vector2) -> void:
@@ -191,7 +188,6 @@ func _on_died() -> void:
 	telegraph.hide()
 	if sprite.sprite_frames.has_animation(&"DEAD"):
 		sprite.play(&"DEAD")
-	ScreenShake.shake(1.0)
 	var tween := create_tween()
 	tween.tween_interval(0.7)
 	tween.tween_property(sprite, "modulate:a", 0.0, 0.3)

@@ -1,7 +1,9 @@
 extends Area2D
 
+signal returned_to_wielder
+
 var direction: Vector2 = Vector2.RIGHT
-var speed: float = 540.0
+var speed: float = 360.0
 var damage: float = 18.0
 var max_distance: float = 650.0
 
@@ -83,6 +85,7 @@ func _return_to_wielder(delta: float) -> void:
 	global_position += to_wielder * speed * 1.2 * delta
 	rotation = to_wielder.angle()
 	if global_position.distance_to(_wielder.global_position) < 8.0:
+		returned_to_wielder.emit()
 		queue_free()
 
 
@@ -101,7 +104,6 @@ func _damage_overlapping_enemies() -> void:
 			continue
 		health.take_damage(damage, global_position)
 		_hit_enemies.append(instance_id)
-		ScreenShake.shake(0.08)
 		if _hit_enemies.size() >= _pierce_count + _ricochet_count:
 			_returning = true
 			break

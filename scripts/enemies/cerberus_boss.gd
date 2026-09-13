@@ -62,7 +62,6 @@ func _execute_attack() -> void:
 		_execute_crushing_leap()
 	_state = State.RECOVERING
 	_state_timer = 0.55
-	ScreenShake.shake(0.7)
 
 
 func _create_breath_telegraphs() -> void:

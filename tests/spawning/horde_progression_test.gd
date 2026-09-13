@@ -32,6 +32,21 @@ func _run_test() -> void:
 		_fail("The horde phases should cover exactly ten gameplay minutes.")
 	if _entry_ids(director.waves[0]) != [&"bat", &"draugr"]:
 		_fail("The opening phase should only contain bats and Draugr.")
+	var expected_event_sizes := [30, 12, 1, 50]
+	if director.horde_events.size() != expected_event_sizes.size():
+		_fail("The default progression should contain four horde events.")
+	else:
+		for event_index in expected_event_sizes.size():
+			var event := director.horde_events[event_index]
+			if event.group_size != expected_event_sizes[event_index]:
+				_fail("Horde event %d should request %d enemies, found %d." % [
+					event_index,
+					expected_event_sizes[event_index],
+					event.group_size,
+				])
+			if event.entry.max_simultaneous > 0 \
+					and event.group_size > event.entry.max_simultaneous:
+				_fail("Horde event %d exceeds its enemy simultaneous cap." % event_index)
 
 	var final_ids := _entry_ids(director.waves.back())
 	for expected_id in [&"orc", &"minotaur", &"medusa", &"cyclops"]:

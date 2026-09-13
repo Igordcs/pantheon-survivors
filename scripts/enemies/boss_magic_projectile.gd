@@ -10,6 +10,7 @@ var hit_radius: float = 14.0
 
 var _player: CharacterBody2D
 var _distance_traveled: float = 0.0
+var _blocked: bool = false
 
 
 func setup(
@@ -32,10 +33,13 @@ func setup(
 
 func _ready() -> void:
 	add_to_group("boss_magic_projectiles")
+	add_to_group(&"enemy_projectiles")
 	queue_redraw()
 
 
 func _physics_process(delta: float) -> void:
+	if _blocked:
+		return
 	var previous_position := global_position
 	var motion := direction * speed * delta
 	global_position += motion
@@ -46,6 +50,14 @@ func _physics_process(delta: float) -> void:
 		return
 	if _distance_traveled >= max_distance:
 		queue_free()
+
+
+func block() -> void:
+	if _blocked:
+		return
+	_blocked = true
+	set_physics_process(false)
+	queue_free()
 
 
 func _hits_player_between(from: Vector2, to: Vector2) -> bool:

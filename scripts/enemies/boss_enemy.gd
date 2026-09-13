@@ -38,7 +38,6 @@ func _ready() -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(2.0, 2.0), 1.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	
-	ScreenShake.shake(0.5)
 
 
 func _on_damaged(_amount: float, _source_pos: Vector2) -> void:
@@ -162,7 +161,6 @@ func _start_attack() -> void:
 	_state_timer = 0.5
 	telegraph_area.color = Color(1, 0, 0, 0.8)
 	hit_area.monitoring = true
-	ScreenShake.shake(1.0)
 	AudioManager.play_sfx("boss_attack")
 
 
@@ -180,7 +178,6 @@ func _on_hit_area_body_entered(body: Node2D) -> void:
 		var health = body.get_node_or_null("HealthComponent") as HealthComponent
 		if health:
 			health.take_damage(boss_data.contact_damage if boss_data else 22.0, global_position)
-			ScreenShake.shake(0.8)
 
 
 func _on_died() -> void:
@@ -193,7 +190,6 @@ func _on_died() -> void:
 	
 	# Animação de morte
 	sprite.play("DEAD")
-	ScreenShake.shake(1.5)
 	AudioManager.play_sfx("boss_death")
 	
 	# Explosão visual

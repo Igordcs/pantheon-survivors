@@ -7,7 +7,7 @@ const INITIAL_CHARACTER_IDS := ["eirik", "arthur", "neferu", "perseus", "punishe
 var save_data: Dictionary = {
 	"currency": 0,
 	"unlocked_weapons": ["mjolnir"],
-	"unlocked_relics": ["thor_relic", "speed_relic"],
+	"unlocked_relics": ["speed_relic"],
 	"unlocked_characters": INITIAL_CHARACTER_IDS.duplicate()
 }
 

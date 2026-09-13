@@ -104,7 +104,6 @@ func _attack_random_targets() -> void:
 			origin = target.global_position
 			strike_damage *= _chain_damage_multiplier
 
-	ScreenShake.shake(0.2)
 	_is_attacking = false
 
 

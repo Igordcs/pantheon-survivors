@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 
 	var dist := global_position.distance_to(_player.global_position)
 	var direction := global_position.direction_to(_player.global_position)
-	var spd := enemy_data.speed if enemy_data else 60.0
+	var spd := enemy_data.speed if enemy_data else 51.0
 	
 	# Foge se muito perto, persegue se muito longe
 	if dist < FLEE_DISTANCE:

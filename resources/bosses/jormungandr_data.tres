@@ -7,6 +7,6 @@ script = ExtResource("1")
 id = &"jormungandr"
 display_name = "Jormungandr"
 max_health = 9500.0
-speed = 58.0
+speed = 49.0
 contact_damage = 30.0
 score_value = 3000

@@ -72,7 +72,6 @@ func _execute_attack() -> void:
 			_execute_radial_magic()
 	_state = State.RECOVERING
 	_state_timer = 0.5
-	ScreenShake.shake(0.75)
 
 
 func _create_bite_telegraph() -> void:

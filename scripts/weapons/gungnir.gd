@@ -2,6 +2,8 @@ extends Node2D
 
 signal weapon_upgraded(weapon_id: StringName, new_level: int)
 
+const RETURN_COOLDOWN_SECONDS: float = 1.0
+
 @export var weapon_data: WeaponData = preload("res://resources/weapons/gungnir_data.tres")
 @export var projectile_scene: PackedScene = preload("res://scenes/weapons/gungnir_projectile.tscn")
 
@@ -9,15 +11,17 @@ var _cooldown_timer: Timer
 var _current_level: int = 1
 var _damage: float = 18.0
 var _attack_range: float = 650.0
-var _projectile_speed: float = 540.0
+var _projectile_speed: float = 360.0
 var _projectile_count: int = 1
 var _pierce_count: int = 2
 var _ricochet_count: int = 1
+var _active_projectiles: int = 0
 
 
 func _ready() -> void:
 	_cooldown_timer = Timer.new()
-	_cooldown_timer.one_shot = false
+	_cooldown_timer.wait_time = RETURN_COOLDOWN_SECONDS
+	_cooldown_timer.one_shot = true
 	_cooldown_timer.autostart = true
 	_cooldown_timer.timeout.connect(_on_cooldown_timeout)
 	add_child(_cooldown_timer)
@@ -66,12 +70,13 @@ func _apply_level_stats() -> void:
 		_pierce_count = max(3, int(level_data.special_value))
 		_ricochet_count = max(1, _pierce_count - 1)
 
-	if _cooldown_timer:
-		_cooldown_timer.wait_time = maxf(0.1, weapon_data.cooldown * level_data.cooldown_multiplier)
-
-
 func _on_cooldown_timeout() -> void:
+	if _active_projectiles > 0:
+		return
 	var targets: Array[CharacterBody2D] = _find_closest_enemies(_projectile_count)
+	if targets.is_empty():
+		_cooldown_timer.start(RETURN_COOLDOWN_SECONDS)
+		return
 	for target in targets:
 		_fire_at(target)
 
@@ -104,7 +109,15 @@ func _fire_at(target: CharacterBody2D) -> void:
 	projectile.rotation = origin.angle_to_point(target.global_position)
 	if projectile.has_method("setup"):
 		projectile.setup(wielder, target, _projectile_speed, _damage, _attack_range, _pierce_count, _ricochet_count)
+	projectile.connect("returned_to_wielder", _on_projectile_returned)
+	_active_projectiles += 1
 	get_tree().current_scene.add_child(projectile)
+
+
+func _on_projectile_returned() -> void:
+	_active_projectiles = maxi(0, _active_projectiles - 1)
+	if _active_projectiles == 0:
+		_cooldown_timer.start(RETURN_COOLDOWN_SECONDS)
 
 
 func _is_valid_target(enemy: CharacterBody2D) -> bool:

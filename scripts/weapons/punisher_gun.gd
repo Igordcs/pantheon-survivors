@@ -189,11 +189,6 @@ func _fire_at(target: CharacterBody2D) -> void:
 	_spawn_shell_casing(global_position + aim_dir * 4.0, bullet_dir)
 	_spawn_smoke_puff(origin, bullet_dir)
 
-	# Pequeno tremor tátil para o tiro
-	var shake_mgr := get_tree().root.get_node_or_null("ScreenShake")
-	if shake_mgr and shake_mgr.has_method("shake"):
-		shake_mgr.shake(0.08)
-
 
 func _apply_gun_recoil(aim_dir: Vector2) -> void:
 	if not gun_sprite:

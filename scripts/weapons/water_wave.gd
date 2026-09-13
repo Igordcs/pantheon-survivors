@@ -53,4 +53,3 @@ func _on_body_entered(body: Node2D) -> void:
 		health.take_damage(damage)
 		if body.has_method("apply_knockback_from"):
 			body.apply_knockback_from(global_position - direction * 32.0, knockback_force)
-		ScreenShake.shake(0.12)

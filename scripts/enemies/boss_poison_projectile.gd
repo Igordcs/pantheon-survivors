@@ -10,6 +10,11 @@ var _elapsed: float = 0.0
 var _impact_damage: float = 12.0
 var _puddle_damage: float = 7.0
 var _puddle_radius: float = 68.0
+var _blocked: bool = false
+
+
+func _ready() -> void:
+	add_to_group(&"enemy_projectiles")
 
 
 func setup(
@@ -32,12 +37,22 @@ func setup(
 
 
 func _process(delta: float) -> void:
+	if _blocked:
+		return
 	_elapsed += delta
 	var progress := clampf(_elapsed / _travel_duration, 0.0, 1.0)
 	var arc_height := sin(progress * PI) * 54.0
 	global_position = _start_position.lerp(_target_position, progress) + Vector2.UP * arc_height
 	if progress >= 1.0:
 		_impact()
+
+
+func block() -> void:
+	if _blocked:
+		return
+	_blocked = true
+	set_process(false)
+	queue_free()
 
 
 func _impact() -> void:

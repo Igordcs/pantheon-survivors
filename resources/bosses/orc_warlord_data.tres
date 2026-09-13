@@ -7,7 +7,6 @@ script = ExtResource("1")
 id = &"orc_warlord"
 display_name = "Orc Warlord"
 max_health = 4000.0
-speed = 65.0
+speed = 55.0
 contact_damage = 25.0
 score_value = 1500
-

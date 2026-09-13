@@ -106,7 +106,6 @@ func _damage_overlapping_enemies() -> void:
 		hit_registry[instance_id] = true
 		health.take_damage(damage, global_position)
 		hit_enemy.emit(body, global_position, damage)
-		ScreenShake.shake(0.14)
 		AudioManager.play_sfx("mjolnir_hit")
 
 

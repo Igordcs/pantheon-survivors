@@ -1,5 +1,5 @@
 extends Area2D
-## Granada do Punisher — viaja até o alvo em arco parabólico e detona causando dano em área com VFX e screen shake.
+## Granada do Punisher — viaja até o alvo em arco parabólico e detona causando dano em área com VFX.
 
 const EXPLOSION_SPRITESHEET = preload("res://assets/vfx/explosion_.png")
 const EXPLOSION_FRAMES := 9
@@ -73,11 +73,6 @@ func _explode() -> void:
 	# Onda de choque e partículas
 	_spawn_shockwave_vfx()
 	_spawn_blast_particles()
-
-	# Screen shake na medida certa (não muito agressivo, mas bem perceptível e impactante)
-	var shake_mgr := get_tree().root.get_node_or_null("ScreenShake")
-	if shake_mgr and shake_mgr.has_method("shake"):
-		shake_mgr.shake(0.55)
 
 	# Remove a granada após a animação
 	var cleanup_timer := get_tree().create_timer(1.0)

@@ -121,7 +121,6 @@ func _deal_damage(target: CharacterBody2D, sword: Node2D) -> void:
 	var health: HealthComponent = target.get_node_or_null("HealthComponent") as HealthComponent
 	if health and health.is_alive():
 		health.take_damage(_damage, sword.global_position)
-		ScreenShake.shake(0.1)
 
 
 func _is_valid_target(enemy: CharacterBody2D) -> bool:

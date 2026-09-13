@@ -3,6 +3,8 @@ extends Node
 
 var number_scene: PackedScene = preload("res://scenes/ui/damage_number.tscn")
 
+const CRITICAL_COLOR := Color(1.0, 0.45, 0.05, 1.0)
+
 func show_number(value: float, pos: Vector2, is_critical: bool = false, is_heal: bool = false) -> void:
 	if not number_scene:
 		return
@@ -14,7 +16,7 @@ func show_number(value: float, pos: Vector2, is_critical: bool = false, is_heal:
 	if is_heal:
 		lbl.modulate = Color.GREEN
 	elif is_critical:
-		lbl.modulate = Color.YELLOW
+		lbl.modulate = CRITICAL_COLOR
 		lbl.scale = Vector2(1.5, 1.5)
 	else:
 		lbl.modulate = Color.WHITE

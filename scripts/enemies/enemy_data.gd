@@ -5,7 +5,7 @@ class_name EnemyData
 @export var id: StringName = &""
 @export var display_name: String = ""
 @export var max_health: float = 30.0
-@export var speed: float = 80.0
+@export var speed: float = 68.0
 @export var contact_damage: float = 10.0
 @export var score_value: int = 10
 @export_range(0.0, 10.0, 0.05) var spawn_weight: float = 1.0

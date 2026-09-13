@@ -22,13 +22,10 @@ const PUNISHER_EXCLUSIVE_WEAPONS = [
 ]
 
 const AVAILABLE_RELICS = [
-	preload("res://resources/relics/thor_relic_data.tres"),
 	preload("res://resources/relics/speed_relic_data.tres")
 ]
 
-const EVOLUTION_RECIPES = [
-	preload("res://resources/evolutions/mjolnir_evolution.tres")
-]
+const EVOLUTION_RECIPES = []
 
 var _player_weapons: Node2D
 var _obtained_relics: Array[RelicData] = []
