@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://s06mfk03o8jg"]
+[gd_scene load_steps=15 format=3 uid="uid://s06mfk03o8jg"]
 
 [ext_resource type="Script" uid="uid://vx3f7tu2fg78" path="res://scripts/core/game.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://don4noo083j8k" path="res://scenes/player/player.tscn" id="2_player"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/pause_panel.tscn" id="11_pausepanel"]
 [ext_resource type="PackedScene" path="res://scenes/world/world.tscn" id="12_world"]
 [ext_resource type="PackedScene" path="res://scenes/ui/damage_feedback.tscn" id="13_damage_feedback"]
+[ext_resource type="Script" path="res://scripts/core/loot_manager.gd" id="14_loot"]
 
 [node name="Game" type="Node2D" unique_id=37594761]
 script = ExtResource("1_script")
@@ -43,6 +44,9 @@ enemy_spawner = NodePath("../EnemySpawner")
 
 [node name="UpgradeSystem" type="Node" parent="." unique_id=2085428199]
 script = ExtResource("5_upgrade")
+
+[node name="LootManager" type="Node" parent="."]
+script = ExtResource("14_loot")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1128601222]
 

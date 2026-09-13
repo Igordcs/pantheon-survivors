@@ -3,7 +3,7 @@ extends Control
 
 @onready var title_label: Label = $Panel/VBoxContainer/TitleLabel
 @onready var time_label: Label = $Panel/VBoxContainer/StatsGrid/TimeValue
-@onready var gold_label: Label = $Panel/VBoxContainer/StatsGrid/GoldValue
+@onready var coins_label: Label = $Panel/VBoxContainer/StatsGrid/CoinsValue
 @onready var kills_label: Label = $Panel/VBoxContainer/StatsGrid/KillsValue
 @onready var bosses_label: Label = $Panel/VBoxContainer/StatsGrid/BossesValue
 
@@ -25,13 +25,9 @@ func show_results(is_victory: bool, stats: Dictionary, time_str: String, kills: 
 		title_label.modulate = Color(0.8, 0.2, 0.2) # Red
 		
 	time_label.text = time_str
-	var gold = stats.get("gold_reward", 0)
-	gold_label.text = str(gold)
+	coins_label.text = str(stats.get("coins_collected", 0))
 	kills_label.text = str(kills)
 	bosses_label.text = str(stats.get("bosses_defeated", 0))
-	
-	# Salva o progresso na persistência
-	SaveManager.add_currency(gold)
 	
 	show()
 

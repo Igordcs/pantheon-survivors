@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/pickups/coin_pickup.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/gem/BlueCoin Sheet.png" id="2"]
+
+[sub_resource type="AtlasTexture" id="Atlas_coin"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CoinShape"]
+radius = 13.0
+
+[sub_resource type="Shader" id="Shader_gold"]
+code = "shader_type canvas_item;\n\nvoid fragment() {\n\tvec4 source = texture(TEXTURE, UV);\n\tfloat lightness = max(source.r, max(source.g, source.b));\n\tvec3 shadow = vec3(0.24, 0.10, 0.01);\n\tvec3 gold = vec3(1.0, 0.72, 0.04);\n\tvec3 highlight = vec3(1.0, 0.96, 0.42);\n\tvec3 color = mix(shadow, gold, smoothstep(0.08, 0.72, lightness));\n\tcolor = mix(color, highlight, smoothstep(0.78, 1.0, lightness));\n\tCOLOR = vec4(color, source.a);\n}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gold"]
+shader = SubResource("Shader_gold")
+
+[node name="CoinPickup" type="Area2D" groups=["coins"]]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_gold")
+texture = SubResource("Atlas_coin")
+scale = Vector2(1.5, 1.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CoinShape")

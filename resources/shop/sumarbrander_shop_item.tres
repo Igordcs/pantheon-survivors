@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ShopItemData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/shop/shop_item_data.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/weapons/sumarbrander_data.tres" id="2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/Sumarbrander.webp" id="3"]
+
+[resource]
+script = ExtResource("1")
+id = &"sumarbrander"
+category = 1
+display_name = "Sumarbrander"
+description = "Libera a espada solar Sumarbrander nas opções de level-up."
+icon = ExtResource("3")
+price = 100
+content = ExtResource("2")

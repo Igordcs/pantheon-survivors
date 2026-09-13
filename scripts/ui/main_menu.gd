@@ -1,6 +1,7 @@
 extends Control
 
 @onready var play_button: Button = $BottomButtons/PlayButton
+@onready var shop_button: Button = $BottomButtons/ShopButton
 @onready var settings_button: Button = $BottomButtons/SettingsButton
 @onready var quit_button: Button = $BottomButtons/QuitButton
 
@@ -18,6 +19,10 @@ func _ready() -> void:
 	play_button.pressed.connect(func():
 		MusicManager.play_ui_click()
 		_on_play_pressed()
+	)
+	shop_button.pressed.connect(func():
+		MusicManager.play_ui_click()
+		get_tree().change_scene_to_file("res://scenes/ui/shop.tscn")
 	)
 	settings_button.pressed.connect(func():
 		MusicManager.play_ui_click()

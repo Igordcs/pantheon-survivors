@@ -68,13 +68,14 @@ text = "Time Survived:"
 layout_mode = 2
 text = "10:00"
 
-[node name="GoldLabel" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="CoinsLabel" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
-text = "Gold Reward:"
+text = "Moedas coletadas:"
 
-[node name="GoldValue" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="CoinsValue" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
-text = "1000"
+theme_override_colors/font_color = Color(1, 0.82, 0.2, 1)
+text = "0"
 
 [node name="KillsLabel" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2

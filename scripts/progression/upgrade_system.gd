@@ -21,6 +21,12 @@ const PUNISHER_EXCLUSIVE_WEAPONS = [
 	preload("res://resources/weapons/punisher_grenade_data.tres")
 ]
 
+const SHOP_WEAPON_IDS: Array[StringName] = [
+	&"anubis_curse",
+	&"gungnir",
+	&"sumarbrander",
+]
+
 const AVAILABLE_RELICS = [
 	preload("res://resources/relics/speed_relic_data.tres")
 ]
@@ -56,6 +62,10 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 	for data in weapon_pool:
 		# Não oferece armas base se elas já foram evoluídas! (Simplificação: checa se está no player)
 		var current_lvl := _get_weapon_level(data.id)
+		if data.id in SHOP_WEAPON_IDS \
+				and current_lvl == 0 \
+				and not SaveManager.is_unlocked(&"weapon", data.id):
+			continue
 		# Só adiciona no pool se não tem a arma, ou se tem e não tá no level maximo
 		if current_lvl < data.max_level:
 			# Mas pera, se ela foi evoluída, current_lvl é 0 (pois não está equipada com o ID original)

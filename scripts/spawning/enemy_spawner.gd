@@ -3,6 +3,7 @@ class_name EnemySpawner
 ## Spawns weighted enemy groups around the player while reusing scene pools.
 
 signal kill_scored
+signal enemy_defeated(position: Vector2)
 
 @export var enemy_scene: PackedScene
 @export var xp_gem_scene: PackedScene = preload("res://scenes/pickups/xp_gem.tscn")
@@ -220,6 +221,7 @@ func _on_enemy_died(enemy: CharacterBody2D) -> void:
 	if not enemy.visible:
 		return
 	kill_scored.emit()
+	enemy_defeated.emit(enemy.global_position)
 	var xp_value := 10
 	var data := enemy.get("enemy_data") as EnemyData
 	if data:

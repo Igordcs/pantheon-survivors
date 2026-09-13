@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ShopItemData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/shop/shop_item_data.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/characters/punisher_data.tres" id="2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/punisher/Idle/rotations/south.png" id="3"]
+
+[resource]
+script = ExtResource("1")
+id = &"punisher"
+category = 0
+display_name = "Justiceiro"
+description = "Libera o Justiceiro com suas armas exclusivas: rifle e granadas."
+icon = ExtResource("3")
+price = 400
+content = ExtResource("2")

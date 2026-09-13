@@ -54,6 +54,11 @@ text = "00:00"
 layout_mode = 2
 text = "Kills: 0"
 
+[node name="CoinsLabel" type="Label" parent="VBoxContainer/TopBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.2, 1)
+text = "Moedas: 0"
+
 [node name="BossBar" type="ProgressBar" parent="VBoxContainer/TopBar" unique_id=985108116]
 custom_minimum_size = Vector2(250, 20)
 layout_mode = 2

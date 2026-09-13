@@ -13,8 +13,10 @@ extends Node2D
 @onready var damage_feedback: DamageFeedback = $CanvasLayer/DamageFeedback
 @onready var world_generator: WorldGenerator = $World/Environment
 @onready var game_camera: GameCameraController = $World/Player/Camera2D
+@onready var loot_manager: LootManager = $LootManager
 
 var _active_boss: Node2D
+var _coins_collected_this_run: int = 0
 
 
 func _ready() -> void:
@@ -49,6 +51,10 @@ func _ready() -> void:
 		health_comp.died.connect(_on_player_died)
 		health_comp.damaged.connect(_on_player_damaged)
 		hud.update_hp(health_comp.current_health, health_comp.max_health)
+	var pickup_area := player.get_node_or_null("PickupArea")
+	if pickup_area and pickup_area.has_signal("currency_collected"):
+		pickup_area.connect("currency_collected", _on_currency_collected)
+	hud.update_coins(0)
 		
 	# Adicionar armas iniciais ao HUD
 	if weapon_holder:
@@ -64,6 +70,9 @@ func _ready() -> void:
 	spawn_director.time_updated.connect(hud.update_time)
 	spawn_director.horde_event_started.connect(hud.show_horde_event)
 	enemy_spawner.kill_scored.connect(hud.add_kill)
+	enemy_spawner.enemy_defeated.connect(
+		func(position: Vector2): loot_manager.handle_defeat(position, LootManager.Source.REGULAR_ENEMY)
+	)
 	
 	# Conectar RunManager
 	run_manager.boss_spawned.connect(_on_boss_spawned)
@@ -91,6 +100,9 @@ func _on_boss_spawned(boss_node: Node2D) -> void:
 	# Conectar morte para dropar o baú
 	if boss_node.has_signal("died"):
 		boss_node.died.connect(_on_boss_died_for_chest.bind(boss_node))
+		boss_node.died.connect(
+			func(): loot_manager.handle_defeat(boss_node.global_position, LootManager.Source.BOSS)
+		)
 
 
 func _on_boss_died_for_chest(boss_node: Node2D) -> void:
@@ -115,12 +127,18 @@ func _on_chest_collected(_chest: Chest) -> void:
 		opt.description_text = recipe.evolved_weapon.description
 		level_up_panel.show_options([opt])
 	else:
-		print("Nenhuma evolução disponível. Você encontrou Ouro!")
+		print("Baú coletado; nenhuma evolução disponível.")
 		run_manager.complete_boss_reward()
 
 
 func _on_run_ended(is_victory: bool, stats: Dictionary) -> void:
+	stats["coins_collected"] = _coins_collected_this_run
 	results_panel.show_results(is_victory, stats, hud.time_label.text, hud._kills)
+
+
+func _on_currency_collected(amount: int) -> void:
+	_coins_collected_this_run += amount
+	hud.update_coins(_coins_collected_this_run)
 
 
 func _on_player_died() -> void:

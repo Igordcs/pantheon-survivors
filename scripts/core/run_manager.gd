@@ -139,7 +139,7 @@ func _show_results(is_victory: bool) -> void:
 	get_tree().paused = true
 	var stats := {
 		"time": spawn_director.get_elapsed_time() if spawn_director else 0.0,
-		"gold_reward": 1000 if is_victory else 100,
+		"coins_collected": 0,
 		"bosses_defeated": _bosses_defeated,
 	}
 	run_ended.emit(is_victory, stats)

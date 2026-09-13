@@ -7,6 +7,7 @@ extends Control
 
 @onready var time_label: Label = $VBoxContainer/TopBar/TimeLabel
 @onready var kills_label: Label = $VBoxContainer/TopBar/KillsLabel
+@onready var coins_label: Label = $VBoxContainer/TopBar/CoinsLabel
 
 @onready var weapons_container: HBoxContainer = $VBoxContainer/BottomBar/WeaponsContainer
 @onready var boss_bar: ProgressBar = $VBoxContainer/TopBar/BossBar
@@ -74,6 +75,10 @@ func update_time(time_str: String) -> void:
 func add_kill() -> void:
 	_kills += 1
 	kills_label.text = "Kills: %d" % _kills
+
+
+func update_coins(amount: int) -> void:
+	coins_label.text = "Moedas: %d" % amount
 
 
 func add_weapon_icon(

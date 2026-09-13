@@ -103,6 +103,11 @@ func _update_character_details(index: int) -> void:
 			weapon_name = data.starting_weapon.display_name
 			weapon_description = data.starting_weapon.description
 			starting_weapon_icon = data.starting_weapon.icon
+		if char_id == &"punisher":
+			var grenade_data := load("res://resources/weapons/punisher_grenade_data.tres") as WeaponData
+			if grenade_data:
+				weapon_name = "%s + %s" % [weapon_name, grenade_data.display_name]
+				weapon_description = "As duas armas exclusivas acompanham o Justiceiro."
 
 		info_label.text = "%s\n\nPerfil: %s" % [
 			data.description,
