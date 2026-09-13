@@ -24,6 +24,11 @@ func set_seed(value: int) -> void:
 
 func roll_drop(source: Source) -> int:
 	var chance := regular_drop_chance if source == Source.REGULAR_ENEMY else boss_drop_chance
+	var players := get_tree().get_nodes_in_group("player") if is_inside_tree() else []
+	if not players.is_empty():
+		var controller := players[0].get_node_or_null("ItemEffectController") as ItemEffectController
+		if controller: chance *= 1.0 + controller.get_luck()
+	chance = clampf(chance, 0.0, 1.0)
 	if rng.randf() >= chance:
 		return 0
 	if source == Source.REGULAR_ENEMY:

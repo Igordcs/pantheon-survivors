@@ -81,6 +81,17 @@ func _refresh_inventory() -> void:
 		lines.append("Nenhuma arma adquirida.")
 
 	lines.append("")
+	lines.append("[font_size=20][b]ITENS ATIVOS[/b][/font_size]")
+	var item_controller := _player.get_node_or_null("ItemEffectController") as ItemEffectController
+	var active_items := item_controller.get_active_items() if item_controller else []
+	if active_items.is_empty():
+		lines.append("Nenhum item ativo.")
+	else:
+		for item in active_items:
+			var item_level := item_controller.get_item_level(item.id)
+			lines.append(_format_inventory_line(item.icon, item.display_name, item_level))
+
+	lines.append("")
 	lines.append("[font_size=20][b]RELÍQUIAS[/b][/font_size]")
 	var relics := _upgrade_system.get_obtained_relics()
 	if relics.is_empty():

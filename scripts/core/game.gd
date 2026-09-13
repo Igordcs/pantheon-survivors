@@ -66,6 +66,10 @@ func _ready() -> void:
 					hud.add_weapon_icon(weapon_data.id, weapon_data.icon, weapon_data.display_name)
 				else:
 					hud.add_weapon_icon(child.get_weapon_id())
+	for item_id in SaveManager.get_equipped_items():
+		var equipped_item := ItemCatalog.get_item(item_id)
+		if equipped_item:
+			hud.add_weapon_icon(equipped_item.id, equipped_item.icon, equipped_item.display_name)
 		
 	level_up_panel.option_chosen.connect(_on_upgrade_option_chosen)
 	spawn_director.time_updated.connect(hud.update_time)
@@ -74,6 +78,7 @@ func _ready() -> void:
 	enemy_spawner.enemy_defeated.connect(
 		func(position: Vector2): loot_manager.handle_defeat(position, LootManager.Source.REGULAR_ENEMY)
 	)
+	enemy_spawner.enemy_defeated.connect(_on_regular_enemy_defeated_for_items)
 	
 	# Conectar RunManager
 	run_manager.boss_spawned.connect(_on_boss_spawned)
@@ -107,6 +112,7 @@ func _on_boss_spawned(boss_node: Node2D) -> void:
 	# Conectar morte para dropar o baú
 	if boss_node.has_signal("died"):
 		boss_node.died.connect(_on_boss_died_for_chest.bind(boss_node))
+		boss_node.died.connect(_on_boss_defeated_for_items)
 		boss_node.died.connect(
 			func(): loot_manager.handle_defeat(boss_node.global_position, LootManager.Source.BOSS)
 		)
@@ -148,6 +154,18 @@ func _on_currency_collected(amount: int) -> void:
 	hud.update_coins(_coins_collected_this_run)
 
 
+func _on_regular_enemy_defeated_for_items(_position: Vector2) -> void:
+	var controller := player.get_node_or_null("ItemEffectController") as ItemEffectController
+	if controller:
+		controller.notify_enemy_defeated()
+
+
+func _on_boss_defeated_for_items() -> void:
+	var controller := player.get_node_or_null("ItemEffectController") as ItemEffectController
+	if controller:
+		controller.notify_enemy_defeated()
+
+
 func _on_player_died() -> void:
 	print("Game Over!")
 	run_manager.trigger_defeat()
@@ -186,6 +204,15 @@ func _on_upgrade_option_chosen(option: UpgradeOption) -> void:
 	elif option.item_data is RelicData:
 		var relic_data := option.item_data as RelicData
 		hud.add_weapon_icon(relic_data.id, relic_data.icon, relic_data.display_name)
+	elif option.item_data is ItemData:
+		var item_data := option.item_data as ItemData
+		var controller := player.get_node_or_null("ItemEffectController") as ItemEffectController
+		var item_level := controller.get_item_level(item_data.id) if controller else 1
+		hud.add_weapon_icon(
+			item_data.id,
+			item_data.icon,
+			"%s — Nível %d" % [item_data.display_name, item_level]
+		)
 
 
 func _on_boss_fight_started(_boss_pos: Vector2) -> void:

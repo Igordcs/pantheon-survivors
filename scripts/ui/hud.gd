@@ -89,6 +89,8 @@ func add_weapon_icon(
 	# Evita duplicatas se já tiver equipado
 	for child in weapons_container.get_children():
 		if child.name == weapon_id:
+			if not display_name.is_empty():
+				child.tooltip_text = display_name
 			return
 
 	var icon: Control

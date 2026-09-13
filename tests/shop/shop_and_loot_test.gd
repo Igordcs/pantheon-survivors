@@ -25,17 +25,28 @@ func _test_catalog() -> void:
 	var characters := ShopCatalog.get_products(ShopItemData.Category.CHARACTER)
 	var weapons := ShopCatalog.get_products(ShopItemData.Category.WEAPON)
 	var items := ShopCatalog.get_products(ShopItemData.Category.ITEM)
-	if characters.size() != 3 or characters[0].id != &"punisher" \
-			or characters[1].id != &"arthur" or characters[2].id != &"kratos":
+	var character_ids: Array[StringName] = []
+	for character in characters: character_ids.append(character.id)
+	if characters.size() != 3 or &"punisher" not in character_ids \
+			or &"arthur" not in character_ids or &"kratos" not in character_ids:
 		_fail("Character catalog should contain the Punisher, King Arthur and Kratos.")
 	var weapon_ids: Array[StringName] = []
 	for product in weapons:
 		weapon_ids.append(product.id)
-	for expected in [&"anubis_curse", &"gungnir", &"sumarbrander"]:
+	for expected in [&"anubis_curse", &"gungnir", &"sumarbrander", &"leviathan_axe"]:
 		if expected not in weapon_ids:
 			_fail("Weapon catalog is missing %s." % expected)
-	if not items.is_empty():
-		_fail("Item category should remain empty.")
+	if items.size() != 11:
+		_fail("The shop should contain only the 11 special-power and synergy items.")
+	for item in items:
+		if item.id == &"excalibur_scabbard" or not item.icon or ItemCatalog.is_fundamental(item.id):
+			_fail("The shop contains a removed, fundamental or iconless item.")
+	if ItemCatalog.get_all().size() != 18 or ItemCatalog.get_fundamentals().size() != 7:
+		_fail("The complete catalog should contain 18 items, including seven fundamentals.")
+	var sandals := ItemCatalog.get_item(&"hermes_sandals")
+	if not sandals or sandals.max_level != 5 \
+			or not is_equal_approx(sandals.get_value_for_level(5), 0.25):
+		_fail("Hermes Sandals should have five movement-speed levels.")
 
 
 func _test_loot_rolls() -> void:
@@ -97,11 +108,17 @@ func _test_save_and_purchases() -> void:
 	if manager.get_currency() != 0 or manager.has_unlocked_character("punisher") \
 			or manager.has_unlocked_character("arthur") or manager.has_unlocked_character("kratos"):
 		_fail("A new save should start with zero coins and all shop characters locked.")
-	if not manager.add_currency(100):
+	var punisher := _find_product(ShopItemData.Category.CHARACTER, &"punisher")
+	if not punisher:
+		_fail("The Punisher product should exist in the catalog.")
+		manager.free()
+		_remove_test_save()
+		return
+	var starting_currency: int = punisher.price + 20
+	if not manager.add_currency(starting_currency):
 		_fail("Positive currency should be accepted.")
 	if manager.add_currency(0) or manager.add_currency(-1):
 		_fail("Non-positive currency should be rejected.")
-	var punisher := ShopCatalog.get_products(ShopItemData.Category.CHARACTER)[0]
 	if not manager.try_purchase(punisher):
 		_fail("A catalog product should be purchasable with enough currency.")
 	if manager.get_currency() != 20:
@@ -167,6 +184,10 @@ func _test_settings_persistence() -> void:
 	manager.set_master_volume(0.35)
 	manager.set_music_volume(0.6)
 	manager.set_fullscreen_enabled(true)
+	manager.save_data["unlocked_items"] = ["ankh_of_osiris", "horn_of_poetic_mead", "golden_fleece", "vial_of_mimirs_waters"]
+	if not manager.equip_item(&"ankh_of_osiris") or not manager.equip_item(&"horn_of_poetic_mead") \
+			or not manager.equip_item(&"golden_fleece") or manager.equip_item(&"vial_of_mimirs_waters"):
+		_fail("The item loadout should accept exactly three unique unlocked items.")
 	manager.free()
 
 	var reloaded := SAVE_MANAGER_SCRIPT.new()
@@ -177,6 +198,8 @@ func _test_settings_persistence() -> void:
 			or not is_equal_approx(reloaded.get_music_volume(), 0.6) \
 			or not reloaded.is_fullscreen_enabled():
 		_fail("Audio and fullscreen settings should survive a save reload.")
+	if reloaded.get_equipped_items() != [&"ankh_of_osiris", &"horn_of_poetic_mead", &"golden_fleece"]:
+		_fail("The three equipped item slots should survive a save reload.")
 	reloaded.free()
 	_remove_test_save()
 
@@ -185,6 +208,13 @@ func _remove_test_save() -> void:
 	var absolute_path := ProjectSettings.globalize_path(TEST_SAVE_PATH)
 	if FileAccess.file_exists(TEST_SAVE_PATH):
 		DirAccess.remove_absolute(absolute_path)
+
+
+func _find_product(category: int, product_id: StringName) -> ShopItemData:
+	for product in ShopCatalog.get_products(category):
+		if product.id == product_id:
+			return product
+	return null
 
 
 func _test_coin_pooling() -> void:

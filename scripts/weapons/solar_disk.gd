@@ -2,6 +2,7 @@ extends Node2D
 ## Disco Solar — causa dano e bloqueia projéteis hostis com até três orbitadores.
 
 signal weapon_upgraded(weapon_id: StringName, new_level: int)
+signal projectile_blocked
 
 @export var weapon_data: WeaponData = preload("res://resources/weapons/solar_disk_data.tres")
 
@@ -130,6 +131,7 @@ func _block_enemy_projectiles() -> void:
 			else:
 				projectile.queue_free()
 			_play_hit_sound_throttled()
+			projectile_blocked.emit()
 			break
 
 

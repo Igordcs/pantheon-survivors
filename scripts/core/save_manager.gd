@@ -3,10 +3,11 @@ extends Node
 
 signal currency_changed(new_balance: int)
 signal unlock_changed(category: StringName, content_id: StringName)
+signal loadout_changed
 signal settings_changed
 
 const SAVE_PATH := "user://save_data.json"
-const SAVE_VERSION := 4
+const SAVE_VERSION := 5
 const INITIAL_CHARACTER_IDS := ["eirik", "neferu", "perseus"]
 const INITIAL_WEAPON_IDS := ["mjolnir"]
 
@@ -20,6 +21,7 @@ var save_data: Dictionary = {
 	"unlocked_relics": ["speed_relic"],
 	"unlocked_characters": ["eirik", "neferu", "perseus"],
 	"unlocked_items": [],
+	"equipped_items": [],
 	"settings": {
 		"master_volume": 0.8,
 		"music_volume": 0.8,
@@ -42,6 +44,7 @@ func _make_defaults() -> Dictionary:
 		"unlocked_relics": ["speed_relic"],
 		"unlocked_characters": INITIAL_CHARACTER_IDS.duplicate(),
 		"unlocked_items": [],
+		"equipped_items": [],
 		"settings": {
 			"master_volume": 0.8,
 			"music_volume": 0.8,
@@ -60,6 +63,38 @@ func get_music_volume() -> float:
 
 func is_fullscreen_enabled() -> bool:
 	return bool(_get_settings().get("fullscreen", false))
+
+
+func get_unlocked_items() -> Array[StringName]:
+	var result: Array[StringName] = []
+	for value in save_data.get("unlocked_items", []): result.append(StringName(value))
+	return result
+
+
+func get_equipped_items() -> Array[StringName]:
+	var result: Array[StringName] = []
+	for value in save_data.get("equipped_items", []): result.append(StringName(value))
+	return result
+
+
+func equip_item(item_id: StringName) -> bool:
+	if not is_unlocked(&"item", item_id) or not ItemCatalog.is_shop_item(item_id): return false
+	var equipped: Array = save_data.get("equipped_items", [])
+	if String(item_id) in equipped: return true
+	if equipped.size() >= 3: return false
+	equipped.append(String(item_id)); save_data["equipped_items"] = equipped
+	if not save_game(): equipped.erase(String(item_id)); return false
+	loadout_changed.emit()
+	return true
+
+
+func unequip_item(item_id: StringName) -> bool:
+	var equipped: Array = save_data.get("equipped_items", [])
+	if String(item_id) not in equipped: return false
+	equipped.erase(String(item_id)); save_data["equipped_items"] = equipped
+	if not save_game(): equipped.append(String(item_id)); return false
+	loadout_changed.emit()
+	return true
 
 
 func set_master_volume(value: float) -> bool:
@@ -250,7 +285,7 @@ func _migrate_save() -> void:
 			save_data[key] = defaults[key]
 	save_data["save_version"] = SAVE_VERSION
 	save_data["currency"] = maxi(int(save_data.get("currency", 0)), 0)
-	for key in ["unlocked_weapons", "unlocked_relics", "unlocked_characters", "unlocked_items"]:
+	for key in ["unlocked_weapons", "unlocked_relics", "unlocked_characters", "unlocked_items", "equipped_items"]:
 		var stored = save_data.get(key, [])
 		var values: Array = stored if stored is Array else []
 		var normalized: Array[String] = []
@@ -259,6 +294,13 @@ func _migrate_save() -> void:
 			if not id.is_empty() and id not in normalized:
 				normalized.append(id)
 		save_data[key] = normalized
+	var unlocked_items: Array = save_data.get("unlocked_items", [])
+	var equipped_items: Array = save_data.get("equipped_items", [])
+	var valid_equipped: Array[String] = []
+	for item_id in equipped_items:
+		if item_id in unlocked_items and ItemCatalog.is_shop_item(StringName(item_id)) and item_id not in valid_equipped and valid_equipped.size() < 3:
+			valid_equipped.append(item_id)
+	save_data["equipped_items"] = valid_equipped
 	if previous_version < 4:
 		var characters: Array = save_data.get("unlocked_characters", [])
 		characters.erase("arthur")
