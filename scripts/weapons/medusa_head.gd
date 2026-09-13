@@ -1,5 +1,5 @@
 extends Node2D
-## Cabeça de Medusa — petrifica inimigos em um cone frontal.
+## Cabeça de Medusa — mira automaticamente e petrifica inimigos em um cone.
 
 signal weapon_upgraded(weapon_id: StringName, new_level: int)
 
@@ -62,7 +62,10 @@ func _apply_level_stats() -> void:
 
 
 func _on_cooldown_timeout() -> void:
-	var facing_direction := _get_facing_direction()
+	var target := _find_closest_enemy()
+	if not target:
+		return
+	var facing_direction := global_position.direction_to(target.global_position)
 	_spawn_petrification_vfx(facing_direction)
 
 	# Dispara o sibilo/olhar petrificante da Medusa sincronizado com o cone
@@ -92,11 +95,21 @@ func _is_inside_cone(target_position: Vector2, facing_direction: Vector2) -> boo
 	return facing_direction.dot(offset.normalized()) >= minimum_dot
 
 
-func _get_facing_direction() -> Vector2:
-	var player := get_parent().get_parent() as CharacterBody2D
-	if player and "last_direction" in player and player.last_direction != Vector2.ZERO:
-		return player.last_direction.normalized()
-	return Vector2.DOWN
+func _find_closest_enemy() -> Node2D:
+	var nearest: Node2D
+	var nearest_distance_squared := _range * _range
+	for candidate in get_tree().get_nodes_in_group("enemies"):
+		var enemy := candidate as Node2D
+		if not is_instance_valid(enemy) or not enemy.visible:
+			continue
+		var health := enemy.get_node_or_null("HealthComponent") as HealthComponent
+		if not health or not health.is_alive():
+			continue
+		var distance_squared := global_position.distance_squared_to(enemy.global_position)
+		if distance_squared <= nearest_distance_squared:
+			nearest = enemy
+			nearest_distance_squared = distance_squared
+	return nearest
 
 
 func _spawn_petrification_vfx(facing_direction: Vector2) -> void:

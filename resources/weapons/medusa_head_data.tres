@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
-description = "Petrifica inimigos em um cone frontal por 1,2 segundo."
+description = "Mira no inimigo mais próximo e petrifica alvos em um cone por 1,2 segundo."
 special_effect = &"petrify"
 special_value = 1.2
 
@@ -73,7 +73,7 @@ script = ExtResource("1_weapon")
 id = &"medusa_head"
 display_name = "Cabeça de Medusa"
 icon = ExtResource("3_icon")
-description = "Petrifica inimigos em um cone frontal e causa dano petrificante."
+description = "Mira automaticamente no inimigo mais próximo, petrificando e causando dano aos alvos no cone."
 base_damage = 12.0
 cooldown = 2.5
 area = 150.0
