@@ -13,6 +13,8 @@ collision_mask = 0
 script = ExtResource("1")
 boss_data = ExtResource("3")
 sprite_directory = "res://assets/sprites/bosses/fenrir/Idle/rotations"
+walk_sprite_directory = "res://assets/sprites/bosses/fenrir/Walk"
+walk_animation_speed = 8.0
 visual_height = 144.0
 contact_radius = 46.0
 

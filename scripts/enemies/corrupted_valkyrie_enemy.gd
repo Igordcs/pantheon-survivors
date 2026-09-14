@@ -13,6 +13,7 @@ var _state_timer := 0.0
 var _charge_direction := Vector2.DOWN
 var _contact_timer := 0.0
 var _telegraph: Line2D
+var _walk_time := 0.0
 
 
 func _ready() -> void:
@@ -33,7 +34,8 @@ func _physics_process(delta: float) -> void:
 	match _state:
 		State.CHASING:
 			var direction := global_position.direction_to(_player.global_position)
-			_update_sprite(direction)
+			_walk_time += delta
+			_update_sprite(direction, _walk_time)
 			velocity = direction * enemy_data.speed + _knockback_velocity
 			if _state_timer <= 0.0:
 				_start_windup(direction)
@@ -68,6 +70,7 @@ func reset(pos: Vector2) -> void:
 	_state = State.CHASING
 	_state_timer = enemy_data.charge_cooldown
 	_contact_timer = 0.0
+	_walk_time = 0.0
 	sprite.modulate = Color.WHITE
 	sprite.self_modulate = Color.WHITE
 	_apply_data()
@@ -107,8 +110,10 @@ func _apply_data() -> void:
 	_update_sprite(Vector2.DOWN)
 
 
-func _update_sprite(direction: Vector2) -> void:
-	var texture := enemy_data.get_directional_sprite(direction)
+func _update_sprite(direction: Vector2, animation_time: float = 0.0) -> void:
+	var frame_index := int(animation_time * enemy_data.walk_animation_speed)
+	var texture := enemy_data.get_walk_frame(direction, frame_index) \
+		if enemy_data.has_walk_animation() else enemy_data.get_directional_sprite(direction)
 	if texture:
 		sprite.texture = texture
 		var largest := maxf(texture.get_width(), texture.get_height())
