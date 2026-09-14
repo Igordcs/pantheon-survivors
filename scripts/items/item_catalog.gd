@@ -79,7 +79,7 @@ static func _items_for_paths(paths: Array[String]) -> Array[ItemData]:
 	_ensure_loaded()
 	var result: Array[ItemData] = []
 	for path in paths:
-		var item: ItemData = _items.get(_id_for_path(path))
+		var item: ItemData = _items.get(_id_for_path(path)) as ItemData
 		if item:
 			result.append(item)
 	return result
