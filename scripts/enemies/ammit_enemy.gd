@@ -7,6 +7,7 @@ extends EnemyBase
 
 var _player: CharacterBody2D
 var _contact_timer := 0.0
+var _walk_time := 0.0
 
 
 func _ready() -> void:
@@ -24,7 +25,8 @@ func _physics_process(delta: float) -> void:
 			return
 	_contact_timer = maxf(_contact_timer - delta, 0.0)
 	var direction := global_position.direction_to(_player.global_position)
-	_update_sprite(direction)
+	_walk_time += delta
+	_update_sprite(direction, _walk_time)
 	_knockback_velocity = _knockback_velocity.lerp(Vector2.ZERO, 12.0 * delta)
 	velocity = direction * enemy_data.speed + _knockback_velocity
 	move_and_slide()
@@ -39,6 +41,7 @@ func reset(pos: Vector2) -> void:
 	global_position = pos
 	velocity = Vector2.ZERO
 	_contact_timer = 0.0
+	_walk_time = 0.0
 	_reset_combat_effects()
 	_player = _find_player()
 	_apply_data()
@@ -59,8 +62,10 @@ func _apply_data() -> void:
 	_update_sprite(Vector2.DOWN)
 
 
-func _update_sprite(direction: Vector2) -> void:
-	var texture := enemy_data.get_directional_sprite(direction)
+func _update_sprite(direction: Vector2, animation_time: float = 0.0) -> void:
+	var frame_index := int(animation_time * enemy_data.walk_animation_speed)
+	var texture := enemy_data.get_walk_frame(direction, frame_index) \
+		if enemy_data.has_walk_animation() else enemy_data.get_directional_sprite(direction)
 	if not texture:
 		return
 	sprite.texture = texture

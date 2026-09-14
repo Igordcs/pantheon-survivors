@@ -17,3 +17,5 @@ charge_cooldown = 5.5
 charge_windup = 0.9
 visual_size = 68.0
 sprite_directory = "res://assets/sprites/enemies/corrupted_valkyrie/Idle/rotations"
+walk_sprite_directory = "res://assets/sprites/enemies/corrupted_valkyrie/Walk"
+walk_animation_speed = 8.0
