@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="BiomeData" format=3]
+
+[ext_resource type="Script" uid="uid://bcg01dx47c1xo" path="res://scripts/world/biome_data.gd" id="1_biome"]
+[ext_resource type="Script" uid="uid://dlt1xep0kfju6" path="res://scripts/world/world_object_data.gd" id="2_object"]
+[ext_resource type="PackedScene" path="res://scenes/environment/snow/frozen_pine.tscn" id="3_frozen_pine"]
+[ext_resource type="PackedScene" path="res://scenes/environment/snow/broken_drakkar.tscn" id="3_broken_drakkar"]
+[ext_resource type="PackedScene" path="res://scenes/environment/snow/frozen_ribcage.tscn" id="3_frozen_ribcage"]
+[ext_resource type="PackedScene" path="res://scenes/environment/snow/runestone.tscn" id="3_runestone"]
+[ext_resource type="PackedScene" path="res://scenes/environment/snow/prop_shield.tscn" id="3_prop_shield"]
+[ext_resource type="PackedScene" path="res://scenes/environment/snow/prop_bones.tscn" id="3_prop_bones"]
+[ext_resource type="PackedScene" path="res://scenes/environment/snow/prop_spear.tscn" id="3_prop_spear"]
+
+[sub_resource type="Resource" id="Resource_frozen_pine"]
+script = ExtResource("2_object")
+scene = ExtResource("3_frozen_pine")
+weight = 0.26
+clearance_radius = 46.0
+
+[sub_resource type="Resource" id="Resource_broken_drakkar"]
+script = ExtResource("2_object")
+scene = ExtResource("3_broken_drakkar")
+weight = 0.14
+clearance_radius = 38.0
+
+[sub_resource type="Resource" id="Resource_frozen_ribcage"]
+script = ExtResource("2_object")
+scene = ExtResource("3_frozen_ribcage")
+weight = 0.14
+clearance_radius = 40.0
+
+[sub_resource type="Resource" id="Resource_runestone"]
+script = ExtResource("2_object")
+scene = ExtResource("3_runestone")
+weight = 0.1
+clearance_radius = 30.0
+
+[sub_resource type="Resource" id="Resource_prop_shield"]
+script = ExtResource("2_object")
+scene = ExtResource("3_prop_shield")
+weight = 0.14
+clearance_radius = 22.0
+
+[sub_resource type="Resource" id="Resource_prop_bones"]
+script = ExtResource("2_object")
+scene = ExtResource("3_prop_bones")
+weight = 0.14
+clearance_radius = 22.0
+
+[sub_resource type="Resource" id="Resource_prop_spear"]
+script = ExtResource("2_object")
+scene = ExtResource("3_prop_spear")
+weight = 0.08
+clearance_radius = 18.0
+
+[resource]
+script = ExtResource("1_biome")
+biome_id = &"snow_deep"
+display_name = "Campo de neve"
+min_noise_value = -0.45
+max_noise_value = 0.4
+ground_source_id = 0
+ground_atlas_coordinates = Vector2i(0, 0)
+is_navigable = true
+movement_speed_multiplier = 1.0
+decoration_density = 0.008
+obstacle_density = 0.105
+decoration_source_id = 2
+decoration_atlas_coordinates = Array[Vector2i]([Vector2i(3, 0), Vector2i(2, 0)])
+rare_decoration_atlas_coordinates = Array[Vector2i]([Vector2i(6, 0)])
+rare_decoration_chance = 0.05
+obstacle_entries = Array[ExtResource("2_object")]([SubResource("Resource_frozen_pine"), SubResource("Resource_broken_drakkar"), SubResource("Resource_frozen_ribcage"), SubResource("Resource_runestone"), SubResource("Resource_prop_shield"), SubResource("Resource_prop_bones"), SubResource("Resource_prop_spear")])

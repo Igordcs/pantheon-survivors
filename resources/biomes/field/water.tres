@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_biome")
+ground_modulate = Color(0.3, 0.62, 0.9, 1)
 biome_id = &"water"
 display_name = "Água rasa"
 min_noise_value = -1.0

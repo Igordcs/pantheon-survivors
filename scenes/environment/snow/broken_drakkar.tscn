@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://bg2o7m2pvjieo" path="res://assets/sprites/environment/snow/broken_drakkar.png" id="1_sprite"]
+
+[sub_resource type="CircleShape2D" id="Shape_broken_drakkar"]
+radius = 20
+
+[node name="BrokenDrakkar" type="StaticBody2D" groups=["world_obstacles"]]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_sprite")
+offset = Vector2(0, -28)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("Shape_broken_drakkar")

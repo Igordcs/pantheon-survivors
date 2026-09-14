@@ -19,6 +19,7 @@ clearance_radius = 26.0
 
 [resource]
 script = ExtResource("1_biome")
+max_noise_value = 0.4
 min_noise_value = -0.45
 ground_atlas_coordinates = Vector2i(1, 4)
 decoration_density = 0.02
