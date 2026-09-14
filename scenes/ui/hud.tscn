@@ -31,6 +31,8 @@ alignment = 1
 
 [node name="LevelLabel" type="Label" parent="VBoxContainer/TopBar" unique_id=654059103]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.08, 1)
+theme_override_constants/outline_size = 6
 text = "Lv: 1"
 
 [node name="XPBar" type="ProgressBar" parent="VBoxContainer/TopBar" unique_id=1881000282]
@@ -48,14 +50,20 @@ show_percentage = false
 
 [node name="TimeLabel" type="Label" parent="VBoxContainer/TopBar" unique_id=1861726509]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.08, 1)
+theme_override_constants/outline_size = 6
 text = "00:00"
 
 [node name="KillsLabel" type="Label" parent="VBoxContainer/TopBar" unique_id=694815011]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.08, 1)
+theme_override_constants/outline_size = 6
 text = "Kills: 0"
 
 [node name="CoinsLabel" type="Label" parent="VBoxContainer/TopBar"]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.04, 0.08, 1)
+theme_override_constants/outline_size = 6
 theme_override_colors/font_color = Color(1, 0.82, 0.2, 1)
 text = "Moedas: 0"
 
