@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bcg01dx47c1xo" path="res://scripts/world/biome_data.gd" id="1_biome"]
 [ext_resource type="Script" uid="uid://dlt1xep0kfju6" path="res://scripts/world/world_object_data.gd" id="2_object"]
-[ext_resource type="PackedScene" path="res://scenes/environment/tree.tscn" id="3_tree"]
-[ext_resource type="PackedScene" path="res://scenes/environment/rock.tscn" id="4_rock"]
+[ext_resource type="PackedScene" path="res://scenes/environment/field/tree.tscn" id="3_tree"]
+[ext_resource type="PackedScene" path="res://scenes/environment/field/rock.tscn" id="4_rock"]
 
 [sub_resource type="Resource" id="Resource_tree"]
 script = ExtResource("2_object")
