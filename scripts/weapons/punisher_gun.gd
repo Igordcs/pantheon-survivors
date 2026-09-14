@@ -122,14 +122,15 @@ func _fire_burst(targets: Array[CharacterBody2D], bursts_remaining: int) -> void
 	if bursts_remaining <= 0:
 		return
 	for target in targets:
-		_fire_at(target)
+		if is_instance_valid(target):
+			_fire_at(target)
 
 	if bursts_remaining > 1:
 		var timer := get_tree().create_timer(_burst_delay)
 		timer.timeout.connect(func():
 			var valid_targets: Array[CharacterBody2D] = []
 			for t in targets:
-				if _is_valid_target(t):
+				if is_instance_valid(t) and _is_valid_target(t):
 					valid_targets.append(t)
 			if valid_targets.is_empty():
 				valid_targets = _find_closest_enemies(_projectile_count)

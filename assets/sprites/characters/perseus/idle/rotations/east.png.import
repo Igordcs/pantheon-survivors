@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://i3rbf1e46w2"
-path="res://.godot/imported/east.png-0eabcd5486987afbc2935fff0d941969.ctex"
+path="res://.godot/imported/east.png-2a9f671c2421a89d39e889300ae93939.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/perseus/Idle/rotations/east.png"
-dest_files=["res://.godot/imported/east.png-0eabcd5486987afbc2935fff0d941969.ctex"]
+source_file="res://assets/sprites/characters/perseus/idle/rotations/east.png"
+dest_files=["res://.godot/imported/east.png-2a9f671c2421a89d39e889300ae93939.ctex"]
 
 [params]
 

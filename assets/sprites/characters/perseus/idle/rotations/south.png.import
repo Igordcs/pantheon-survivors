@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bepnjp57q78yj"
-path="res://.godot/imported/south.png-57836b54b39df212e8f6a31d28a7946f.ctex"
+path="res://.godot/imported/south.png-8fbe531660d547650100b7f9d54ca51f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/perseus/Idle/rotations/south.png"
-dest_files=["res://.godot/imported/south.png-57836b54b39df212e8f6a31d28a7946f.ctex"]
+source_file="res://assets/sprites/characters/perseus/idle/rotations/south.png"
+dest_files=["res://.godot/imported/south.png-8fbe531660d547650100b7f9d54ca51f.ctex"]
 
 [params]
 
