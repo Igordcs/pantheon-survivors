@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dn17hqrx1dqbw"]
+
+[ext_resource type="Script" path="res://scripts/weapons/horusfeather.gd" id="1_script"]
+[ext_resource type="Resource" path="res://resources/weapons/horusfeather_data.tres" id="2_weapon_data"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/horusfeather_projectile.tscn" id="3_projectile"]
+
+[node name="Horusfeather" type="Node2D"]
+script = ExtResource("1_script")
+weapon_data = ExtResource("2_weapon_data")
+projectile_scene = ExtResource("3_projectile")

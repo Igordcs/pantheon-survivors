@@ -49,6 +49,7 @@ const WEAPONS := {
 	&"punisher_grenade": ["Granada do Justiceiro", "res://resources/weapons/punisher_grenade_data.tres"],
 	&"blades_of_chaos": ["Lâminas do Caos", "res://resources/weapons/blades_of_chaos_data.tres"],
 	&"leviathan_axe": ["Machado Leviatã", "res://resources/weapons/leviathan_axe_data.tres"],
+	&"horusfeather": ["Pena de Hórus", "res://resources/weapons/horusfeather_data.tres"],
 }
 
 

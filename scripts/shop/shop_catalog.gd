@@ -20,6 +20,7 @@ static func _build_products() -> Array[ShopItemData]:
 		load("res://resources/shop/gungnir_shop_item.tres") as ShopItemData,
 		load("res://resources/shop/sumarbrander_shop_item.tres") as ShopItemData,
 		load("res://resources/shop/leviathan_axe_shop_item.tres") as ShopItemData,
+		load("res://resources/shop/horusfeather_shop_item.tres") as ShopItemData,
 	]
 	for item in ItemCatalog.get_shop_items():
 		var product := ShopItemData.new()
