@@ -1,11 +1,16 @@
 extends CanvasLayer
-## Global developer tools: F2 opens the dev menu and F3 shows performance.
+## Global developer tools: F2 or Ctrl+D open the dev menu, F3 shows performance.
 
 @onready var label: Label = $MarginContainer/VBoxContainer/StatsLabel
 
 var _dev_overlay: ColorRect
 var _character_select: OptionButton
+var _map_select: OptionButton
 var _was_paused := false
+
+## Teclas de funcao viram atalho de sistema em muito notebook, entao o menu dev
+## tambem responde a uma combinacao que nao depende delas.
+const DEV_MENU_KEYS := [KEY_F2, KEY_F9]
 
 const CHARACTERS := [
 	["Eirik", &"eirik"], ["Arthur", &"arthur"], ["Neferu", &"neferu"],
@@ -20,13 +25,21 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.keycode == KEY_F2 and event.pressed and not event.echo:
+	if _is_dev_menu_shortcut(event):
 		if _dev_overlay.visible or _can_open_dev_menu():
 			_toggle_dev_menu()
 			get_viewport().set_input_as_handled()
 		return
 	if event.is_action_pressed("debug_f3") or (event is InputEventKey and event.keycode == KEY_F3 and event.pressed):
 		$MarginContainer.visible = not $MarginContainer.visible
+
+
+func _is_dev_menu_shortcut(event: InputEvent) -> bool:
+	if not (event is InputEventKey) or not event.pressed or event.echo:
+		return false
+	if event.keycode in DEV_MENU_KEYS:
+		return true
+	return event.ctrl_pressed and event.keycode == KEY_D
 
 
 func _process(_delta: float) -> void:
@@ -74,13 +87,20 @@ func _build_dev_menu() -> void:
 		_character_select.add_item(entry[0])
 		_character_select.set_item_metadata(_character_select.item_count - 1, entry[1])
 	box.add_child(_character_select)
+	_map_select = OptionButton.new()
+	for map_data in MapCatalog.get_maps():
+		_map_select.add_item(map_data.display_name)
+		_map_select.set_item_metadata(_map_select.item_count - 1, map_data.map_id)
+		if map_data.map_id == Global.selected_map_id:
+			_map_select.select(_map_select.item_count - 1)
+	box.add_child(_map_select)
 	var start := Button.new()
 	start.text = "INICIAR MUNDO"
 	start.custom_minimum_size.y = 48.0
 	start.pressed.connect(_start_sandbox)
 	box.add_child(start)
 	var close := Button.new()
-	close.text = "Fechar (F2)"
+	close.text = "Fechar (F2 ou Ctrl+D)"
 	close.pressed.connect(_toggle_dev_menu)
 	box.add_child(close)
 
@@ -104,6 +124,8 @@ func _can_open_dev_menu() -> bool:
 
 func _start_sandbox() -> void:
 	Global.selected_character_id = _character_select.get_item_metadata(_character_select.selected) as StringName
+	if _map_select.selected >= 0:
+		Global.selected_map_id = _map_select.get_item_metadata(_map_select.selected) as StringName
 	Global.sandbox_mode = true
 	_dev_overlay.hide()
 	get_tree().paused = false
