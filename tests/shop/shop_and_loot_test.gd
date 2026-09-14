@@ -7,6 +7,7 @@ var _failures := 0
 
 
 func _ready() -> void:
+	_test_content_registry()
 	_test_catalog()
 	_test_loot_rolls()
 	_test_drop_distribution()
@@ -21,7 +22,21 @@ func _ready() -> void:
 	get_tree().quit(_failures)
 
 
+func _test_content_registry() -> void:
+	var errors := ContentRegistry.validate()
+	for error in errors:
+		_fail("Content registry validation failed: %s" % error)
+	var medusa_scene := ContentRegistry.get_enemy_scene(&"medusa")
+	var medusa_data := ContentRegistry.get_enemy_data(&"medusa")
+	if not medusa_scene or not medusa_data or medusa_data.id != &"medusa":
+		_fail("Medusa must have a valid unique scene and matching data resource.")
+	elif medusa_scene.resource_path != "res://scenes/enemies/medusa.tscn":
+		_fail("Medusa must not reuse the ranged slime projectile scene.")
+
+
 func _test_catalog() -> void:
+	for error in ItemCatalog.validate():
+		_fail("Item catalog validation failed: %s" % error)
 	var characters := ShopCatalog.get_products(ShopItemData.Category.CHARACTER)
 	var weapons := ShopCatalog.get_products(ShopItemData.Category.WEAPON)
 	var items := ShopCatalog.get_products(ShopItemData.Category.ITEM)
@@ -43,6 +58,8 @@ func _test_catalog() -> void:
 			_fail("The shop contains a removed, fundamental or iconless item.")
 	if ItemCatalog.get_all().size() != 18 or ItemCatalog.get_fundamentals().size() != 7:
 		_fail("The complete catalog should contain 18 items, including seven fundamentals.")
+	if ItemCatalog.get_specials().size() != 11:
+		_fail("The catalog should contain eleven special shop items.")
 	var sandals := ItemCatalog.get_item(&"hermes_sandals")
 	if not sandals or sandals.max_level != 5 \
 			or not is_equal_approx(sandals.get_value_for_level(5), 0.25):

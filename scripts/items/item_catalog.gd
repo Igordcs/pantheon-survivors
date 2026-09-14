@@ -1,90 +1,104 @@
 extends RefCounted
 class_name ItemCatalog
+## Índice de ItemData persistidos como resources editáveis pelo Inspector.
 
-const DEFINITIONS := [
-	[&"chronos_hourglass", "Ampulheta de Cronos", &"Grega", 55, &"cooldown", 0.08, 0.0, "Reduz o cooldown de todas as armas em 8%.", "chronos_hourglass.png"],
-	[&"thoths_papyrus", "Papiro de Thoth", &"Egípcia", 40, &"xp", 0.12, 0.0, "Aumenta todo XP recebido em 12%.", "thoths_papyrus.png"],
-	[&"amphora_of_ambrosia", "Ânfora de Ambrosia", &"Grega", 50, &"regen", 0.003, 5.0, "Regenera vida; pausa por 5 s após sofrer dano.", "amphora_of_ambrosia.png"],
-	[&"aegis_of_athena", "Égide de Atena", &"Grega", 60, &"max_health", 0.15, 0.0, "Aumenta a vida máxima em 15%.", "aegis_of_athena.png"],
-	[&"megingjord", "Megingjörð", &"Nórdica", 65, &"damage", 0.10, 0.0, "Aumenta todo dano de armas em 10%.", "megingjord.png"],
-	[&"tyches_cornucopia", "Cornucópia de Tique", &"Grega", 45, &"luck", 0.10, 0.0, "Concede 10% de sorte.", "tyches_cornucopia.png"],
-	[&"ankh_of_osiris", "Ankh de Osíris", &"Egípcia", 120, &"revive", 0.35, 2.0, "Reanima uma vez por run com 35% da vida.", "ankh_of_osiris.png"],
-	[&"horn_of_poetic_mead", "Chifre do Hidromel Poético", &"Nórdica", 75, &"level_haste", 0.20, 8.0, "Level-up acelera ataques por 8 s.", "horn_of_poetic_mead.png"],
-	[&"golden_fleece", "Velocino de Ouro", &"Grega", 90, &"shield", 30.0, 0.0, "30 s sem dano concedem um escudo.", "golden_fleece.png"],
-	[&"vial_of_mimirs_waters", "Frasco das Águas de Mímir", &"Nórdica", 70, &"level_heal", 0.05, 0.0, "Cada level-up cura 5% da vida.", "vial_of_mimirs_waters.png"],
-	[&"feather_of_maat", "Pena de Ma'at", &"Egípcia", 80, &"kill_streak", 20.0, 10.0, "20 kills sem dano concedem um buff.", "feather_of_maat.png"],
-	[&"ariadnes_thread_ball", "Novelo de Ariadne", &"Grega", 65, &"pickup", 0.35, 15.0, "Amplia a coleta e ativa atração após 15 pickups.", "ariadnes_thread_ball.png"],
-	[&"eye_of_horus", "Olho de Hórus", &"Egípcia", 100, &"solar_block", 5.0, 0.75, "Cinco bloqueios solares emitem um pulso.", "eye_of_horus.png"],
-	[&"draupnir_ring", "Anel de Draupnir", &"Nórdica", 110, &"attack_echo", 8.0, 0.5, "A cada oitavo ataque, cria um eco.", "draupnir_ring.png"],
-	[&"tyet_amulet_of_isis", "Amuleto Tyet de Ísis", &"Egípcia", 95, &"overheal_barrier", 0.15, 0.0, "Cura excedente vira barreira.", "tyet_amulet_of_isis.png"],
-	[&"odins_sacrificed_eye", "Olho Sacrificado de Odin", &"Nórdica", 105, &"mark", 0.25, 4.0, "Marca um alvo para receber mais dano.", "odins_sacrificed_eye.png"],
-	[&"hippolytas_belt", "Cinto de Hipólita", &"Grega", 85, &"area", 0.20, 0.0, "Aumenta a área dos ataques em até 20%.", "hippolytas_belt.png"],
-	[&"hermes_sandals", "Sandálias de Hermes", &"Grega", 75, &"move_speed", 0.08, 0.0, "Aumenta a velocidade e pode chegar ao nível 5 durante a run.", "res://assets/sprites/weapons/hermes_sandals.png"],
+const FUNDAMENTAL_PATHS: Array[String] = [
+	"res://resources/items/fundamentals/chronos_hourglass.tres",
+	"res://resources/items/fundamentals/thoths_papyrus.tres",
+	"res://resources/items/fundamentals/amphora_of_ambrosia.tres",
+	"res://resources/items/fundamentals/aegis_of_athena.tres",
+	"res://resources/items/fundamentals/megingjord.tres",
+	"res://resources/items/fundamentals/tyches_cornucopia.tres",
+	"res://resources/items/fundamentals/hermes_sandals.tres",
 ]
 
-const FUNDAMENTAL_IDS: Array[StringName] = [
-	&"chronos_hourglass",
-	&"thoths_papyrus",
-	&"amphora_of_ambrosia",
-	&"aegis_of_athena",
-	&"megingjord",
-	&"tyches_cornucopia",
-	&"hermes_sandals",
+const SPECIAL_PATHS: Array[String] = [
+	"res://resources/items/specials/ankh_of_osiris.tres",
+	"res://resources/items/specials/horn_of_poetic_mead.tres",
+	"res://resources/items/specials/golden_fleece.tres",
+	"res://resources/items/specials/vial_of_mimirs_waters.tres",
+	"res://resources/items/specials/feather_of_maat.tres",
+	"res://resources/items/specials/ariadnes_thread_ball.tres",
+	"res://resources/items/specials/eye_of_horus.tres",
+	"res://resources/items/specials/draupnir_ring.tres",
+	"res://resources/items/specials/tyet_amulet_of_isis.tres",
+	"res://resources/items/specials/odins_sacrificed_eye.tres",
+	"res://resources/items/specials/hippolytas_belt.tres",
 ]
 
-static var _items: Dictionary = {}
+static var _items: Dictionary[StringName, ItemData] = {}
 
 static func get_all() -> Array[ItemData]:
-	_ensure_loaded()
-	var result: Array[ItemData] = []
-	for value in _items.values(): result.append(value as ItemData)
-	return result
+	return _items_for_paths(FUNDAMENTAL_PATHS + SPECIAL_PATHS)
 
 static func get_item(id: StringName) -> ItemData:
 	_ensure_loaded()
-	return _items.get(id) as ItemData
+	return _items.get(id)
 
 static func has_item(id: StringName) -> bool:
 	_ensure_loaded()
 	return _items.has(id)
 
-
 static func is_fundamental(id: StringName) -> bool:
-	return id in FUNDAMENTAL_IDS
-
+	return has_item(id) and _paths_contain_id(FUNDAMENTAL_PATHS, id)
 
 static func is_shop_item(id: StringName) -> bool:
-	return has_item(id) and not is_fundamental(id)
-
+	return has_item(id) and _paths_contain_id(SPECIAL_PATHS, id)
 
 static func get_fundamentals() -> Array[ItemData]:
+	return _items_for_paths(FUNDAMENTAL_PATHS)
+
+static func get_shop_items() -> Array[ItemData]:
+	return get_specials()
+
+static func get_specials() -> Array[ItemData]:
+	return _items_for_paths(SPECIAL_PATHS)
+
+static func validate() -> PackedStringArray:
+	var errors := PackedStringArray()
+	var seen: Dictionary[StringName, bool] = {}
+	for path in FUNDAMENTAL_PATHS + SPECIAL_PATHS:
+		if not ResourceLoader.exists(path):
+			errors.append("Item resource ausente: %s" % path)
+			continue
+		var item := load(path) as ItemData
+		var expected_id := _id_for_path(path)
+		if not item:
+			errors.append("Resource não é ItemData: %s" % path)
+		elif item.id != expected_id:
+			errors.append("Item '%s' possui ID divergente: %s" % [path, item.id])
+		elif seen.has(item.id):
+			errors.append("Item possui ID duplicado: %s" % item.id)
+		elif not item.icon:
+			errors.append("Item '%s' não possui ícone." % item.id)
+		else:
+			seen[item.id] = true
+	return errors
+
+static func _items_for_paths(paths: Array[String]) -> Array[ItemData]:
+	_ensure_loaded()
 	var result: Array[ItemData] = []
-	for id in FUNDAMENTAL_IDS:
-		var item := get_item(id)
+	for path in paths:
+		var item := _items.get(_id_for_path(path))
 		if item:
 			result.append(item)
 	return result
 
 static func _ensure_loaded() -> void:
-	if not _items.is_empty(): return
-	for definition in DEFINITIONS:
-		var item := ItemData.new()
-		item.id = definition[0]; item.display_name = definition[1]; item.mythology = definition[2]
-		item.price = definition[3]; item.effect_id = definition[4]; item.value = definition[5]
-		item.secondary_value = definition[6]; item.description = definition[7]
-		item.is_fundamental = item.id in FUNDAMENTAL_IDS
-		var icon_path := String(definition[8])
-		if not icon_path.begins_with("res://"):
-			icon_path = "res://assets/sprites/items/%s" % icon_path
-		item.icon = load(icon_path) as Texture2D
-		if item.id == &"hermes_sandals":
-			item.max_level = 5
-			item.level_values = [0.08, 0.12, 0.16, 0.20, 0.25]
-			item.level_descriptions = [
-				"Aumenta a velocidade de movimento em 8%.",
-				"Aumenta a velocidade de movimento em 12%.",
-				"Aumenta a velocidade de movimento em 16%.",
-				"Aumenta a velocidade de movimento em 20%.",
-				"Poder de Hermes: aumenta a velocidade de movimento em 25%.",
-			]
-		_items[item.id] = item
+	if not _items.is_empty():
+		return
+	for path in FUNDAMENTAL_PATHS + SPECIAL_PATHS:
+		var item := load(path) as ItemData
+		if item and not _items.has(item.id):
+			_items[item.id] = item
+		else:
+			push_error("ItemCatalog: resource inválido ou duplicado em %s" % path)
+
+static func _id_for_path(path: String) -> StringName:
+	return StringName(path.get_file().get_basename())
+
+static func _paths_contain_id(paths: Array[String], id: StringName) -> bool:
+	for path in paths:
+		if _id_for_path(path) == id:
+			return true
+	return false

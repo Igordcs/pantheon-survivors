@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyhcnuk5543k2"
-path="res://.godot/imported/05.png-50c0825c410a8e66a87e461623b1f8a3.ctex"
+uid="uid://p764pk4lnny"
+path="res://.godot/imported/05.png-df4094212a09e7502639824c3c89e75c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/ORC/dead/05.png"
-dest_files=["res://.godot/imported/05.png-50c0825c410a8e66a87e461623b1f8a3.ctex"]
+source_file="res://assets/sprites/enemies/orc/Dead/05.png"
+dest_files=["res://.godot/imported/05.png-df4094212a09e7502639824c3c89e75c.ctex"]
 
 [params]
 

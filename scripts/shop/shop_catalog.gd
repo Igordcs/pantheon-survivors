@@ -21,9 +21,7 @@ static func _build_products() -> Array[ShopItemData]:
 		load("res://resources/shop/sumarbrander_shop_item.tres") as ShopItemData,
 		load("res://resources/shop/leviathan_axe_shop_item.tres") as ShopItemData,
 	]
-	for item in ItemCatalog.get_all():
-		if item.is_fundamental:
-			continue
+	for item in ItemCatalog.get_shop_items():
 		var product := ShopItemData.new()
 		product.id = item.id; product.category = ShopItemData.Category.ITEM
 		product.display_name = item.display_name; product.description = "%s — %s" % [item.mythology, item.description]

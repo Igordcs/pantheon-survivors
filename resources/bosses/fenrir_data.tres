@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/boss_data.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
@@ -12,3 +12,5 @@ contact_damage = 32.0
 score_value = 3500
 visual_size = 144.0
 sprite_directory = "res://assets/sprites/bosses/fenrir/Idle/rotations"
+walk_sprite_directory = "res://assets/sprites/bosses/fenrir/Walk"
+walk_animation_speed = 8.0

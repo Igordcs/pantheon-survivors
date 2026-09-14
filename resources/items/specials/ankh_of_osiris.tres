@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/ankh_of_osiris.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"ankh_of_osiris"
+display_name = "Ankh de Osíris"
+description = "Reanima uma vez por run com 35% da vida."
+mythology = &"Egípcia"
+icon = ExtResource("2")
+price = 120
+effect_id = &"revive"
+value = 0.35
+secondary_value = 2.0

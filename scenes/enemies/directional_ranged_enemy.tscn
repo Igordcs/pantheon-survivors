@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/enemies/directional_ranged_enemy.gd" id="1_script"]
 [ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2_health"]
-[ext_resource type="Resource" path="res://resources/enemies/medusa_data.tres" id="3_data"]
+[ext_resource type="Resource" path="res://resources/enemies/mummy_data.tres" id="3_data"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 12.0
@@ -21,4 +21,3 @@ shape = SubResource("CircleShape2D_1")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("2_health")
-

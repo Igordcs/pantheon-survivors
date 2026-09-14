@@ -7,7 +7,7 @@ signal died
 enum AttackMode { CHARGE, TARGETED_AREA }
 enum State { SPAWNING, CHASING, TELEGRAPHING, ATTACKING, DYING }
 
-@export var boss_data: EnemyData
+@export var boss_data: BossData
 @export var attack_mode := AttackMode.CHARGE
 @export_dir var spawn_directory: String
 @export_dir var idle_directory: String

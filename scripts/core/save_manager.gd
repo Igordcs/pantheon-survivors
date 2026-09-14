@@ -7,7 +7,7 @@ signal loadout_changed
 signal settings_changed
 
 const SAVE_PATH := "user://save_data.json"
-const SAVE_VERSION := 6
+const SAVE_VERSION := 7
 const INITIAL_CHARACTER_IDS := ["eirik", "neferu", "perseus"]
 const INITIAL_WEAPON_IDS := ["mjolnir"]
 
@@ -18,7 +18,6 @@ var save_data: Dictionary = {
 	"save_version": SAVE_VERSION,
 	"currency": 0,
 	"unlocked_weapons": ["mjolnir"],
-	"unlocked_relics": ["speed_relic"],
 	"unlocked_characters": ["eirik", "neferu", "perseus"],
 	"unlocked_items": [],
 	"equipped_items": [],
@@ -42,7 +41,6 @@ func _make_defaults() -> Dictionary:
 		"save_version": SAVE_VERSION,
 		"currency": 0,
 		"unlocked_weapons": INITIAL_WEAPON_IDS.duplicate(),
-		"unlocked_relics": ["speed_relic"],
 		"unlocked_characters": INITIAL_CHARACTER_IDS.duplicate(),
 		"unlocked_items": [],
 		"equipped_items": [],
@@ -301,7 +299,7 @@ func _migrate_save() -> void:
 			save_data[key] = defaults[key]
 	save_data["save_version"] = SAVE_VERSION
 	save_data["currency"] = maxi(int(save_data.get("currency", 0)), 0)
-	for key in ["unlocked_weapons", "unlocked_relics", "unlocked_characters", "unlocked_items", "equipped_items"]:
+	for key in ["unlocked_weapons", "unlocked_characters", "unlocked_items", "equipped_items"]:
 		var stored = save_data.get(key, [])
 		var values: Array = stored if stored is Array else []
 		var normalized: Array[String] = []
@@ -310,6 +308,7 @@ func _migrate_save() -> void:
 			if not id.is_empty() and id not in normalized:
 				normalized.append(id)
 		save_data[key] = normalized
+	save_data.erase("unlocked_relics")
 	var unlocked_items: Array = save_data.get("unlocked_items", [])
 	var equipped_items: Array = save_data.get("equipped_items", [])
 	var valid_equipped: Array[String] = []

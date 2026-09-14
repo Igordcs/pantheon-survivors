@@ -73,18 +73,18 @@ func _update_time_ui() -> void:
 
 
 func _generate_default_progression() -> void:
-	var bat := _entry("res://resources/enemies/bat_data.tres", &"bat", 1.6, 0.5, 2, 5, 80)
-	var draugr := _entry("res://resources/enemies/draugr_data.tres", &"melee", 1.4, 1.0, 1, 3, 0)
-	var harpy := _entry("res://resources/enemies/harpy_data.tres", &"melee", 0.8, 1.25, 1, 3, 18)
-	var ranged_slime := _entry("res://resources/enemies/ranged_enemy_data.tres", &"ranged", 0.6, 1.5, 1, 2, 24)
-	var healer_slime := _entry("res://resources/enemies/healer_enemy_data.tres", &"healer", 0.2, 2.5, 1, 1, 6)
-	var medusa := _entry("res://resources/enemies/medusa_data.tres", &"directional_ranged", 0.35, 3.0, 1, 2, 8)
-	var mummy := _entry("res://resources/enemies/mummy_data.tres", &"directional_ranged", 0.3, 3.0, 1, 2, 10)
-	var cyclops := _entry("res://resources/enemies/cyclops_data.tres", &"melee", 0.15, 4.0, 1, 1, 10)
-	var orc := _entry("res://resources/enemies/tank_data.tres", &"tank", 0.12, 5.0, 1, 1, 8)
-	var minotaur := _entry("res://resources/enemies/minotaur_data.tres", &"charger", 0.04, 8.0, 1, 1, 1)
-	var ammit := _entry("res://resources/enemies/ammit_data.tres", &"ammit", 0.035, 5.5, 1, 1, 6)
-	var valkyrie := _entry("res://resources/enemies/corrupted_valkyrie_data.tres", &"corrupted_valkyrie", 0.045, 5.0, 1, 2, 8)
+	var bat := _entry(&"bat", 1.6, 0.5, 2, 5, 80)
+	var draugr := _entry(&"draugr", 1.4, 1.0, 1, 3, 0)
+	var harpy := _entry(&"harpy", 0.8, 1.25, 1, 3, 18)
+	var ranged_slime := _entry(&"ranged_slime", 0.6, 1.5, 1, 2, 24)
+	var healer_slime := _entry(&"healer_slime", 0.2, 2.5, 1, 1, 6)
+	var medusa := _entry(&"medusa", 0.35, 3.0, 1, 2, 8)
+	var mummy := _entry(&"mummy", 0.3, 3.0, 1, 2, 10)
+	var cyclops := _entry(&"cyclops", 0.15, 4.0, 1, 1, 10)
+	var orc := _entry(&"orc", 0.12, 5.0, 1, 1, 8)
+	var minotaur := _entry(&"minotaur", 0.04, 8.0, 1, 1, 1)
+	var ammit := _entry(&"ammit", 0.035, 5.5, 1, 1, 6)
+	var valkyrie := _entry(&"corrupted_valkyrie", 0.045, 5.0, 1, 2, 8)
 
 	waves = [
 		_wave(60.0, 0.8, 25, 1.2, 4, [bat, draugr]),
@@ -105,8 +105,7 @@ func _generate_default_progression() -> void:
 
 
 func _entry(
-	data_path: String,
-	scene_key: StringName,
+	enemy_id: StringName,
 	weight: float,
 	cost: float,
 	min_group: int,
@@ -114,8 +113,8 @@ func _entry(
 	max_simultaneous: int
 ) -> EnemySpawnEntry:
 	var result := EnemySpawnEntry.new()
-	result.enemy_data = load(data_path) as EnemyData
-	result.scene_key = scene_key
+	result.enemy_data = ContentRegistry.get_enemy_data(enemy_id)
+	result.scene_key = enemy_id
 	result.weight = weight
 	result.threat_cost = cost
 	result.min_group_size = min_group

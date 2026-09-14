@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://rckj0rftgypa" path="res://scripts/enemies/basic_enemy.gd" id="1_script"]
 [ext_resource type="Script" uid="uid://rpi6bjtolxtp" path="res://scripts/combat/health_component.gd" id="2_health"]
-[ext_resource type="Resource" path="res://resources/enemies/basic_enemy_data.tres" id="3_data"]
+[ext_resource type="Resource" path="res://resources/enemies/draugr_data.tres" id="3_data"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 12.0

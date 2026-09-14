@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsvotu7cfpbyk"
-path="res://.godot/imported/03.png-26ab719a2b5ea811f05b41be29b467ec.ctex"
+uid="uid://or6q6jsj6cbw"
+path="res://.godot/imported/varios.png-6cb697a01b03ca989a959180b9cf68e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/Slime/idle_run/03.png"
-dest_files=["res://.godot/imported/03.png-26ab719a2b5ea811f05b41be29b467ec.ctex"]
+source_file="res://assets/sprites/map/snow/varios.png"
+dest_files=["res://.godot/imported/varios.png-6cb697a01b03ca989a959180b9cf68e0.ctex"]
 
 [params]
 

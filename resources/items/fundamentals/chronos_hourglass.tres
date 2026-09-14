@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/chronos_hourglass.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"chronos_hourglass"
+display_name = "Ampulheta de Cronos"
+description = "Reduz o cooldown de todas as armas em 8%."
+mythology = &"Grega"
+icon = ExtResource("2")
+price = 55
+effect_id = &"cooldown"
+value = 0.08

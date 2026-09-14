@@ -91,15 +91,6 @@ func _refresh_inventory() -> void:
 			var item_level := item_controller.get_item_level(item.id)
 			lines.append(_format_inventory_line(item.icon, item.display_name, item_level))
 
-	lines.append("")
-	lines.append("[font_size=20][b]RELÍQUIAS[/b][/font_size]")
-	var relics := _upgrade_system.get_obtained_relics()
-	if relics.is_empty():
-		lines.append("Nenhuma relíquia adquirida.")
-	else:
-		for relic in relics:
-			lines.append(_format_inventory_line(relic.icon, relic.display_name, 1))
-
 	inventory_text.text = "\n".join(lines)
 
 

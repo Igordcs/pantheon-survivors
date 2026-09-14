@@ -59,3 +59,8 @@ func _get_effect_visual() -> CanvasItem:
 	if static_sprite:
 		return static_sprite
 	return get_node_or_null("AnimatedSprite2D") as CanvasItem
+
+
+func _find_player() -> CharacterBody2D:
+	var players := get_tree().get_nodes_in_group("player")
+	return players[0] as CharacterBody2D if not players.is_empty() else null

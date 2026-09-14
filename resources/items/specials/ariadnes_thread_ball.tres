@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/ariadnes_thread_ball.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"ariadnes_thread_ball"
+display_name = "Novelo de Ariadne"
+description = "Amplia a coleta e ativa atração após 15 pickups."
+mythology = &"Grega"
+icon = ExtResource("2")
+price = 65
+effect_id = &"pickup"
+value = 0.35
+secondary_value = 15.0

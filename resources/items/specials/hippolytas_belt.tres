@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/hippolytas_belt.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"hippolytas_belt"
+display_name = "Cinto de Hipólita"
+description = "Aumenta a área dos ataques em até 20%."
+mythology = &"Grega"
+icon = ExtResource("2")
+price = 85
+effect_id = &"area"
+value = 0.2

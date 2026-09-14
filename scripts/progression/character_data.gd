@@ -2,11 +2,14 @@ extends Resource
 class_name CharacterData
 ## Dados de um personagem desbloqueável/selecionável.
 
+const ActorVisualDataType := preload("res://scripts/actors/actor_visual_data.gd")
+
 @export var id: StringName
 @export var display_name: String
 @export_multiline var description: String = ""
 @export var portrait: Texture2D
 @export var gameplay_sprite: Texture2D
+@export var visual: ActorVisualDataType
 @export_dir var gameplay_sprite_directory: String = ""
 @export_dir var walk_sprite_directory: String = ""
 @export_range(1.0, 30.0, 0.5) var walk_animation_speed: float = 8.0
@@ -23,6 +26,10 @@ var _walk_sprites_loaded: bool = false
 
 
 func get_gameplay_sprite(direction: Vector2) -> Texture2D:
+	if visual:
+		var configured := visual.get_idle(direction)
+		if configured:
+			return configured
 	_ensure_directional_sprites_loaded()
 	var directional_sprite := DirectionalSpriteHelper.get_sprite(_directional_sprites, direction)
 	if directional_sprite:
@@ -38,6 +45,10 @@ func has_directional_gameplay_sprites() -> bool:
 
 
 func get_walk_frames(direction: Vector2) -> Array[Texture2D]:
+	if visual:
+		var configured := visual.get_walk_frames(direction)
+		if not configured.is_empty():
+			return configured
 	_ensure_walk_sprites_loaded()
 	var direction_name := DirectionalSpriteHelper.get_direction_name(direction)
 	var frames: Array[Texture2D] = []
@@ -58,6 +69,8 @@ func get_walk_frames(direction: Vector2) -> Array[Texture2D]:
 
 
 func has_walk_animation() -> bool:
+	if visual and visual.has_walk():
+		return true
 	_ensure_walk_sprites_loaded()
 	return not _walk_sprites.is_empty()
 

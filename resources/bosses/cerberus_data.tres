@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/boss_data.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
@@ -10,3 +10,5 @@ max_health = 3600.0
 speed = 61.0
 contact_damage = 24.0
 score_value = 1800
+visual_size = 124.0
+sprite_directory = "res://assets/sprites/bosses/cerberus/idle/rotations"

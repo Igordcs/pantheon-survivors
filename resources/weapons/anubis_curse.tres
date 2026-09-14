@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://cl7efvtgsvut2"]
 
 [ext_resource type="Script" uid="uid://25g41b34ykt1" path="res://scripts/weapons/weapon_data.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://byuijiu6qkw4d" path="res://assets/sprites/weapons/AnubisCurse.png" id="1_rhst6"]
+[ext_resource type="Texture2D" uid="uid://byuijiu6qkw4d" path="res://assets/sprites/weapons/anubiscurse.png" id="1_rhst6"]
 [ext_resource type="Script" uid="uid://dby8hcw36xba6" path="res://scripts/weapons/weapon_level_data.gd" id="2_0ngxw"]
 
 [sub_resource type="Resource" id="Level_1"]

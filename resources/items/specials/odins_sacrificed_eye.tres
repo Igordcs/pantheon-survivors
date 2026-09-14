@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/odins_sacrificed_eye.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"odins_sacrificed_eye"
+display_name = "Olho Sacrificado de Odin"
+description = "Marca um alvo para receber mais dano."
+mythology = &"Nórdica"
+icon = ExtResource("2")
+price = 105
+effect_id = &"mark"
+value = 0.25
+secondary_value = 4.0

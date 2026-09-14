@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/amphora_of_ambrosia.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"amphora_of_ambrosia"
+display_name = "Ânfora de Ambrosia"
+description = "Regenera vida; pausa por 5 s após sofrer dano."
+mythology = &"Grega"
+icon = ExtResource("2")
+price = 50
+effect_id = &"regen"
+value = 0.003
+secondary_value = 5.0

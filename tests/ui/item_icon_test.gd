@@ -7,7 +7,6 @@ const ICON_RESOURCES: Array[String] = [
 	"res://resources/weapons/poseidon_trident_data.tres",
 	"res://resources/weapons/medusa_head_data.tres",
 	"res://resources/weapons/zeus_lightning_data.tres",
-	"res://resources/relics/speed_relic_data.tres",
 ]
 
 var _failures: int = 0
