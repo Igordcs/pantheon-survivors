@@ -3,7 +3,7 @@ extends EnemyBase
 
 signal died
 
-@export var boss_data: EnemyData = preload("res://resources/bosses/king_slime_data.tres")
+@export var boss_data: BossData = preload("res://resources/bosses/king_slime_data.tres")
 
 enum State { SPAWNING, CHASING, TELEGRAPHING, ATTACKING, DYING }
 

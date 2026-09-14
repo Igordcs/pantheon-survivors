@@ -2,6 +2,8 @@ extends Resource
 class_name EnemyData
 ## Dados configuráveis de um tipo de inimigo.
 
+const ActorVisualDataType := preload("res://scripts/actors/actor_visual_data.gd")
+
 @export var id: StringName = &""
 @export var display_name: String = ""
 @export var max_health: float = 30.0
@@ -32,6 +34,7 @@ class_name EnemyData
 @export var charge_windup: float = 0.75
 
 @export_group("Visual")
+@export var visual: ActorVisualDataType
 @export_range(16.0, 256.0, 1.0) var visual_size: float = 64.0
 @export_dir var sprite_directory: String = ""
 @export_dir var walk_sprite_directory: String = ""
@@ -52,6 +55,10 @@ var _walk_sprites_loaded: bool = false
 
 
 func get_directional_sprite(direction: Vector2) -> Texture2D:
+	if visual:
+		var configured := visual.get_idle(direction)
+		if configured:
+			return configured
 	var direction_name := DirectionalSpriteHelper.get_direction_name(direction)
 	var directional_sprite: Texture2D
 	match direction_name:
@@ -92,6 +99,10 @@ func has_visual() -> bool:
 
 
 func get_walk_frame(direction: Vector2, frame_index: int) -> Texture2D:
+	if visual:
+		var configured_frames := visual.get_walk_frames(direction)
+		if not configured_frames.is_empty():
+			return configured_frames[posmod(frame_index, configured_frames.size())]
 	_ensure_walk_sprites_loaded()
 	var direction_name := DirectionalSpriteHelper.get_direction_name(direction)
 	var frames = _walk_sprites.get(direction_name)
@@ -103,6 +114,8 @@ func get_walk_frame(direction: Vector2, frame_index: int) -> Texture2D:
 
 
 func has_walk_animation() -> bool:
+	if visual and visual.has_walk():
+		return true
 	_ensure_walk_sprites_loaded()
 	return not _walk_sprites.is_empty()
 

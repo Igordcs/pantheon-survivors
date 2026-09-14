@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/hermes_sandals.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"hermes_sandals"
+display_name = "Sandálias de Hermes"
+description = "Aumenta a velocidade e pode chegar ao nível 5 durante a run."
+mythology = &"Grega"
+icon = ExtResource("2")
+price = 75
+effect_id = &"move_speed"
+value = 0.08
+max_level = 5
+level_values = Array[float]([0.08, 0.12, 0.16, 0.2, 0.25])
+level_descriptions = Array[String](["Aumenta a velocidade de movimento em 8%.", "Aumenta a velocidade de movimento em 12%.", "Aumenta a velocidade de movimento em 16%.", "Aumenta a velocidade de movimento em 20%.", "Poder de Hermes: aumenta a velocidade de movimento em 25%."])

@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func _test_combat_data() -> void:
-	var slime := load("res://resources/enemies/ranged_enemy_data.tres") as EnemyData
+	var slime := load("res://resources/enemies/ranged_slime_data.tres") as EnemyData
 	var ammit := load("res://resources/enemies/ammit_data.tres") as EnemyData
 	var valkyrie := load("res://resources/enemies/corrupted_valkyrie_data.tres") as EnemyData
 	var fenrir := load("res://resources/bosses/fenrir_data.tres") as EnemyData

@@ -12,7 +12,7 @@ signal enemy_defeated(position: Vector2)
 @export var min_spawn_radius: float = 400.0
 @export var max_spawn_radius: float = 600.0
 
-var _enemy_scenes: Dictionary[StringName, PackedScene] = {}
+var _legacy_scenes: Dictionary[StringName, PackedScene] = {}
 var _pools: Dictionary = {}
 var _active_by_id: Dictionary[StringName, int] = {}
 var _active_count: int = 0
@@ -28,15 +28,15 @@ var _world_generator: WorldGenerator
 
 func _ready() -> void:
 	_player = _find_player()
-	_enemy_scenes[&"melee"] = enemy_scene
-	_enemy_scenes[&"bat"] = preload("res://scenes/enemies/bat_enemy.tscn")
-	_enemy_scenes[&"tank"] = preload("res://scenes/enemies/tank_enemy.tscn")
-	_enemy_scenes[&"ranged"] = preload("res://scenes/enemies/ranged_enemy.tscn")
-	_enemy_scenes[&"healer"] = preload("res://scenes/enemies/healer_enemy.tscn")
-	_enemy_scenes[&"directional_ranged"] = preload("res://scenes/enemies/directional_ranged_enemy.tscn")
-	_enemy_scenes[&"charger"] = preload("res://scenes/enemies/charger_enemy.tscn")
-	_enemy_scenes[&"ammit"] = preload("res://scenes/enemies/ammit.tscn")
-	_enemy_scenes[&"corrupted_valkyrie"] = preload("res://scenes/enemies/corrupted_valkyrie.tscn")
+	_legacy_scenes[&"melee"] = enemy_scene
+	_legacy_scenes[&"bat"] = preload("res://scenes/enemies/bat_enemy.tscn")
+	_legacy_scenes[&"tank"] = preload("res://scenes/enemies/tank_enemy.tscn")
+	_legacy_scenes[&"ranged"] = preload("res://scenes/enemies/ranged_enemy.tscn")
+	_legacy_scenes[&"healer"] = preload("res://scenes/enemies/healer_enemy.tscn")
+	_legacy_scenes[&"directional_ranged"] = preload("res://scenes/enemies/directional_ranged_enemy.tscn")
+	_legacy_scenes[&"charger"] = preload("res://scenes/enemies/charger_enemy.tscn")
+	_legacy_scenes[&"ammit"] = preload("res://scenes/enemies/ammit.tscn")
+	_legacy_scenes[&"corrupted_valkyrie"] = preload("res://scenes/enemies/corrupted_valkyrie.tscn")
 
 	_spawn_timer = Timer.new()
 	_spawn_timer.wait_time = spawn_interval
@@ -167,7 +167,7 @@ func _spawn_group(entry: EnemySpawnEntry, count: int) -> int:
 
 
 func _get_enemy(entry: EnemySpawnEntry) -> CharacterBody2D:
-	var pool_key := entry.scene_key
+	var pool_key := entry.enemy_data.id
 	if not _pools.has(pool_key):
 		_pools[pool_key] = []
 	var pool: Array = _pools[pool_key]
@@ -176,9 +176,11 @@ func _get_enemy(entry: EnemySpawnEntry) -> CharacterBody2D:
 			pooled_enemy.set("enemy_data", entry.enemy_data)
 			return pooled_enemy as CharacterBody2D
 
-	var scene: PackedScene = _enemy_scenes.get(pool_key, enemy_scene) as PackedScene
+	var scene := ContentRegistry.get_enemy_scene(entry.enemy_data.id)
+	if not scene:
+		scene = _legacy_scenes.get(entry.scene_key, enemy_scene) as PackedScene
 	if scene == null:
-		push_error("EnemySpawner: no scene registered for '%s'." % pool_key)
+		push_error("EnemySpawner: no scene registered for '%s'." % entry.enemy_data.id)
 		return null
 	var enemy := scene.instantiate() as CharacterBody2D
 	enemy.set("enemy_data", entry.enemy_data)

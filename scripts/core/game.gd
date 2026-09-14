@@ -21,6 +21,10 @@ var _coins_collected_this_run: int = 0
 
 
 func _ready() -> void:
+	for registry_error in ContentRegistry.validate():
+		push_error("ContentRegistry: %s" % registry_error)
+	for item_error in ItemCatalog.validate():
+		push_error("ItemCatalog: %s" % item_error)
 	MusicManager.play_game_music()
 	print("Pantheon Survivors — Game started")
 	
@@ -129,19 +133,8 @@ func _on_boss_died_for_chest(boss_node: Node2D) -> void:
 
 
 func _on_chest_collected(_chest: Chest) -> void:
-	var recipe = upgrade_system.check_evolutions()
-	if recipe:
-		print("Evolução Divina Encontrada: ", recipe.evolved_weapon.display_name)
-		# Não aplica aqui, aplica só quando o usuário clicar no botão!
-		var opt = UpgradeOption.new()
-		opt.item_data = recipe.evolved_weapon
-		opt.is_new_weapon = true
-		opt.display_text = "EVOLUÇÃO DIVINA: %s" % recipe.evolved_weapon.display_name
-		opt.description_text = recipe.evolved_weapon.description
-		level_up_panel.show_options([opt])
-	else:
-		print("Baú coletado; nenhuma evolução disponível.")
-		run_manager.complete_boss_reward()
+	print("Baú coletado.")
+	run_manager.complete_boss_reward()
 
 
 func _on_run_ended(is_victory: bool, stats: Dictionary) -> void:
@@ -185,25 +178,10 @@ func _on_player_level_up(new_level: int) -> void:
 
 
 func _on_upgrade_option_chosen(option: UpgradeOption) -> void:
-	if option.display_text.begins_with("EVOLUÇÃO"):
-		var recipe = upgrade_system.check_evolutions()
-		if recipe:
-			upgrade_system.apply_evolution(recipe)
-			hud.add_weapon_icon(
-				recipe.evolved_weapon.id,
-				recipe.evolved_weapon.icon,
-				recipe.evolved_weapon.display_name
-			)
-			run_manager.complete_boss_reward()
-		return
-		
 	upgrade_system.apply_option(option)
 	if option.item_data is WeaponData:
 		var weapon_data := option.item_data as WeaponData
 		hud.add_weapon_icon(weapon_data.id, weapon_data.icon, weapon_data.display_name)
-	elif option.item_data is RelicData:
-		var relic_data := option.item_data as RelicData
-		hud.add_weapon_icon(relic_data.id, relic_data.icon, relic_data.display_name)
 	elif option.item_data is ItemData:
 		var item_data := option.item_data as ItemData
 		var controller := player.get_node_or_null("ItemEffectController") as ItemEffectController

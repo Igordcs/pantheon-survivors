@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf5ix1ovpjt6r"
-path="res://.godot/imported/01.png-43a3cbf5fbe74175debdfe6edff19508.ctex"
+uid="uid://bg2o7m2pvjieo"
+path="res://.godot/imported/broken_drakkar.png-6b2fb0cac3c0a5a577e6d295077d92b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/Slime/idle_run/01.png"
-dest_files=["res://.godot/imported/01.png-43a3cbf5fbe74175debdfe6edff19508.ctex"]
+source_file="res://assets/sprites/environment/snow/broken_drakkar.png"
+dest_files=["res://.godot/imported/broken_drakkar.png-6b2fb0cac3c0a5a577e6d295077d92b4.ctex"]
 
 [params]
 

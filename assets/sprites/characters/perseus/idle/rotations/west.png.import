@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wxpmhckrm0sx"
-path="res://.godot/imported/west.png-1bc8b768d5957d2d3ae14cd91ced827f.ctex"
+uid="uid://dqp4k8hwjcluq"
+path="res://.godot/imported/west.png-56301e8e992a74adb3e4ddb60f4b42b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/perseus/idle/rotations/west.png"
-dest_files=["res://.godot/imported/west.png-1bc8b768d5957d2d3ae14cd91ced827f.ctex"]
+source_file="res://assets/sprites/characters/perseus/Idle/rotations/west.png"
+dest_files=["res://.godot/imported/west.png-56301e8e992a74adb3e4ddb60f4b42b0.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw4vk4rt4l5hu"
-path="res://.godot/imported/03.png-5e8f0951006af95b354486680546f5db.ctex"
+uid="uid://xwqf67awjin8"
+path="res://.godot/imported/03.png-ec33cdbd9ef4a7d77d82d49861d30340.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/enemies/ORC/ATTACK/03.png"
-dest_files=["res://.godot/imported/03.png-5e8f0951006af95b354486680546f5db.ctex"]
+source_file="res://assets/sprites/enemies/orc/Attack/03.png"
+dest_files=["res://.godot/imported/03.png-ec33cdbd9ef4a7d77d82d49861d30340.ctex"]
 
 [params]
 

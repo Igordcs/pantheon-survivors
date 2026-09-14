@@ -140,10 +140,7 @@ func _load_characters() -> void:
 	_characters.clear()
 
 	for char_id in _unlocked_chars:
-		var data_path := "res://resources/characters/%s_data.tres" % char_id
-		if not ResourceLoader.exists(data_path):
-			continue
-		var data := load(data_path) as CharacterData
+		var data := ContentRegistry.get_character_data(StringName(char_id))
 		if data:
 			_characters.append(data)
 
@@ -305,7 +302,7 @@ func _update_character_details(index: int) -> void:
 		weapon_description = data.starting_weapon.description
 		starting_weapon_icon = data.starting_weapon.icon
 	if char_id == &"punisher":
-		var grenade_data := load("res://resources/weapons/punisher_grenade_data.tres") as WeaponData
+		var grenade_data := ContentRegistry.get_weapon_data(&"punisher_grenade")
 		if grenade_data:
 			weapon_display = "%s + %s" % [weapon_display, grenade_data.display_name]
 			weapon_description = "As duas armas exclusivas acompanham o Justiceiro."

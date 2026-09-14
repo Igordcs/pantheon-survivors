@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/aegis_of_athena.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"aegis_of_athena"
+display_name = "Égide de Atena"
+description = "Aumenta a vida máxima em 15%."
+mythology = &"Grega"
+icon = ExtResource("2")
+price = 60
+effect_id = &"max_health"
+value = 0.15

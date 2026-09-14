@@ -4,7 +4,7 @@ class_name DirectionalBoss
 
 signal died
 
-@export var boss_data: EnemyData
+@export var boss_data: BossData
 @export_dir var sprite_directory: String
 @export_dir var walk_sprite_directory: String
 @export_range(1.0, 30.0, 0.5) var walk_animation_speed: float = 8.0
@@ -25,8 +25,12 @@ var _last_direction := Vector2.DOWN
 
 
 func _ready() -> void:
-	_directional_sprites = DirectionalSpriteHelper.load_directory(sprite_directory)
-	_walk_sprites = DirectionalSpriteHelper.load_animation_directory(walk_sprite_directory)
+	var idle_path := boss_data.sprite_directory if boss_data and not boss_data.sprite_directory.is_empty() else sprite_directory
+	var walk_path := boss_data.walk_sprite_directory if boss_data and not boss_data.walk_sprite_directory.is_empty() else walk_sprite_directory
+	if boss_data and boss_data.visual_size > 0.0:
+		visual_height = boss_data.visual_size
+	_directional_sprites = DirectionalSpriteHelper.load_directory(idle_path)
+	_walk_sprites = DirectionalSpriteHelper.load_animation_directory(walk_path)
 	_apply_idle_direction(Vector2.DOWN)
 	health_component.max_health = boss_data.max_health
 	health_component.reset()

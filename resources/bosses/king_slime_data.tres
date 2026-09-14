@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://86db14m2o7mw"]
+[gd_resource type="Resource" script_class="BossData" format=3 uid="uid://86db14m2o7mw"]
 
-[ext_resource type="Script" uid="uid://7sdoy4k44d5y" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/boss_data.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
-id = &"boss_enemy"
+id = &"king_slime"
 display_name = "King Slime"
 max_health = 1500.0
 speed = 21.0

@@ -3,28 +3,15 @@ class_name UpgradeSystem
 ## Gerencia as opções de upgrade e aplica as escolhas do jogador.
 
 # Lista hardcoded das armas e relíquias disponíveis
-const AVAILABLE_WEAPONS = [
-	preload("res://resources/weapons/mjolnir_data.tres"),
-	preload("res://resources/weapons/excalibur_data.tres"),
-	preload("res://resources/weapons/solar_disk_data.tres"),
-	preload("res://resources/weapons/poseidon_trident_data.tres"),
-	preload("res://resources/weapons/medusa_head_data.tres"),
-	preload("res://resources/weapons/zeus_lightning_data.tres"),
-	preload("res://resources/weapons/anubis_curse.tres"),
-	preload("res://resources/weapons/gungnir_data.tres"),
-	preload("res://resources/weapons/sumarbrander_data.tres"),
-	preload("res://resources/weapons/leviathan_axe_data.tres")
+const AVAILABLE_WEAPON_IDS: Array[StringName] = [
+	&"mjolnir", &"excalibur", &"solar_disk", &"poseidon_trident", &"medusa_head",
+	&"zeus_lightning", &"anubis_curse", &"gungnir", &"sumarbrander", &"leviathan_axe",
 ]
 
 # Armas exclusivas do Punisher — só aparecem no pool se o personagem atual for o Punisher
-const PUNISHER_EXCLUSIVE_WEAPONS = [
-	preload("res://resources/weapons/punisher_gun_data.tres"),
-	preload("res://resources/weapons/punisher_grenade_data.tres")
-]
+const PUNISHER_EXCLUSIVE_WEAPON_IDS: Array[StringName] = [&"punisher_gun", &"punisher_grenade"]
 
-const KRATOS_EXCLUSIVE_WEAPONS = [
-	preload("res://resources/weapons/blades_of_chaos_data.tres")
-]
+const KRATOS_EXCLUSIVE_WEAPON_IDS: Array[StringName] = [&"blades_of_chaos"]
 
 const SHOP_WEAPON_IDS: Array[StringName] = [
 	&"anubis_curse",
@@ -33,14 +20,7 @@ const SHOP_WEAPON_IDS: Array[StringName] = [
 	&"leviathan_axe",
 ]
 
-# As Sandálias de Hermes agora são um item de loja com progressão própria.
-# A antiga relíquia de velocidade não entra mais no pool da run.
-const AVAILABLE_RELICS = []
-
-const EVOLUTION_RECIPES = []
-
 var _player_weapons: Node2D
-var _obtained_relics: Array[RelicData] = []
 var _player: CharacterBody2D
 var _item_controller: ItemEffectController
 
@@ -50,10 +30,6 @@ func setup(weapon_holder: Node2D) -> void:
 	if weapon_holder:
 		_player = weapon_holder.get_parent() as CharacterBody2D
 		_item_controller = _player.get_node_or_null("ItemEffectController") as ItemEffectController
-
-
-func get_obtained_relics() -> Array[RelicData]:
-	return _obtained_relics.duplicate()
 
 
 func debug_grant_weapon(data: WeaponData) -> bool:
@@ -74,32 +50,27 @@ func debug_grant_weapon(data: WeaponData) -> bool:
 	return true
 
 
-func debug_grant_relic(data: RelicData) -> bool:
-	if not data or _has_relic(data.id):
-		return false
-	var option := UpgradeOption.new()
-	option.item_data = data
-	option.is_relic = true
-	apply_option(option)
-	return true
-
-
-func debug_reset_inventory() -> void:
-	_obtained_relics.clear()
-
-
 func generate_options(count: int = 3) -> Array[UpgradeOption]:
 	var options: Array[UpgradeOption] = []
 	var pool: Array[Resource] = []
 	
 	# Construir o pool de possibilidades (Armas)
-	var weapon_pool: Array = []
-	weapon_pool.append_array(AVAILABLE_WEAPONS)
+	var weapon_pool: Array[WeaponData] = []
+	for weapon_id in AVAILABLE_WEAPON_IDS:
+		var weapon_data := ContentRegistry.get_weapon_data(weapon_id)
+		if weapon_data:
+			weapon_pool.append(weapon_data)
 	# Inclui armas exclusivas do Punisher se for o personagem atual
 	if Global.selected_character_id == &"punisher":
-		weapon_pool.append_array(PUNISHER_EXCLUSIVE_WEAPONS)
+		for weapon_id in PUNISHER_EXCLUSIVE_WEAPON_IDS:
+			var weapon_data := ContentRegistry.get_weapon_data(weapon_id)
+			if weapon_data:
+				weapon_pool.append(weapon_data)
 	elif Global.selected_character_id == &"kratos":
-		weapon_pool.append_array(KRATOS_EXCLUSIVE_WEAPONS)
+		for weapon_id in KRATOS_EXCLUSIVE_WEAPON_IDS:
+			var weapon_data := ContentRegistry.get_weapon_data(weapon_id)
+			if weapon_data:
+				weapon_pool.append(weapon_data)
 
 	for data in weapon_pool:
 		# Não oferece armas base se elas já foram evoluídas! (Simplificação: checa se está no player)
@@ -116,11 +87,6 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 			# Simplificação: se level 0 (nova arma), só adiciona se tiver slot (vamos ignorar slots por agora).
 			pool.append(data)
 			
-	# Construir o pool de possibilidades (Relíquias)
-	for relic in AVAILABLE_RELICS:
-		if not _has_relic(relic.id):
-			pool.append(relic)
-
 	# Fundamentais são encontrados durante a run e não pertencem à loja.
 	if _item_controller:
 		for item in ItemCatalog.get_fundamentals():
@@ -144,7 +110,6 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 		opt.item_data = data
 		
 		if data is WeaponData:
-			opt.is_relic = false
 			var current_lvl := _get_weapon_level(data.id)
 			if current_lvl == 0:
 				opt.is_new_weapon = true
@@ -160,10 +125,6 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 					opt.description_text = weapon.get_next_upgrade_description()
 				else:
 					opt.description_text = data.get_level_description(current_lvl + 1)
-		elif data is RelicData:
-			opt.is_relic = true
-			opt.display_text = "Relíquia: %s" % data.display_name
-			opt.description_text = data.description
 		elif data is ItemData:
 			opt.is_item = true
 			var item := data as ItemData
@@ -186,12 +147,6 @@ func apply_option(option: UpgradeOption) -> void:
 				_item_controller.debug_grant_item(item)
 			else:
 				_item_controller.upgrade_item(item.id)
-	elif option.is_relic:
-		_obtained_relics.append(option.item_data as RelicData)
-		print("Relíquia obtida: ", option.item_data.display_name)
-		# Efeitos passivos poderiam ser aplicados aqui
-		if option.item_data.id == &"speed_relic" and _player:
-			_player.speed += 20.0
 	else:
 		if not is_instance_valid(_player_weapons):
 			return
@@ -211,47 +166,6 @@ func apply_option(option: UpgradeOption) -> void:
 					if child.has_method("upgrade"):
 						child.upgrade()
 					break
-
-
-func check_evolutions() -> EvolutionRecipe:
-	# Retorna a primeira receita válida
-	for recipe in EVOLUTION_RECIPES:
-		if not _has_relic(recipe.required_relic.id):
-			continue
-			
-		var weapon_lvl = _get_weapon_level(recipe.base_weapon.id)
-		if weapon_lvl == 0:
-			continue
-			
-		if recipe.require_max_weapon_level and weapon_lvl < recipe.base_weapon.max_level:
-			continue
-			
-		return recipe
-		
-	return null
-
-
-func apply_evolution(recipe: EvolutionRecipe) -> void:
-	# Remove arma base
-	for child in _player_weapons.get_children():
-		if child.has_method("get_weapon_id") and child.get_weapon_id() == recipe.base_weapon.id:
-			child.queue_free()
-			break
-			
-	# Instancia arma evoluída
-	var scene_path = "res://scenes/weapons/%s.tscn" % recipe.evolved_weapon.id
-	if ResourceLoader.exists(scene_path):
-		var weapon_scene = load(scene_path) as PackedScene
-		if weapon_scene:
-			var weapon_inst = weapon_scene.instantiate()
-			_player_weapons.add_child(weapon_inst)
-
-
-func _has_relic(relic_id: StringName) -> bool:
-	for r in _obtained_relics:
-		if r.id == relic_id:
-			return true
-	return false
 
 
 func _get_weapon_level(weapon_id: StringName) -> int:

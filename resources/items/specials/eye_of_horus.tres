@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/items/item_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/eye_of_horus.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"eye_of_horus"
+display_name = "Olho de Hórus"
+description = "Cinco bloqueios solares emitem um pulso."
+mythology = &"Egípcia"
+icon = ExtResource("2")
+price = 100
+effect_id = &"solar_block"
+value = 5.0
+secondary_value = 0.75

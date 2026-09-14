@@ -12,6 +12,7 @@ var _uses_directional_sprites: bool = false
 var _world_generator: WorldGenerator
 var _temporary_slow_multiplier: float = 1.0
 var _temporary_slow_timer: float = 0.0
+var _petrification_timer: float = 0.0
 
 var _boss_fight_active: bool = false
 var _boss_fight_center: Vector2 = Vector2.ZERO
@@ -29,10 +30,13 @@ func _on_damaged(_amount: float, _source_pos: Vector2) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_petrification_timer = maxf(_petrification_timer - delta, 0.0)
+	if _petrification_timer <= 0.0 and sprite.self_modulate != Color.WHITE:
+		sprite.self_modulate = Color.WHITE
 	_temporary_slow_timer = maxf(_temporary_slow_timer - delta, 0.0)
 	if _temporary_slow_timer <= 0.0:
 		_temporary_slow_multiplier = 1.0
-	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var input_dir := Vector2.ZERO if _petrification_timer > 0.0 else Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var terrain_speed_multiplier := 1.0
 	if is_instance_valid(_world_generator):
 		terrain_speed_multiplier = _world_generator.get_movement_speed_multiplier_at(global_position)
@@ -66,31 +70,34 @@ func apply_temporary_slow(multiplier: float, duration: float) -> void:
 	_temporary_slow_timer = maxf(_temporary_slow_timer, duration)
 
 
+func apply_petrification(duration: float) -> void:
+	_petrification_timer = maxf(_petrification_timer, duration)
+	velocity = Vector2.ZERO
+	sprite.self_modulate = Color(0.55, 0.62, 0.68, 1.0)
+
+
 func _load_character_data() -> void:
 	# Carrega o ID do Global
 	var char_id = Global.selected_character_id
-	var data_path = "res://resources/characters/%s_data.tres" % char_id
-	
-	if ResourceLoader.exists(data_path):
-		var char_data = load(data_path) as CharacterData
-		if char_data:
-			_apply_character_visual(char_data)
+	var char_data := ContentRegistry.get_character_data(char_id)
+	if char_data:
+		_apply_character_visual(char_data)
 
-			# Aplica os status base
-			health_component.max_health = char_data.base_health
-			health_component.reset()
+		# Aplica os status base
+		health_component.max_health = char_data.base_health
+		health_component.reset()
 			
-			speed = char_data.base_speed
+		speed = char_data.base_speed
 			
-			# Instancia a arma inicial
-			if char_data.starting_weapon:
-				_instantiate_weapon(char_data.starting_weapon.id)
+		# Instancia a arma inicial
+		if char_data.starting_weapon:
+			_instantiate_weapon(char_data.starting_weapon.id)
 			
-			# Punisher: instancia a granada junto com a arma base
-			if char_id == "punisher":
-				_instantiate_weapon(&"punisher_grenade")
+		# Punisher: instancia a granada junto com a arma base
+		if char_id == "punisher":
+			_instantiate_weapon(&"punisher_grenade")
 
-			return
+		return
 
 	push_error("Character data not found or invalid for id: %s" % char_id)
 

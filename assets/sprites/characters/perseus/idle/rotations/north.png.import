@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nwgt0f432ql"
-path="res://.godot/imported/north.png-e3c3211f68eea3abdb5c248ff410464a.ctex"
+uid="uid://cobq3d0ejvgjk"
+path="res://.godot/imported/north.png-7cd363d0b8b43ff28f1364c7169910a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/perseus/idle/rotations/north.png"
-dest_files=["res://.godot/imported/north.png-e3c3211f68eea3abdb5c248ff410464a.ctex"]
+source_file="res://assets/sprites/characters/perseus/Idle/rotations/north.png"
+dest_files=["res://.godot/imported/north.png-7cd363d0b8b43ff28f1364c7169910a3.ctex"]
 
 [params]
 

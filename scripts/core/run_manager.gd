@@ -162,8 +162,7 @@ func _default_boss_schedule() -> Array[BossEncounterData]:
 	result.append(_encounter(
 		180.0,
 		[_candidate(
-			&"king_slime", "King Slime",
-			preload("res://scenes/bosses/king_slime.tscn")
+			&"king_slime", "King Slime"
 		)],
 		false
 	))
@@ -171,12 +170,10 @@ func _default_boss_schedule() -> Array[BossEncounterData]:
 		390.0,
 		[
 			_candidate(
-				&"orc_warlord", "Orc Warlord",
-				preload("res://scenes/bosses/orc_warlord.tscn")
+				&"orc_warlord", "Orc Warlord"
 			),
 			_candidate(
-				&"cerberus", "Cerberus",
-				preload("res://scenes/bosses/cerberus.tscn")
+				&"cerberus", "Cerberus"
 			),
 		],
 		false
@@ -185,16 +182,13 @@ func _default_boss_schedule() -> Array[BossEncounterData]:
 		600.0,
 		[
 			_candidate(
-				&"corrupted_treant", "Corrupted Treant",
-				preload("res://scenes/bosses/corrupted_treant.tscn")
+				&"corrupted_treant", "Corrupted Treant"
 			),
 			_candidate(
-				&"jormungandr", "Jormungandr",
-				preload("res://scenes/bosses/jormungandr.tscn")
+				&"jormungandr", "Jormungandr"
 			),
 			_candidate(
-				&"fenrir", "Fenrir",
-				preload("res://scenes/bosses/fenrir.tscn")
+				&"fenrir", "Fenrir"
 			),
 		],
 		true
@@ -218,13 +212,12 @@ func _encounter(
 func _candidate(
 	id: StringName,
 	display_name: String,
-	scene: PackedScene,
 	weight: float = 1.0
 ) -> BossCandidateData:
 	var result := BossCandidateData.new()
 	result.id = id
 	result.display_name = display_name
-	result.boss_scene = scene
+	result.boss_scene = ContentRegistry.get_boss_scene(id)
 	result.selection_weight = weight
 	return result
 

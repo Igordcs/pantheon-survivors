@@ -58,8 +58,8 @@ func _run_test() -> void:
 		if entry.enemy_data.id == &"medusa":
 			medusa_entry = entry
 			break
-	if not medusa_entry or medusa_entry.scene_key != &"directional_ranged":
-		_fail("Medusa should use the directional ranged behavior.")
+	if not medusa_entry or medusa_entry.scene_key != &"medusa":
+		_fail("Medusa should use its unique chase and petrifying-cone scene.")
 
 	for entry in director.waves.back().enemies:
 		await _validate_enemy_entry(spawner, entry)
