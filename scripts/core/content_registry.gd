@@ -50,6 +50,9 @@ const WEAPONS := {
 	&"blades_of_chaos": ["Lâminas do Caos", "res://resources/weapons/blades_of_chaos_data.tres"],
 	&"leviathan_axe": ["Machado Leviatã", "res://resources/weapons/leviathan_axe_data.tres"],
 	&"horusfeather": ["Pena de Hórus", "res://resources/weapons/horusfeather_data.tres"],
+	&"apollos_lyre": ["Lira de Apolo", "res://resources/weapons/apollos_lyre_data.tres"],
+	&"gjallarhorn": ["Gjallarhorn", "res://resources/weapons/gjallarhorn_data.tres"],
+	&"khepris_scarab": ["Escaravelho de Khepri", "res://resources/weapons/khepris_scarab_data.tres"],
 }
 
 

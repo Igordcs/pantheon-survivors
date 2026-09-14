@@ -2,15 +2,15 @@ extends Node
 class_name UpgradeSystem
 ## Gerencia as opções de upgrade e aplica as escolhas do jogador.
 
-const EIRIK_WEAPON_IDS: Array[StringName] = [&"gungnir", &"mjolnir", &"sumarbrander"]
-const NEFERU_WEAPON_IDS: Array[StringName] = [&"anubis_curse", &"horusfeather", &"solar_disk"]
-const PERSEUS_WEAPON_IDS: Array[StringName] = [&"medusa_head", &"poseidon_trident", &"zeus_lightning"]
+const EIRIK_WEAPON_IDS: Array[StringName] = [&"gungnir", &"mjolnir", &"sumarbrander", &"gjallarhorn"]
+const NEFERU_WEAPON_IDS: Array[StringName] = [&"anubis_curse", &"horusfeather", &"solar_disk", &"khepris_scarab"]
+const PERSEUS_WEAPON_IDS: Array[StringName] = [&"medusa_head", &"poseidon_trident", &"zeus_lightning", &"apollos_lyre"]
 
 const ARTHUR_WEAPON_IDS: Array[StringName] = [&"excalibur"]
 
 const PUNISHER_EXCLUSIVE_WEAPON_IDS: Array[StringName] = [&"punisher_gun", &"punisher_grenade"]
 
-const KRATOS_EXCLUSIVE_WEAPON_IDS: Array[StringName] = [&"blades_of_chaos"]
+const KRATOS_EXCLUSIVE_WEAPON_IDS: Array[StringName] = [&"blades_of_chaos", &"leviathan_axe", &"gungnir", &"mjolnir", &"sumarbrander", &"gjallarhorn", &"medusa_head", &"poseidon_trident", &"zeus_lightning", &"apollos_lyre"]
 
 const SHOP_WEAPON_IDS: Array[StringName] = [
 	&"anubis_curse",
