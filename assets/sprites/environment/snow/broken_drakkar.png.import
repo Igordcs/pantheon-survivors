@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bp240wroummnq"
-path="res://.godot/imported/deco_shield.png-69398518b3e200d02232c211a08b97e1.ctex"
+uid="uid://bg2o7m2pvjieo"
+path="res://.godot/imported/broken_drakkar.png-6b2fb0cac3c0a5a577e6d295077d92b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/map/snow/deco_shield.png"
-dest_files=["res://.godot/imported/deco_shield.png-69398518b3e200d02232c211a08b97e1.ctex"]
+source_file="res://assets/sprites/environment/snow/broken_drakkar.png"
+dest_files=["res://.godot/imported/broken_drakkar.png-6b2fb0cac3c0a5a577e6d295077d92b4.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8dehuglj6322"
-path="res://.godot/imported/snow_deep.png-677164b93dbe77a7c68c064beea7ed68.ctex"
+uid="uid://c8ecuiutd3hw1"
+path="res://.godot/imported/frozen_pine.png-c2555d49cc2f4670ef04e0b1241fbd73.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/map/snow/snow_deep.png"
-dest_files=["res://.godot/imported/snow_deep.png-677164b93dbe77a7c68c064beea7ed68.ctex"]
+source_file="res://assets/sprites/environment/snow/frozen_pine.png"
+dest_files=["res://.godot/imported/frozen_pine.png-c2555d49cc2f4670ef04e0b1241fbd73.ctex"]
 
 [params]
 

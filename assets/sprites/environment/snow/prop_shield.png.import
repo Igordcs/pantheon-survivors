@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6m8j40c7x0ka"
-path="res://.godot/imported/snow_rock.png-9c88463e68c32fe73e871be86344887f.ctex"
+uid="uid://cef2x6c62nj8y"
+path="res://.godot/imported/prop_shield.png-7e503dcca8708c87cc9c1c19b4daf80c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/map/snow/snow_rock.png"
-dest_files=["res://.godot/imported/snow_rock.png-9c88463e68c32fe73e871be86344887f.ctex"]
+source_file="res://assets/sprites/environment/snow/prop_shield.png"
+dest_files=["res://.godot/imported/prop_shield.png-7e503dcca8708c87cc9c1c19b4daf80c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e6f8acjj800q"
-path="res://.godot/imported/deco_bones.png-1d736858cae0e85e54f7b0afc7dcbfea.ctex"
+uid="uid://df1qnwedy6g1d"
+path="res://.godot/imported/TilesetSnowDeco.png-e12bd2f68c9a65f6af7f2c3931046788.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/map/snow/deco_bones.png"
-dest_files=["res://.godot/imported/deco_bones.png-1d736858cae0e85e54f7b0afc7dcbfea.ctex"]
+source_file="res://assets/sprites/map/snow/TilesetSnowDeco.png"
+dest_files=["res://.godot/imported/TilesetSnowDeco.png-e12bd2f68c9a65f6af7f2c3931046788.ctex"]
 
 [params]
 

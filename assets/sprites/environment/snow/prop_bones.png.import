@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyaes0etckpyv"
-path="res://.godot/imported/snow_ice.png-062276e5910277f8dd22d02f5788c026.ctex"
+uid="uid://f7i21atuv4mx"
+path="res://.godot/imported/prop_bones.png-ab7256388375dd9a27653a1c00959914.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/map/snow/snow_ice.png"
-dest_files=["res://.godot/imported/snow_ice.png-062276e5910277f8dd22d02f5788c026.ctex"]
+source_file="res://assets/sprites/environment/snow/prop_bones.png"
+dest_files=["res://.godot/imported/prop_bones.png-ab7256388375dd9a27653a1c00959914.ctex"]
 
 [params]
 

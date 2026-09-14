@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8fjjvr0vxndi"
-path="res://.godot/imported/deco_grass.png-c1cb3218d1bd5de34954b7a5d478ee89.ctex"
+uid="uid://cgbgnuwen81dt"
+path="res://.godot/imported/prop_spear.png-39c8a7b239306bac7be516dc4a1fbd94.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/map/snow/deco_grass.png"
-dest_files=["res://.godot/imported/deco_grass.png-c1cb3218d1bd5de34954b7a5d478ee89.ctex"]
+source_file="res://assets/sprites/environment/snow/prop_spear.png"
+dest_files=["res://.godot/imported/prop_spear.png-39c8a7b239306bac7be516dc4a1fbd94.ctex"]
 
 [params]
 
