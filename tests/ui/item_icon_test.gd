@@ -67,7 +67,8 @@ func _run_test() -> void:
 	var inventory_line := pause_panel.call(
 		"_format_inventory_line", weapon_data.icon, weapon_data.display_name, 1
 	) as String
-	if "[img=40x40]" not in inventory_line or weapon_data.icon.resource_path not in inventory_line:
+	# O tamanho do ícone é decisão de layout; o que importa é a linha trazer o ícone.
+	if "[img=" not in inventory_line or weapon_data.icon.resource_path not in inventory_line:
 		_fail("Pause inventory rows should include the item's icon.")
 	pause_panel.free()
 

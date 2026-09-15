@@ -284,7 +284,7 @@ func _update_character_details(index: int) -> void:
 	Global.selected_character_id = char_id
 
 	var accent := _accent_for(char_id)
-	name_label.text = data.display_name
+	name_label.text = PixelText.fit(data.display_name)
 	name_label.add_theme_color_override("font_color", accent)
 
 	var lore: Dictionary = OATHS.get(char_id, {})
@@ -308,7 +308,7 @@ func _update_character_details(index: int) -> void:
 			weapon_description = "As duas armas exclusivas acompanham o Justiceiro."
 	weapon_icon.texture = starting_weapon_icon
 	weapon_icon.visible = starting_weapon_icon != null
-	weapon_name.text = weapon_display
+	weapon_name.text = PixelText.fit(weapon_display)
 	weapon_text.text = weapon_description
 
 	health_label.text = "VIDA %d" % int(data.base_health)

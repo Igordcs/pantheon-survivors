@@ -85,7 +85,7 @@ func _create_product_card(product: ShopItemData) -> Control:
 
 	var title := Label.new()
 	title.name = "ProductName"
-	title.text = product.display_name
+	title.text = PixelText.fit(product.display_name)
 	title.add_theme_font_override("font", PIXEL_FONT)
 	title.add_theme_font_size_override("font_size", 12)
 	title.add_theme_color_override("font_color", Color(1.0, 0.88, 0.35))
@@ -262,7 +262,7 @@ func _update_loadout_label() -> void:
 	var names: Array[String] = []
 	for id in SaveManager.get_equipped_items():
 		var item := ItemCatalog.get_item(id)
-		if item: names.append(item.display_name)
+		if item: names.append(PixelText.fit(item.display_name))
 	while names.size() < 3: names.append("vazio")
 	loadout_label.text = "EQUIPADOS:   %s   |   %s   |   %s" % names
 	loadout_label.visible = _category == ShopItemData.Category.ITEM

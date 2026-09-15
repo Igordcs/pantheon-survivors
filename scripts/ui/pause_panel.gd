@@ -1,6 +1,10 @@
 extends Control
 ## PausePanel — pausa a run e apresenta os itens obtidos e seus níveis.
 
+## A fonte pixelada nao tem maiuscula acentuada propria, entao os titulos vao sem acento.
+const GOLD := "ffe054"
+const DIM := "b8b0c6"
+
 @onready var inventory_text: RichTextLabel = $Panel/VBoxContainer/InventoryText
 @onready var resume_button: Button = $Panel/VBoxContainer/ResumeButton
 @onready var main_menu_button: Button = $Panel/VBoxContainer/MainMenuButton
@@ -56,9 +60,9 @@ func _refresh_inventory() -> void:
 	var lines := PackedStringArray()
 	var experience := _player.get_node_or_null("ExperienceComponent") as ExperienceComponent
 	var hero_level := experience.current_level if experience else 1
-	lines.append("[center]Nível do herói: [b]%d[/b][/center]" % hero_level)
+	lines.append("[center][color=%s]NIVEL DO HEROI  %d[/color][/center]" % [GOLD, hero_level])
 	lines.append("")
-	lines.append("[font_size=20][b]ARMAS[/b][/font_size]")
+	lines.append(_section("ARMAS"))
 
 	var weapon_holder := _player.get_node_or_null("WeaponHolder") as Node2D
 	var weapon_count := 0
@@ -78,14 +82,14 @@ func _refresh_inventory() -> void:
 			weapon_count += 1
 
 	if weapon_count == 0:
-		lines.append("Nenhuma arma adquirida.")
+		lines.append("[color=%s]Nenhuma arma adquirida.[/color]" % DIM)
 
 	lines.append("")
-	lines.append("[font_size=20][b]ITENS ATIVOS[/b][/font_size]")
+	lines.append(_section("ITENS ATIVOS"))
 	var item_controller := _player.get_node_or_null("ItemEffectController") as ItemEffectController
 	var active_items := item_controller.get_active_items() if item_controller else []
 	if active_items.is_empty():
-		lines.append("Nenhum item ativo.")
+		lines.append("[color=%s]Nenhum item ativo.[/color]" % DIM)
 	else:
 		for item in active_items:
 			var item_level := item_controller.get_item_level(item.id)
@@ -94,11 +98,17 @@ func _refresh_inventory() -> void:
 	inventory_text.text = "\n".join(lines)
 
 
+func _section(title: String) -> String:
+	return "[font_size=13][color=%s]%s[/color][/font_size]" % [GOLD, title]
+
+
 func _format_inventory_line(icon: Texture2D, item_name: String, item_level: int) -> String:
 	var icon_markup := ""
 	if icon and not icon.resource_path.is_empty():
-		icon_markup = "[img=40x40]%s[/img] " % icon.resource_path
-	return "%s%s — Nível %d" % [icon_markup, item_name, item_level]
+		icon_markup = "[img=28x28]%s[/img]  " % icon.resource_path
+	return "%s%s  [color=%s]Nv %d[/color]" % [
+		icon_markup, PixelText.fit(item_name), GOLD, item_level,
+	]
 
 
 func _on_main_menu_pressed() -> void:

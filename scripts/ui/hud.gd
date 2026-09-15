@@ -87,7 +87,7 @@ func _make_pip_style(pending: bool) -> StyleBoxFlat:
 func show_boss_bar(boss_name: String, maximum: float) -> void:
 	boss_bar.max_value = maxf(maximum, 1.0)
 	boss_bar.value = boss_bar.max_value
-	boss_name_label.text = boss_name.to_upper()
+	boss_name_label.text = PixelText.upper(boss_name)
 	_update_boss_hp_label(boss_bar.max_value, boss_bar.max_value)
 	boss_panel.show()
 	if _boss_tween and _boss_tween.is_valid():
@@ -121,7 +121,7 @@ func _update_boss_hp_label(current: float, maximum: float) -> void:
 
 func show_boss_warning(boss_name: String, duration: float) -> void:
 	var remaining := maxi(_anchor_total - _anchor_defeated, 0)
-	var message := "%s SE MANIFESTA" % boss_name.to_upper()
+	var message := "%s SE MANIFESTA" % PixelText.upper(boss_name)
 	if _anchor_total > 1:
 		message += "\nANCORA %d DE %d" % [_anchor_total - remaining + 1, _anchor_total]
 	_show_announcement(message, duration, Color(1.0, 0.35, 0.2))

@@ -126,7 +126,7 @@ func _build_cards() -> void:
 
 		box.add_child(_card_label("Order", "FASE %d" % phase.order, 10,
 			Color(0.66, 0.63, 0.74)))
-		box.add_child(_card_label("Name", _pixel_upper(phase.display_name), 13,
+		box.add_child(_card_label("Name", PixelText.upper(phase.display_name), 13,
 			phase.accent_color if unlocked else LOCKED_ACCENT, true))
 		box.add_child(_card_label("Anchors", _anchors_summary(phase), 9,
 			Color(0.78, 0.76, 0.84)))
@@ -137,16 +137,6 @@ func _build_cards() -> void:
 		_cards.append(card)
 
 	_refresh_card_styles()
-
-
-## A fonte pixelada nao tem forma maiuscula para vogais acentuadas: "RUÍNAS" sairia
-## com um "í" minusculo no meio. Só "Ã" e "Ç" sobrevivem ao to_upper().
-func _pixel_upper(text: String) -> String:
-	var result := text.to_upper()
-	for pair in [["Á", "A"], ["À", "A"], ["Â", "A"], ["É", "E"], ["Ê", "E"],
-			["Í", "I"], ["Ó", "O"], ["Ô", "O"], ["Ú", "U"]]:
-		result = result.replace(pair[0], pair[1])
-	return result
 
 
 func _card_label(node_name: String, text: String, size: int, color: Color,
@@ -246,7 +236,7 @@ func _update_details(index: int) -> void:
 	var phase := _phases[index]
 	var unlocked := SaveManager.is_phase_unlocked(phase.phase_id)
 
-	name_label.text = phase.display_name
+	name_label.text = PixelText.fit(phase.display_name)
 	name_label.add_theme_color_override("font_color",
 		phase.accent_color if unlocked else LOCKED_ACCENT)
 	status_label.text = _status_text(phase)
@@ -257,7 +247,7 @@ func _update_details(index: int) -> void:
 		var names: Array[String] = []
 		for anchor in phase.get_anchors():
 			names.append(ContentRegistry.get_boss_display_name(anchor.boss_id))
-		anchors_label.text = "Ancoras da Fenda: %s" % ", ".join(names)
+		anchors_label.text = "Ancoras da Fenda: %s" % PixelText.fit(", ".join(names))
 	else:
 		var previous := _previous_phase_name(phase)
 		description_label.text = "Esta ruptura ainda não foi detectada." if previous.is_empty() \
