@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/world/map_data.gd" id="1_map"]
 [ext_resource type="TileSet" path="res://resources/map/ruins_tileset.tres" id="2_tileset"]
 [ext_resource type="Resource" path="res://resources/biomes/ruins/ruins_ground.tres" id="3_b0"]
-[ext_resource type="Resource" path="res://resources/biomes/ruins/ruins_rubble.tres" id="3_b1"]
+[ext_resource type="Resource" path="res://resources/biomes/ruins/ruins_stone.tres" id="3_b1"]
 [ext_resource type="Resource" path="res://resources/biomes/ruins/ruins_ash.tres" id="3_b2"]
 
 [resource]

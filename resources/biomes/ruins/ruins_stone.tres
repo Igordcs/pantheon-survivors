@@ -1,0 +1,58 @@
+[gd_resource type="Resource" script_class="BiomeData" format=3]
+
+[ext_resource type="Script" uid="uid://bcg01dx47c1xo" path="res://scripts/world/biome_data.gd" id="1_biome"]
+[ext_resource type="Script" uid="uid://dlt1xep0kfju6" path="res://scripts/world/world_object_data.gd" id="2_object"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/ruined_wall.tscn" id="3_ruined_wall"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/broken_column.tscn" id="3_broken_column"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/broken_statue.tscn" id="3_broken_statue"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/prop_orc_shield.tscn" id="3_prop_orc_shield"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/prop_bones.tscn" id="3_prop_bones"]
+
+[sub_resource type="Resource" id="Resource_ruined_wall"]
+script = ExtResource("2_object")
+scene = ExtResource("3_ruined_wall")
+weight = 0.26
+clearance_radius = 42.0
+
+[sub_resource type="Resource" id="Resource_broken_column"]
+script = ExtResource("2_object")
+scene = ExtResource("3_broken_column")
+weight = 0.22
+clearance_radius = 40.0
+
+[sub_resource type="Resource" id="Resource_broken_statue"]
+script = ExtResource("2_object")
+scene = ExtResource("3_broken_statue")
+weight = 0.18
+clearance_radius = 32.0
+
+[sub_resource type="Resource" id="Resource_prop_orc_shield"]
+script = ExtResource("2_object")
+scene = ExtResource("3_prop_orc_shield")
+weight = 0.18
+clearance_radius = 20.0
+
+[sub_resource type="Resource" id="Resource_prop_bones"]
+script = ExtResource("2_object")
+scene = ExtResource("3_prop_bones")
+weight = 0.16
+clearance_radius = 22.0
+
+[resource]
+script = ExtResource("1_biome")
+biome_id = &"ruins_stone"
+display_name = "Ruínas de pedra"
+min_noise_value = 0.4
+max_noise_value = 1.0
+ground_source_id = 0
+ground_atlas_coordinates = Vector2i(1, 0)
+ground_modulate = Color(1, 1, 1, 1)
+is_navigable = true
+movement_speed_multiplier = 0.9
+decoration_density = 0.012
+obstacle_density = 0.13
+decoration_source_id = 2
+decoration_atlas_coordinates = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
+rare_decoration_atlas_coordinates = Array[Vector2i]([Vector2i(4, 0)])
+rare_decoration_chance = 0.04
+obstacle_entries = Array[ExtResource("2_object")]([SubResource("Resource_ruined_wall"), SubResource("Resource_broken_column"), SubResource("Resource_broken_statue"), SubResource("Resource_prop_orc_shield"), SubResource("Resource_prop_bones")])
