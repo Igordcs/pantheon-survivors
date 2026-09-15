@@ -4,12 +4,15 @@ extends Node
 signal currency_changed(new_balance: int)
 signal unlock_changed(category: StringName, content_id: StringName)
 signal loadout_changed
+signal phase_completed(phase_id: StringName, unlocked_phase_id: StringName)
 signal settings_changed
 
 const SAVE_PATH := "user://save_data.json"
-const SAVE_VERSION := 7
+const SAVE_VERSION := 8
 const INITIAL_CHARACTER_IDS := ["eirik", "neferu", "perseus"]
 const INITIAL_WEAPON_IDS := ["mjolnir"]
+## A campanha comeca com a primeira ruptura ja aberta.
+const INITIAL_PHASE_IDS := ["phase_1"]
 
 var save_path: String = SAVE_PATH
 var apply_runtime_settings := true
@@ -22,6 +25,8 @@ var save_data: Dictionary = {
 	"unlocked_items": [],
 	"equipped_items": [],
 	"intro_seen": false,
+	"unlocked_phases": ["phase_1"],
+	"completed_phases": [],
 	"settings": {
 		"master_volume": 0.8,
 		"music_volume": 0.8,
@@ -45,6 +50,8 @@ func _make_defaults() -> Dictionary:
 		"unlocked_items": [],
 		"equipped_items": [],
 		"intro_seen": false,
+		"unlocked_phases": INITIAL_PHASE_IDS.duplicate(),
+		"completed_phases": [],
 		"settings": {
 			"master_volume": 0.8,
 			"music_volume": 0.8,
@@ -195,6 +202,77 @@ func set_intro_seen() -> bool:
 	return true
 
 
+## A primeira fase nunca fica trancada, e concluir uma fase implica ter as anteriores.
+func _migrate_phases() -> void:
+	var unlocked: Array = save_data.get("unlocked_phases", [])
+	for phase_id in INITIAL_PHASE_IDS:
+		if phase_id not in unlocked:
+			unlocked.append(phase_id)
+	for completed_id in save_data.get("completed_phases", []):
+		var next_phase := PhaseCatalog.get_next_phase(StringName(completed_id))
+		if next_phase != null and String(next_phase.phase_id) not in unlocked:
+			unlocked.append(String(next_phase.phase_id))
+	save_data["unlocked_phases"] = unlocked
+
+
+func get_unlocked_phases() -> Array[StringName]:
+	var result: Array[StringName] = []
+	for value in save_data.get("unlocked_phases", []): result.append(StringName(value))
+	return result
+
+
+func get_completed_phases() -> Array[StringName]:
+	var result: Array[StringName] = []
+	for value in save_data.get("completed_phases", []): result.append(StringName(value))
+	return result
+
+
+func is_phase_unlocked(phase_id: StringName) -> bool:
+	return String(phase_id) in save_data.get("unlocked_phases", [])
+
+
+func is_phase_completed(phase_id: StringName) -> bool:
+	return String(phase_id) in save_data.get("completed_phases", [])
+
+
+## Sela a ruptura e abre a proxima. Rejogar uma fase ja concluida nao muda nada.
+func complete_phase(phase_id: StringName) -> bool:
+	if not PhaseCatalog.has_phase(phase_id):
+		return false
+	var completed: Array = save_data.get("completed_phases", [])
+	var unlocked: Array = save_data.get("unlocked_phases", [])
+	var next_phase := PhaseCatalog.get_next_phase(phase_id)
+	var next_id: StringName = next_phase.phase_id if next_phase else &""
+	if String(phase_id) in completed and (next_id.is_empty() or String(next_id) in unlocked):
+		return true
+
+	var previous_completed := completed.duplicate()
+	var previous_unlocked := unlocked.duplicate()
+	if String(phase_id) not in completed:
+		completed.append(String(phase_id))
+	if not next_id.is_empty() and String(next_id) not in unlocked:
+		unlocked.append(String(next_id))
+	save_data["completed_phases"] = completed
+	save_data["unlocked_phases"] = unlocked
+	if not save_game():
+		save_data["completed_phases"] = previous_completed
+		save_data["unlocked_phases"] = previous_unlocked
+		return false
+	phase_completed.emit(phase_id, next_id)
+	return true
+
+
+## A fase mais avancada que o jogador pode iniciar.
+func get_latest_unlocked_phase() -> StringName:
+	var result := PhaseCatalog.FIRST_PHASE_ID
+	var best := -1
+	for phase in PhaseCatalog.get_phases():
+		if is_phase_unlocked(phase.phase_id) and phase.order > best:
+			best = phase.order
+			result = phase.phase_id
+	return result
+
+
 func get_currency() -> int:
 	return maxi(int(save_data.get("currency", 0)), 0)
 
@@ -299,7 +377,8 @@ func _migrate_save() -> void:
 			save_data[key] = defaults[key]
 	save_data["save_version"] = SAVE_VERSION
 	save_data["currency"] = maxi(int(save_data.get("currency", 0)), 0)
-	for key in ["unlocked_weapons", "unlocked_characters", "unlocked_items", "equipped_items"]:
+	for key in ["unlocked_weapons", "unlocked_characters", "unlocked_items",
+			"equipped_items", "unlocked_phases", "completed_phases"]:
 		var stored = save_data.get(key, [])
 		var values: Array = stored if stored is Array else []
 		var normalized: Array[String] = []
@@ -317,6 +396,7 @@ func _migrate_save() -> void:
 			valid_equipped.append(item_id)
 	save_data["equipped_items"] = valid_equipped
 	save_data["intro_seen"] = bool(save_data.get("intro_seen", false))
+	_migrate_phases()
 	if previous_version < 4:
 		var characters: Array = save_data.get("unlocked_characters", [])
 		characters.erase("arthur")

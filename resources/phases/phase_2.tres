@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="PhaseData" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/phase_data.gd" id="1_phase"]
+[ext_resource type="Script" path="res://scripts/world/phase_anchor_data.gd" id="2_anchor"]
+
+[sub_resource type="Resource" id="Anchor_0"]
+script = ExtResource("2_anchor")
+boss_id = &"orc_warlord"
+trigger_time = 180.0
+warning_duration = 3.0
+
+[sub_resource type="Resource" id="Anchor_1"]
+script = ExtResource("2_anchor")
+boss_id = &"cerberus"
+trigger_time = 420.0
+warning_duration = 3.0
+
+[resource]
+script = ExtResource("1_phase")
+phase_id = &"phase_2"
+display_name = "Ruínas do Conflito"
+description = "Uma região marcada por guerra, onde as realidades já começaram a se sobrepor."
+intro_line = "As realidades se sobrepõem. Duas Âncoras sustentam esta Fenda."
+order = 2
+map_id = &"ruins"
+anchors = Array[ExtResource("2_anchor")]([SubResource("Anchor_0"), SubResource("Anchor_1")])
+accent_color = Color(0.92, 0.55, 0.25, 1)

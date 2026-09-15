@@ -8,6 +8,8 @@ signal boss_spawned(boss_node: Node2D)
 signal boss_fight_started(boss_pos: Vector2)
 signal boss_fight_ended
 signal run_ended(is_victory: bool, stats: Dictionary)
+## Quantas Âncoras da fase já caíram, e quantas a ruptura tem no total.
+signal anchor_progress_changed(defeated: int, total: int)
 
 enum State { PLAYING, BOSS_WARNING, BOSS_FIGHT, BOSS_REWARD, VICTORY, DEFEAT }
 
@@ -23,13 +25,18 @@ var _bosses_defeated: int = 0
 var _boss_instance: Node2D
 var boss_position := Vector2.ZERO
 var _boss_rng := RandomNumberGenerator.new()
+var active_phase: PhaseData
 
 
 func _ready() -> void:
+	active_phase = _resolve_phase()
+	if boss_encounters.is_empty() and active_phase != null:
+		boss_encounters = _encounters_from_phase(active_phase)
 	if boss_encounters.is_empty():
 		boss_encounters = _default_boss_schedule()
 	_configure_boss_rng()
 	_resolve_boss_candidates()
+	_emit_anchor_progress.call_deferred()
 
 
 func _process(_delta: float) -> void:
@@ -90,6 +97,7 @@ func _on_boss_died() -> void:
 	if _current_state != State.BOSS_FIGHT:
 		return
 	_bosses_defeated += 1
+	_emit_anchor_progress()
 	_current_state = State.BOSS_REWARD
 	state_changed.emit("BOSS_REWARD")
 	boss_fight_ended.emit()
@@ -115,7 +123,21 @@ func trigger_victory() -> void:
 	_current_state = State.VICTORY
 	state_changed.emit("VICTORY")
 	boss_fight_ended.emit()
+	_seal_active_phase()
 	_show_results(true)
+
+
+## Derrubar a ultima Ancora fecha a ruptura. O modo sandbox nao altera progresso.
+func _seal_active_phase() -> void:
+	if active_phase == null:
+		return
+	var global_state := get_node_or_null("/root/Global")
+	if global_state != null and bool(global_state.get("sandbox_mode")):
+		return
+	var save_manager := get_node_or_null("/root/SaveManager")
+	if save_manager == null:
+		return
+	save_manager.complete_phase(active_phase.phase_id)
 
 
 func trigger_defeat() -> void:
@@ -137,10 +159,15 @@ func is_boss_reward_pending() -> bool:
 
 func _show_results(is_victory: bool) -> void:
 	get_tree().paused = true
+	var next_phase := PhaseCatalog.get_next_phase(active_phase.phase_id) if active_phase else null
 	var stats := {
 		"time": spawn_director.get_elapsed_time() if spawn_director else 0.0,
 		"coins_collected": 0,
 		"bosses_defeated": _bosses_defeated,
+		"phase_id": active_phase.phase_id if active_phase else &"",
+		"phase_name": active_phase.display_name if active_phase else "",
+		"anchor_count": active_phase.get_anchor_count() if active_phase else 0,
+		"next_phase_name": next_phase.display_name if next_phase else "",
 	}
 	run_ended.emit(is_victory, stats)
 
@@ -194,6 +221,48 @@ func _default_boss_schedule() -> Array[BossEncounterData]:
 		true
 	))
 	return result
+
+
+## Prioridade: a fase escolhida na sessao, senao a primeira da campanha.
+func _resolve_phase() -> PhaseData:
+	var global_state := get_node_or_null("/root/Global")
+	if global_state != null:
+		var selected: StringName = global_state.get("selected_phase_id")
+		if not String(selected).is_empty():
+			return PhaseCatalog.get_phase(selected)
+	return PhaseCatalog.get_first_phase()
+
+
+func _encounters_from_phase(phase: PhaseData) -> Array[BossEncounterData]:
+	var result: Array[BossEncounterData] = []
+	var anchors := phase.get_anchors()
+	for index in range(anchors.size()):
+		var anchor := anchors[index]
+		var scene := ContentRegistry.get_boss_scene(anchor.boss_id)
+		if scene == null:
+			push_warning("RunManager: Âncora \"%s\" não tem cena." % anchor.boss_id)
+			continue
+		var encounter := BossEncounterData.new()
+		encounter.id = anchor.boss_id
+		encounter.display_name = ContentRegistry.get_boss_display_name(anchor.boss_id)
+		encounter.trigger_time = anchor.trigger_time
+		encounter.boss_scene = scene
+		encounter.warning_duration = anchor.warning_duration
+		encounter.is_final_boss = index == anchors.size() - 1
+		result.append(encounter)
+	return result
+
+
+func _emit_anchor_progress() -> void:
+	anchor_progress_changed.emit(_bosses_defeated, boss_encounters.size())
+
+
+func get_anchor_total() -> int:
+	return boss_encounters.size()
+
+
+func get_remaining_anchors() -> int:
+	return maxi(boss_encounters.size() - _bosses_defeated, 0)
 
 
 func _encounter(

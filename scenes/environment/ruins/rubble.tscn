@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rubble"]
+radius = 17.0
+
+[node name="Rubble" type="StaticBody2D" groups=["world_obstacles"]]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Body" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-24, 13, -19, -8, -7, -22, 13, -19, 25, -3, 20, 16, -5, 22)
+color = Color(0.24, 0.22, 0.21, 1)
+
+[node name="Light" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-15, -7, -5, -17, 10, -14, 15, -6, -1, -2)
+color = Color(0.38, 0.35, 0.32, 1)
+
+[node name="Shade" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-23, 12, -1, 8, 20, 1, 20, 15, -5, 21)
+color = Color(0.15, 0.13, 0.13, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rubble")

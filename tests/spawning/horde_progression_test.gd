@@ -69,28 +69,36 @@ func _run_test() -> void:
 	await _validate_directional_boss_scene("res://scenes/bosses/cerberus.tscn", 3600.0)
 	await _validate_directional_boss_scene("res://scenes/bosses/jormungandr.tscn", 9500.0)
 
+	# As Âncoras deixaram de ser sorteadas: cada fase declara exatamente quais são,
+	# em ordem, e a última encerra a ruptura (docs/lore.md).
+	var phase := PhaseCatalog.get_phase(&"phase_3")
+	Global.selected_phase_id = phase.phase_id
 	var run_manager := RunManager.new()
 	run_manager.boss_selection_seed = 12345
 	add_child(run_manager)
 	await get_tree().process_frame
-	var medium_encounter := _find_encounter_at(run_manager.boss_encounters, 390.0)
-	var final_encounter := _find_final_encounter(run_manager.boss_encounters)
-	if medium_encounter == null:
-		_fail("The run should contain a medium boss encounter at 06:30.")
+
+	if run_manager.active_phase != phase:
+		_fail("The run should load the phase selected for the session.")
+	var anchors := phase.get_anchors()
+	if run_manager.boss_encounters.size() != anchors.size():
+		_fail("The run should schedule one encounter per anchor of the phase.")
 	else:
-		_validate_boss_pool(
-			medium_encounter,
-			[&"orc_warlord", &"cerberus"],
-			"medium"
-		)
+		for index in range(anchors.size()):
+			var encounter := run_manager.boss_encounters[index]
+			if encounter.id != anchors[index].boss_id:
+				_fail("Anchor %d should be %s." % [index + 1, anchors[index].boss_id])
+			if not is_equal_approx(encounter.trigger_time, anchors[index].trigger_time):
+				_fail("Anchor %s should trigger at its declared time." % encounter.id)
+			if encounter.boss_scene == null:
+				_fail("Anchor %s should resolve a boss scene." % encounter.id)
+			if encounter.is_final_boss != (index == anchors.size() - 1):
+				_fail("Only the last anchor should end the phase.")
+
+	var medium_encounter := run_manager.boss_encounters[0]
+	var final_encounter := _find_final_encounter(run_manager.boss_encounters)
 	if final_encounter == null:
 		_fail("The run should contain a final boss encounter.")
-	else:
-		_validate_boss_pool(
-			final_encounter,
-			[&"corrupted_treant", &"jormungandr"],
-			"final"
-		)
 
 	run_manager.enemy_spawner = spawner
 	if medium_encounter:

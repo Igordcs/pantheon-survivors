@@ -1,7 +1,7 @@
 extends Control
 
 const STORY_INTRO_SCENE := "res://scenes/ui/story_intro.tscn"
-const CHARACTER_SELECTION_SCENE := "res://scenes/ui/character_selection.tscn"
+const PHASE_SELECTION_SCENE := "res://scenes/ui/phase_selection.tscn"
 
 @onready var play_button: Button = $BottomButtons/PlayButton
 @onready var shop_button: Button = $BottomButtons/ShopButton

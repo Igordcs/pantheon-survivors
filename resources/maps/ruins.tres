@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MapData" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/map_data.gd" id="1_map"]
+[ext_resource type="TileSet" path="res://resources/map/ruins_tileset.tres" id="2_tileset"]
+[ext_resource type="Resource" path="res://resources/biomes/ruins/ruins_ground.tres" id="3_b0"]
+[ext_resource type="Resource" path="res://resources/biomes/ruins/ruins_rubble.tres" id="3_b1"]
+[ext_resource type="Resource" path="res://resources/biomes/ruins/ruins_ash.tres" id="3_b2"]
+
+[resource]
+script = ExtResource("1_map")
+map_id = &"ruins"
+display_name = "Ruínas do Conflito"
+tile_set = ExtResource("2_tileset")
+biomes = Array[Resource]([ExtResource("3_b0"), ExtResource("3_b1"), ExtResource("3_b2")])
+safe_biome_index = 0

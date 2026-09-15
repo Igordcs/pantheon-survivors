@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="BiomeData" format=3]
+
+[ext_resource type="Script" uid="uid://bcg01dx47c1xo" path="res://scripts/world/biome_data.gd" id="1_biome"]
+[ext_resource type="Script" uid="uid://dlt1xep0kfju6" path="res://scripts/world/world_object_data.gd" id="2_object"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/rubble.tscn" id="3_rubble"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/burnt_tree.tscn" id="3_burnt_tree"]
+
+[sub_resource type="Resource" id="Resource_rubble"]
+script = ExtResource("2_object")
+scene = ExtResource("3_rubble")
+weight = 0.4
+clearance_radius = 26.0
+
+[sub_resource type="Resource" id="Resource_burnt_tree"]
+script = ExtResource("2_object")
+scene = ExtResource("3_burnt_tree")
+weight = 0.6
+clearance_radius = 52.0
+
+[resource]
+script = ExtResource("1_biome")
+biome_id = &"ruins_rubble"
+display_name = "Ruínas"
+min_noise_value = 0.4
+max_noise_value = 1.0
+ground_source_id = 0
+ground_atlas_coordinates = Vector2i(1, 0)
+ground_modulate = Color(1, 1, 1, 1)
+is_navigable = true
+movement_speed_multiplier = 0.9
+decoration_density = 0.04
+obstacle_density = 0.11
+decoration_source_id = 2
+decoration_atlas_coordinates = Array[Vector2i]([Vector2i(0, 0), Vector2i(1, 0)])
+rare_decoration_atlas_coordinates = Array[Vector2i]([])
+rare_decoration_chance = 0.0
+obstacle_entries = Array[ExtResource("2_object")]([SubResource("Resource_rubble"), SubResource("Resource_burnt_tree")])

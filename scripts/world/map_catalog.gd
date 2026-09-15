@@ -6,6 +6,7 @@ const DEFAULT_MAP_ID := &"field"
 
 const MAP_PATHS := [
 	"res://resources/maps/field.tres",
+	"res://resources/maps/ruins.tres",
 	"res://resources/maps/snow.tres",
 ]
 

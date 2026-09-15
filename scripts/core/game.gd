@@ -90,6 +90,7 @@ func _ready() -> void:
 	run_manager.boss_fight_started.connect(_on_boss_fight_started)
 	run_manager.boss_fight_ended.connect(_on_boss_fight_ended)
 	run_manager.boss_warning_started.connect(hud.show_boss_warning)
+	run_manager.anchor_progress_changed.connect(hud.update_anchor_progress)
 	if Global.sandbox_mode:
 		spawn_director.set_progression_paused(true)
 		enemy_spawner.stop_spawning()
@@ -111,7 +112,7 @@ func _on_boss_spawned(boss_node: Node2D) -> void:
 	var boss_health = boss_node.get_node_or_null("HealthComponent") as HealthComponent
 	if boss_health:
 		boss_health.health_changed.connect(hud.update_boss_hp)
-		hud.show_boss_bar(boss_health.max_health)
+		hud.show_boss_bar(_resolve_boss_name(boss_node), boss_health.max_health)
 	
 	# Conectar morte para dropar o baú
 	if boss_node.has_signal("died"):
@@ -122,6 +123,17 @@ func _on_boss_spawned(boss_node: Node2D) -> void:
 		)
 
 
+## O nome mostrado na barra vem do encontro em curso; o nó é o último recurso.
+func _resolve_boss_name(boss_node: Node2D) -> String:
+	var encounters: Array = run_manager.boss_encounters
+	var index: int = run_manager._current_encounter_index
+	if index >= 0 and index < encounters.size():
+		var encounter: BossEncounterData = encounters[index]
+		if not encounter.display_name.is_empty():
+			return encounter.display_name
+	return boss_node.name
+
+
 func _on_boss_died_for_chest(boss_node: Node2D) -> void:
 	var chest_scene = preload("res://scenes/pickups/chest.tscn")
 	var chest = chest_scene.instantiate() as Chest
@@ -129,7 +141,7 @@ func _on_boss_died_for_chest(boss_node: Node2D) -> void:
 	chest.collected.connect(_on_chest_collected)
 	$World.add_child(chest)
 	# Oculta a barra do boss
-	hud.boss_bar.hide()
+	hud.hide_boss_bar()
 
 
 func _on_chest_collected(_chest: Chest) -> void:

@@ -80,6 +80,11 @@ static func get_boss_data(id: StringName) -> BossData:
 	return load(entry[1]) as BossData if entry.size() >= 3 else null
 
 
+static func get_boss_display_name(id: StringName) -> String:
+	var entry: Array = BOSSES.get(id, [])
+	return String(entry[0]) if not entry.is_empty() else String(id)
+
+
 static func get_boss_options() -> Dictionary:
 	return _options(BOSSES)
 
