@@ -35,8 +35,9 @@ func _run_test() -> void:
 	add_child(level_up_panel)
 	await get_tree().process_frame
 	level_up_panel.show_options(options)
-	var option_button := level_up_panel.get_node("Panel/VBoxContainer").get_child(0) as Button
-	if option_button.icon != weapon_data.icon:
+	var option_button := level_up_panel.get_node("Panel/Content/VBoxContainer").get_child(0) as Button
+	var option_icon := option_button.find_child("OptionIcon", true, false) as TextureRect
+	if option_icon == null or option_icon.texture != weapon_data.icon:
 		_fail("Level-up options should display the selected item's icon.")
 	level_up_panel.hide()
 	get_tree().paused = false
