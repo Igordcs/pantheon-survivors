@@ -8,6 +8,8 @@ extends Node
 @export_range(0.0001, 0.02, 0.0001) var noise_frequency: float = 0.0001
 @export_range(1, 8, 1) var fractal_octaves: int = 3
 @export_range(0.0, 1.0, 0.01) var fractal_gain: float = 0.5
+@export_range(0.0, 600.0, 5.0) var border_warp_amplitude: float = 200.0
+@export_range(0.0001, 0.05, 0.0001) var border_warp_frequency: float = 0.004
 
 var biomes: Array[BiomeData] = []
 var safe_biome_index: int = 0
@@ -22,12 +24,22 @@ func configure(world_seed: int, map_data: MapData = null) -> void:
 		noise_frequency = map_data.noise_frequency
 		fractal_octaves = map_data.fractal_octaves
 		fractal_gain = map_data.fractal_gain
+		border_warp_amplitude = map_data.border_warp_amplitude
+		border_warp_frequency = map_data.border_warp_frequency
 	_noise.seed = world_seed
 	_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
 	_noise.frequency = noise_frequency
 	_noise.fractal_type = FastNoiseLite.FRACTAL_FBM
 	_noise.fractal_octaves = fractal_octaves
 	_noise.fractal_gain = fractal_gain
+	# Sem isto a fronteira entre biomas é quase uma reta, e em tiles de 16px vira escada.
+	_noise.domain_warp_enabled = border_warp_amplitude > 0.0
+	if _noise.domain_warp_enabled:
+		_noise.domain_warp_type = FastNoiseLite.DOMAIN_WARP_SIMPLEX
+		_noise.domain_warp_amplitude = border_warp_amplitude
+		_noise.domain_warp_frequency = border_warp_frequency
+		_noise.domain_warp_fractal_type = FastNoiseLite.DOMAIN_WARP_FRACTAL_INDEPENDENT
+		_noise.domain_warp_fractal_octaves = 2
 
 
 func get_biome_count() -> int:

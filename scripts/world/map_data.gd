@@ -20,6 +20,13 @@ extends Resource
 @export_range(1, 8, 1) var fractal_octaves: int = 3
 @export_range(0.0, 1.0, 0.01) var fractal_gain: float = 0.5
 
+@export_category("Borda entre biomas")
+## Distorce as coordenadas do ruído para a fronteira entre biomas deixar de ser uma
+## linha quase reta, que em tiles de 16px vira escada. Zero desliga.
+@export_range(0.0, 600.0, 5.0) var border_warp_amplitude: float = 200.0
+## Escala da distorção: quanto maior, mais miúdo o recorte da borda.
+@export_range(0.0001, 0.05, 0.0001) var border_warp_frequency: float = 0.004
+
 
 func get_biomes() -> Array[BiomeData]:
 	var result: Array[BiomeData] = []
