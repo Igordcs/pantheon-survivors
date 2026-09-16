@@ -6,7 +6,7 @@ const EIRIK_WEAPON_IDS: Array[StringName] = [&"gungnir", &"mjolnir", &"sumarbran
 const NEFERU_WEAPON_IDS: Array[StringName] = [&"anubis_curse", &"horusfeather", &"solar_disk", &"khepris_scarab"]
 const PERSEUS_WEAPON_IDS: Array[StringName] = [&"medusa_head", &"poseidon_trident", &"zeus_lightning", &"apollos_lyre"]
 
-const ARTHUR_WEAPON_IDS: Array[StringName] = [&"excalibur"]
+const ARTHUR_WEAPON_IDS: Array[StringName] = [&"excalibur", &"avalon_shield"]
 
 const PUNISHER_EXCLUSIVE_WEAPON_IDS: Array[StringName] = [&"punisher_gun", &"punisher_grenade"]
 
