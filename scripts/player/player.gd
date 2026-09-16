@@ -86,7 +86,9 @@ func _load_character_data() -> void:
 		# Aplica os status base
 		health_component.max_health = char_data.base_health
 		health_component.reset()
-			
+		# Passiva de Arthur — "Determinação do Rei": reduz todo dano recebido em 5 pontos.
+		health_component.flat_damage_reduction = 5.0 if char_id == &"arthur" else 0.0
+
 		speed = char_data.base_speed
 			
 		# Instancia a arma inicial
