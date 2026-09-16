@@ -6,66 +6,66 @@
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
-description = "Desfere um golpe frontal em arco de alto dano."
+description = "Desfere um giro curto ao redor do rei."
 
 [sub_resource type="Resource" id="Level_2"]
 script = ExtResource("2_level")
-description = "+15% de área do ataque frontal."
-area_multiplier = 1.15
+description = "+5% de dano."
+damage_multiplier = 1.05
 
 [sub_resource type="Resource" id="Level_3"]
 script = ExtResource("2_level")
-description = "Adiciona um golpe traseiro após o ataque frontal."
-area_multiplier = 1.15
+description = "+10% de dano. Adiciona um segundo giro."
+damage_multiplier = 1.1
 special_effect = &"front_rear_combo"
 
 [sub_resource type="Resource" id="Level_4"]
 script = ExtResource("2_level")
-description = "Reduz o intervalo entre ataques em 15%."
+description = "+15% de dano. Reduz o intervalo entre ataques em 15%."
+damage_multiplier = 1.15
 cooldown_multiplier = 0.85
-area_multiplier = 1.15
 special_effect = &"front_rear_combo"
 
 [sub_resource type="Resource" id="Level_5"]
 script = ExtResource("2_level")
-description = "+35% de área total para os golpes frontal e traseiro."
+description = "+20% de dano."
+damage_multiplier = 1.2
 cooldown_multiplier = 0.85
-area_multiplier = 1.35
 special_effect = &"front_rear_combo"
 
 [sub_resource type="Resource" id="Level_6"]
 script = ExtResource("2_level")
-description = "Executa dois golpes frontais e um golpe traseiro."
+description = "+25% de dano. Executa três giros."
+damage_multiplier = 1.25
 cooldown_multiplier = 0.85
-area_multiplier = 1.35
 special_effect = &"double_front_rear_combo"
 
 [sub_resource type="Resource" id="Level_7"]
 script = ExtResource("2_level")
-description = "Reduz o intervalo total entre ataques em 30%."
+description = "+30% de dano. Reduz o intervalo total em 30%."
+damage_multiplier = 1.3
 cooldown_multiplier = 0.7
-area_multiplier = 1.35
 special_effect = &"double_front_rear_combo"
 
 [sub_resource type="Resource" id="Level_8"]
 script = ExtResource("2_level")
-description = "+60% de área para toda a sequência."
+description = "+35% de dano."
+damage_multiplier = 1.35
 cooldown_multiplier = 0.7
-area_multiplier = 1.6
 special_effect = &"double_front_rear_combo"
 
 [sub_resource type="Resource" id="Level_9"]
 script = ExtResource("2_level")
-description = "Executa um golpe frontal e dois golpes traseiros."
+description = "+40% de dano. Executa três giros."
+damage_multiplier = 1.4
 cooldown_multiplier = 0.7
-area_multiplier = 1.6
 special_effect = &"double_rear_front_combo"
 
 [sub_resource type="Resource" id="Level_10"]
 script = ExtResource("2_level")
-description = "Bênção de Avalon: a sequência ganha 10% de roubo de vida."
+description = "+45% de dano. Bênção de Avalon: 10% de roubo de vida."
+damage_multiplier = 1.45
 cooldown_multiplier = 0.7
-area_multiplier = 1.6
 special_effect = &"royal_life_steal_combo"
 special_value = 0.1
 
@@ -75,7 +75,7 @@ id = &"excalibur"
 display_name = "Excalibur"
 icon = ExtResource("3_icon")
 description = "Espada lendária que desfere ataques frontais em arco de alto dano."
-base_damage = 30.0
+base_damage = 11.0
 cooldown = 1.5
 area = 1.0
 projectile_speed = 0.0
