@@ -14,3 +14,5 @@ visual_size = 144.0
 sprite_directory = "res://assets/sprites/bosses/fenrir/Idle/rotations"
 walk_sprite_directory = "res://assets/sprites/bosses/fenrir/Walk"
 walk_animation_speed = 8.0
+epithet = "O LOBO SOLTO ANTES DA HORA"
+presentation_text = "Gleipnir nao arrebentou: a Fenda simplesmente o tirou de onde estava preso. O lobo acordou num mundo sem Odin para devorar e sem deuses para enfrenta-lo. Para ele, isso nao cancela o fim. So facilita."

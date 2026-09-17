@@ -23,6 +23,11 @@ const BOSS_BAR_FADE := 0.25
 @onready var anchor_label: Label = $AnchorPanel/AnchorRow/AnchorLabel
 @onready var anchor_pips: HBoxContainer = $AnchorPanel/AnchorRow/AnchorPips
 
+@onready var boss_intro_panel: PanelContainer = $BossIntroPanel
+@onready var boss_intro_epithet: Label = $BossIntroPanel/BossIntroBox/EpithetLabel
+@onready var boss_intro_name: Label = $BossIntroPanel/BossIntroBox/NameLabel
+@onready var boss_intro_lore: Label = $BossIntroPanel/BossIntroBox/LoreLabel
+
 @onready var boss_panel: PanelContainer = $BossPanel
 @onready var boss_name_label: Label = $BossPanel/BossBox/BossNameLabel
 @onready var boss_bar: ProgressBar = $BossPanel/BossBox/BossBar
@@ -31,6 +36,7 @@ const BOSS_BAR_FADE := 0.25
 var _kills: int = 0
 var _announcement_tween: Tween
 var _boss_tween: Tween
+var _intro_tween: Tween
 var _anchor_total: int = 0
 var _anchor_defeated: int = 0
 
@@ -38,6 +44,8 @@ var _anchor_defeated: int = 0
 func _ready() -> void:
 	boss_panel.hide()
 	boss_panel.modulate.a = 0.0
+	boss_intro_panel.hide()
+	boss_intro_panel.modulate.a = 0.0
 	anchor_panel.hide()
 
 
@@ -119,12 +127,32 @@ func _update_boss_hp_label(current: float, maximum: float) -> void:
 
 # ------------------------------------------------------------------- avisos
 
-func show_boss_warning(boss_name: String, duration: float) -> void:
-	var remaining := maxi(_anchor_total - _anchor_defeated, 0)
-	var message := "%s SE MANIFESTA" % PixelText.upper(boss_name)
+## Apresenta a Âncora: quem é e por que ela sustenta a ruptura (docs/lore.md).
+func show_boss_intro(display_name: String, epithet: String, lore: String,
+		duration: float) -> void:
+	var position_text := ""
 	if _anchor_total > 1:
-		message += "\nANCORA %d DE %d" % [_anchor_total - remaining + 1, _anchor_total]
-	_show_announcement(message, duration, Color(1.0, 0.35, 0.2))
+		position_text = "ANCORA %d DE %d  ·  " % [_anchor_defeated + 1, _anchor_total]
+	boss_intro_epithet.text = position_text + PixelText.upper(epithet)
+	boss_intro_epithet.visible = not boss_intro_epithet.text.strip_edges().is_empty()
+	boss_intro_name.text = PixelText.upper(display_name)
+	boss_intro_lore.text = PixelText.fit(lore)
+	boss_intro_lore.visible = not lore.strip_edges().is_empty()
+
+	boss_intro_panel.show()
+	if _intro_tween and _intro_tween.is_valid():
+		_intro_tween.kill()
+	_intro_tween = create_tween()
+	_intro_tween.tween_property(boss_intro_panel, "modulate:a", 1.0, 0.35)
+	_intro_tween.tween_interval(maxf(duration, 0.5))
+	_intro_tween.tween_property(boss_intro_panel, "modulate:a", 0.0, 0.6)
+	_intro_tween.tween_callback(boss_intro_panel.hide)
+
+
+## Frase curta de abertura da fase e marcos da run.
+func show_run_message(message: String, duration: float = 4.0) -> void:
+	if not message.strip_edges().is_empty():
+		_show_announcement(PixelText.fit(message), duration, Color(1.0, 0.82, 0.35))
 
 
 func show_horde_event(message: String) -> void:

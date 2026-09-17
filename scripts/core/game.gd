@@ -89,8 +89,10 @@ func _ready() -> void:
 	run_manager.run_ended.connect(_on_run_ended)
 	run_manager.boss_fight_started.connect(_on_boss_fight_started)
 	run_manager.boss_fight_ended.connect(_on_boss_fight_ended)
-	run_manager.boss_warning_started.connect(hud.show_boss_warning)
 	run_manager.anchor_progress_changed.connect(hud.update_anchor_progress)
+	run_manager.boss_introduced.connect(_on_boss_introduced)
+	run_manager.phase_started.connect(hud.show_run_message)
+	run_manager.anchor_sealed.connect(_on_anchor_sealed)
 	if Global.sandbox_mode:
 		spawn_director.set_progression_paused(true)
 		enemy_spawner.stop_spawning()
@@ -121,6 +123,22 @@ func _on_boss_spawned(boss_node: Node2D) -> void:
 		boss_node.died.connect(
 			func(): loot_manager.handle_defeat(boss_node.global_position, LootManager.Source.BOSS)
 		)
+
+
+## Busca a lore da Âncora no catálogo e entrega à HUD.
+func _on_boss_introduced(boss_id: StringName, display_name: String, duration: float) -> void:
+	var data := ContentRegistry.get_boss_data(boss_id)
+	var epithet := data.epithet if data else ""
+	var lore := data.presentation_text if data else ""
+	hud.show_boss_intro(display_name, epithet, lore, duration)
+
+
+## Marco de progresso da fase, no espírito das mensagens da lore.
+func _on_anchor_sealed(remaining: int) -> void:
+	if remaining > 0:
+		hud.show_run_message("Uma Ancora caiu. A Fenda ainda resiste.", 3.0)
+	else:
+		hud.show_run_message("A ultima Ancora caiu. Sele a ruptura.", 3.0)
 
 
 ## O nome mostrado na barra vem do encontro em curso; o nó é o último recurso.

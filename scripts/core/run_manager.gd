@@ -4,6 +4,12 @@ class_name RunManager
 
 signal state_changed(new_state: String)
 signal boss_warning_started(boss_name: String, duration: float)
+## Emitido junto do aviso, com a lore da Âncora que está chegando.
+signal boss_introduced(boss_id: StringName, display_name: String, duration: float)
+## Frase de abertura da fase, no primeiro instante da run.
+signal phase_started(intro_line: String)
+## Emitido quando uma Âncora cai e a ruptura ainda resiste.
+signal anchor_sealed(remaining: int)
 signal boss_spawned(boss_node: Node2D)
 signal boss_fight_started(boss_pos: Vector2)
 signal boss_fight_ended
@@ -37,6 +43,7 @@ func _ready() -> void:
 	_configure_boss_rng()
 	_resolve_boss_candidates()
 	_emit_anchor_progress.call_deferred()
+	_announce_phase.call_deferred()
 
 
 func _process(_delta: float) -> void:
@@ -60,6 +67,7 @@ func _begin_boss_warning(encounter: BossEncounterData) -> void:
 	var keep_ratio := 0.0 if encounter.is_final_boss else horde_keep_ratio_during_boss
 	enemy_spawner.reduce_active_horde(keep_ratio)
 	boss_warning_started.emit(encounter.display_name, encounter.warning_duration)
+	boss_introduced.emit(encounter.id, encounter.display_name, encounter.warning_duration)
 	print("WARNING: %s approaches!" % encounter.display_name)
 	await get_tree().create_timer(encounter.warning_duration).timeout
 	if _current_state == State.BOSS_WARNING:
@@ -98,6 +106,7 @@ func _on_boss_died() -> void:
 		return
 	_bosses_defeated += 1
 	_emit_anchor_progress()
+	anchor_sealed.emit(get_remaining_anchors())
 	_current_state = State.BOSS_REWARD
 	state_changed.emit("BOSS_REWARD")
 	boss_fight_ended.emit()
@@ -251,6 +260,11 @@ func _encounters_from_phase(phase: PhaseData) -> Array[BossEncounterData]:
 		encounter.is_final_boss = index == anchors.size() - 1
 		result.append(encounter)
 	return result
+
+
+func _announce_phase() -> void:
+	if active_phase != null and not active_phase.intro_line.is_empty():
+		phase_started.emit(active_phase.intro_line)
 
 
 func _emit_anchor_progress() -> void:

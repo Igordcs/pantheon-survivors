@@ -18,7 +18,7 @@ Esses mortais são os **Sobreviventes do Panteão**.
 
 Três grandes rupturas foram detectadas na Terra. Cada uma tornou-se uma **fase** da campanha e um ponto de invasão para hordas de criaturas vindas de várias dimensões.
 
-Cada ruptura é sustentada por três entidades poderosas, chamadas de **Âncoras da Fenda**. Os escolhidos devem sobreviver às hordas, reunir o poder liberado pelos inimigos derrotados e derrotar as três Âncoras de uma fase para então selar sua abertura no Véu.
+Cada ruptura é sustentada por entidades poderosas, chamadas de **Âncoras da Fenda** — quanto mais grave a ruptura, mais Âncoras a seguram. Os escolhidos devem sobreviver às hordas, reunir o poder liberado pelos inimigos derrotados e derrubar todas as Âncoras de uma fase para então selar sua abertura no Véu.
 
 Fechar uma ruptura não encerra a guerra: apenas desbloqueia permanentemente a próxima fase antes que a corrupção se espalhe.
 
@@ -54,9 +54,11 @@ Escolhido por Atena, Perseus recebe a **Cabeça de Medusa**. Seu poder vem do le
 
 ## Estrutura da campanha e progresso
 
-A campanha inicial possui três fases. Cada fase possui **três chefes sequenciais**. Eles representam as três Âncoras que mantêm aquela ruptura aberta.
+A campanha inicial possui três fases. Cada fase é sustentada por um número crescente de **Âncoras**: criaturas que mantêm aquela ruptura aberta e precisam cair em sequência.
 
-O jogador só sela a Fenda e conclui a fase após derrotar o terceiro chefe. Ao fazê-lo, a fase seguinte é desbloqueada e esse progresso é salvo permanentemente.
+O número de Âncoras cresce com a gravidade da ruptura: a primeira fenda é sustentada por uma só, a segunda por duas, a terceira por três. Isso também dá o ritmo da campanha — a primeira fase é curta o bastante para ensinar, a última é uma maratona.
+
+O jogador só sela a Fenda e conclui a fase após derrotar a última Âncora. Ao fazê-lo, a fase seguinte é desbloqueada e esse progresso é salvo permanentemente.
 
 Caso o personagem morra em uma fase já desbloqueada, não precisa repetir as fases anteriores. Uma tela intermediária de **seleção de fases** permite iniciar a fase mais avançada desbloqueada ou revisitar qualquer fase concluída. Rejogar fases serve para enfrentar novamente suas hordas e chefes, testar personagens e builds, e obter recompensas sem bloquear o avanço principal.
 
@@ -64,33 +66,42 @@ Caso o personagem morra em uma fase já desbloqueada, não precisa repetir as fa
 
 O primeiro ponto em que o Véu falhou. Uma região antes comum foi contaminada pela energia que escapa da abertura. Criaturas menores e rápidas começam a atravessar: Draugr, morcegos, harpias e slimes arcanos.
 
-O **King Slime** é a primeira Âncora conhecida: uma massa parasitária formada pelo resíduo mágico que escorre da ruptura. Ele será acompanhado por mais duas Âncoras planejadas para esta fase, formando o primeiro trio de chefes.
+Nada aqui *decidiu* atravessar. Simplesmente escorreu.
 
-Somente depois da derrota dos três chefes, os heróis podem reunir a energia da região e selar a primeira Fenda.
+A Âncora desta fase é o **King Slime**, *a Primeira Âncora*: não é uma criatura, é o que escorre da ruptura. Resíduo mágico de mil mitologias, coagulado em algo que aprendeu a se mover e a crescer. Enquanto ele pulsar, a Fenda continua sangrando neste campo.
+
+Derrubá-lo permite reunir a energia da região e selar a primeira Fenda. É a fase mais curta da campanha, e a que ensina o jogador a ler o Véu.
 
 ## Fase 2 — Ruínas do Conflito
 
-Uma região marcada por guerra, onde as realidades já começaram a se sobrepor. Orcs, ciclopes, múmias, medusas e outras criaturas mais perigosas ocupam o território.
+Uma região marcada por guerra, onde as realidades já começaram a se sobrepor. Orcs, ciclopes, múmias, medusas e outras criaturas mais perigosas ocupam o território — e "ocupam" é a palavra exata.
 
-As Âncoras conhecidas dessa ruptura são:
+Aqui a invasão muda de natureza. **O que atravessou não veio saquear: veio ficar.** A Fenda deixou de ser um vazamento e virou a porta de um exército com endereço fixo.
 
-- **Orc Warlord**, um conquistador que atravessou a ruptura para estabelecer um exército na Terra;
-- **Cerberus**, uma entidade infernal que protege a passagem entre mundos como se ela fosse um novo portão do submundo;
-- uma terceira Âncora ainda a ser definida, para completar o trio da fase.
+As duas Âncoras dessa ruptura são:
 
-Ao derrotar as três Âncoras e fechar essa segunda ruptura, os escolhidos descobrem que o problema é maior que uma invasão isolada: todas as fendas parecem estar ligadas à mesma força desconhecida.
+- **Orc Warlord**, *o Conquistador da Passagem*: atravessou o Véu com um exército e entendeu o que os outros não entenderam — a Terra não tem deuses de plantão. Já ergueu o primeiro forte sobre as ruínas.
+- **Cerberus**, *o Novo Portão*: guardava a passagem dos mortos e não sabe fazer outra coisa. Agora trata a ruptura como o portão que perdeu, e vigia os dois lados. Enquanto ele respirar, nada que atravessou volta, e tudo que vem continua vindo.
+
+Ao fechar essa segunda ruptura, os escolhidos descobrem que o problema é maior que uma invasão isolada: todas as fendas parecem estar ligadas à mesma força desconhecida.
 
 ## Fase 3 — Fronteira do Fim
 
-A maior e mais instável ruptura. Nessa fronteira, a natureza, os mitos e as dimensões quase se fundiram. É o último ponto antes que a Fenda alcance escala global.
+A maior e mais instável ruptura, e a única que não trouxe apenas criaturas: trouxe uma **profecia**.
 
-As três Âncoras finais já conhecidas são:
+Na tradição nórdica, o Ragnarök é anunciado pelo **Fimbulvetr** — três invernos seguidos, sem verão entre eles. Quando o fim chega, Jormungandr solta a própria cauda e envenena o céu, Fenrir arrebenta as amarras e devora Odin, e os deuses caem junto com Asgard.
 
-- **Corrupted Treant**: um guardião natural contaminado pela energia dimensional;
-- **Jormungandr**: uma manifestação apocalíptica puxada para um mundo onde Ragnarök ainda não deveria acontecer;
-- **Fenrir**: outra força do fim dos tempos nórdico, libertada antes da hora pela fragilidade do Véu.
+O Véu rachou cedo demais, e foi o inverno que atravessou primeiro. A Terra congelou sem entender por quê.
 
-Vencer os três chefes fecha a terceira ruptura e conclui a campanha inicial, salvando aquela parte da Terra — mas sem necessariamente revelar ou derrotar a origem da Fenda.
+As feras do fim vieram atrás do próprio inverno, olharam em volta e tiraram a única conclusão possível: **o Ragnarök começou.** Que tenha começado no mundo errado não as detém — se não podem cumprir a profecia em Asgard, cumprem aqui. E aqui é pior, porque não há deuses para enfrentá-las.
+
+As três Âncoras finais são:
+
+- **Corrupted Treant**, *o Guardião Virado*: passou eras protegendo a fronteira entre a floresta e o gelo. A energia da Fenda subiu por suas raízes e inverteu a ordem antiga — agora ele protege a ruptura, com a mesma paciência de séculos.
+- **Jormungandr**, *a Serpente que Errou o Mundo*: a profecia dizia que ela só soltaria a própria cauda quando o Ragnarök começasse, e que envenenaria o céu de Asgard. Ela atravessou, olhou para a Terra e decidiu que este mundo serve.
+- **Fenrir**, *o Lobo Solto Antes da Hora*: Gleipnir não arrebentou — a Fenda simplesmente o tirou de onde estava preso. O lobo acordou num mundo sem Odin para devorar e sem deuses para enfrentá-lo. Para ele, isso não cancela o fim. Só facilita.
+
+Vencer as três Âncoras fecha a terceira ruptura e conclui a campanha inicial, salvando aquela parte da Terra — mas sem necessariamente revelar ou derrotar a origem da Fenda. E sem responder a pergunta que a fase deixa: se o inverno atravessou sozinho, o que mais da profecia já está a caminho?
 
 ## Ecos Divinos e progressão da run
 
@@ -98,13 +109,19 @@ Os pontos de experiência não são apenas experiência comum. Ao derrotar criat
 
 Quando sobe de nível, o herói consegue atrair uma nova arma ou uma relíquia através do Véu. Por isso, armas de diferentes panteões podem coexistir na mesma run: são bênçãos temporárias enviadas por deuses e forças que resistem ao colapso das realidades.
 
+Subir de nível nunca é apresentado como progressão mecânica. É **uma dádiva atravessando o Véu**, e a tela diz de onde ela vem:
+
+- uma arma nova é uma **arma divina** que os deuses empurraram através da abertura;
+- melhorar uma arma existente é **o Eco despertando** — o fragmento preso nela ganhando força;
+- uma relíquia nova é **concedida**; uma relíquia melhorada **ressoa**.
+
 Os baús deixados por chefes contêm **Fragmentos de Panteão**, recompensas capazes de fortalecer ou evoluir armas divinas.
 
 ## Transição entre fases
 
-Após cada chefe, a Fenda permanece ativa: uma Âncora foi destruída, mas as outras ainda sustentam a ruptura. A progressão da fase deixa claro quantos chefes ainda restam.
+Enquanto restar uma Âncora de pé, a Fenda permanece ativa: uma caiu, mas as outras ainda sustentam a ruptura. A HUD deixa claro quantas faltam.
 
-Após o terceiro chefe, a ruptura da região se manifesta visualmente como um rasgo instável de luz e energia. Os Ecos Divinos liberados pelo combate convergem para a abertura até que ela se feche.
+Depois da última Âncora, a ruptura da região se manifesta visualmente como um rasgo instável de luz e energia. Os Ecos Divinos liberados pelo combate convergem para a abertura até que ela se feche.
 
 Uma breve tela de transição informa que a fase foi concluída e que outra ruptura foi detectada. A fase seguinte é desbloqueada; os heróis podem partir para ela ou retornar à seleção de fases.
 
@@ -117,25 +134,37 @@ Uma introdução curta, em três ou quatro telas, apresenta:
 1. O Véu e a separação entre os mundos;
 2. A Ruptura e a invasão das criaturas;
 3. Thor, Rá e Atena escolhendo os três mortais;
-4. A missão de fechar as três Fendas, derrotando as três Âncoras de cada uma.
+4. A missão de fechar as três Fendas, derrubando as Âncoras que sustentam cada uma.
 
 Na tela de seleção, cada herói pode exibir uma frase curta de juramento e sua ligação com o deus que lhe concedeu a arma.
 
 ### Durante a run
 
-As mensagens precisam ser breves para não quebrar o ritmo de sobrevivência. Elas podem aparecer no início da fase, durante eventos de horda, na aproximação de chefes e na conclusão de cada fase.
+As mensagens precisam ser breves para não quebrar o ritmo de sobrevivência. Elas aparecem no início da fase, durante eventos de horda, na queda de cada Âncora e na conclusão da fase.
 
-Exemplo de início de run:
+Cada fase abre com uma frase própria, que diz do que aquela ruptura se trata:
 
-> O Véu se rompeu. Reúna os Ecos. Feche a Fenda.
+> **Campos da Ruptura** — O Véu se rompeu. Reúna os Ecos. Feche a Fenda.
+>
+> **Ruínas do Conflito** — Eles não vieram saquear. Vieram ficar. Feche a porta.
+>
+> **Fronteira do Fim** — O fim chegou ao mundo errado. Não deixe que ele se acostume.
 
-Exemplo após vencer uma Âncora, antes do fim da fase:
+Ao vencer uma Âncora, antes do fim da fase:
 
 > Uma Âncora caiu. A Fenda ainda resiste.
 
-Exemplo após concluir uma fase:
+Ao concluir uma fase:
 
 > A ruptura foi selada. Uma nova Fenda responde ao chamado.
+
+**A chegada de uma Âncora é o único momento que interrompe o ritmo com texto longo.** Um painel apresenta a criatura antes de ela entrar em cena, com a posição dela na fase, um epíteto e o motivo de ela sustentar a ruptura. Não é descrição de inimigo: é a resposta para "por que *esta* criatura está segurando a Fenda aberta".
+
+> **ÂNCORA 2 DE 3 · A SERPENTE QUE ERROU O MUNDO**
+> **JORMUNGANDR**
+> A profecia dizia que ela só soltaria a própria cauda quando o Ragnarök começasse, e que envenenaria o céu de Asgard. O Véu rachou cedo demais. Ela atravessou, olhou para a Terra e decidiu que este mundo serve.
+
+Durante o combate, a HUD mostra quantas Âncoras ainda sustentam a ruptura — a contagem só existe para deixar claro o quanto falta para selar a Fenda.
 
 ## Espaço para expansão futura
 

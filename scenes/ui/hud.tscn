@@ -31,6 +31,20 @@ border_color = Color(0.36, 0.2, 0.16, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_fill"]
 bg_color = Color(0.85, 0.16, 0.16, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lore_panel"]
+content_margin_left = 28.0
+content_margin_top = 18.0
+content_margin_right = 28.0
+content_margin_bottom = 18.0
+bg_color = Color(0.04, 0.03, 0.07, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.24, 0.16, 1)
+shadow_color = Color(0, 0, 0, 0.8)
+shadow_size = 12
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_anchor_panel"]
 content_margin_left = 16.0
 content_margin_top = 8.0
@@ -208,6 +222,62 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 10
 text = "0 / 0"
 horizontal_alignment = 1
+
+[node name="BossIntroPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -420.0
+offset_top = 96.0
+offset_right = 420.0
+offset_bottom = 260.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lore_panel")
+
+[node name="BossIntroBox" type="VBoxContainer" parent="BossIntroPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="EpithetLabel" type="Label" parent="BossIntroPanel/BossIntroBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.5, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0.06, 0.02, 0.01, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "A PRIMEIRA ANCORA"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="NameLabel" type="Label" parent="BossIntroPanel/BossIntroBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.32, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0.05, 0.02, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "CHEFE"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="LoreLabel" type="Label" parent="BossIntroPanel/BossIntroBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.85, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.02, 0.01, 1)
+theme_override_constants/line_spacing = 8
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="BossWarning" type="Label" parent="." unique_id=1875167409]
 visible = false

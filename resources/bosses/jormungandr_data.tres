@@ -12,3 +12,5 @@ contact_damage = 30.0
 score_value = 3000
 visual_size = 136.0
 sprite_directory = "res://assets/sprites/bosses/jormungandr/idle/rotations"
+epithet = "A SERPENTE QUE ERROU O MUNDO"
+presentation_text = "A profecia dizia que ela so soltaria a propria cauda quando o Ragnarok comecasse, e que envenenaria o ceu de Asgard. O Veu rachou cedo demais. Ela atravessou, olhou para a Terra e decidiu que este mundo serve."
