@@ -3,6 +3,19 @@
 [ext_resource type="Texture2D" uid="uid://dm8cj20grgpeh" path="res://assets/sprites/map/field/TilesetField.png" id="1_dr6u6"]
 [ext_resource type="Texture2D" uid="uid://bjkbq8c1kxt3l" path="res://assets/sprites/map/field/TilesetNature.png" id="2_1va36"]
 
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/grass_ground.png" id="10_grass"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/dark_grass.png" id="11_dark"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/shallow_water.png" id="14_water"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/grass_to_dark_grass_edge_north.png" id="15_dark_n"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/grass_to_dark_grass_edge_east.png" id="16_dark_e"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/grass_to_dark_grass_edge_south.png" id="17_dark_s"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/grass_to_dark_grass_edge_west.png" id="18_dark_w"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/grass_to_water_edge_north.png" id="19_water_n"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/grass_to_water_edge_east.png" id="20_water_e"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/grass_to_water_edge_south.png" id="21_water_s"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/ground/grass_to_water_edge_west.png" id="22_water_w"]
+
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1va36"]
 texture = ExtResource("1_dr6u6")
 0:0/0 = 0
@@ -757,6 +770,52 @@ texture = ExtResource("2_1va36")
 10:20/0 = 0
 11:20/0 = 0
 
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_grass_new"]
+texture = ExtResource("10_grass")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dark_new"]
+texture = ExtResource("11_dark")
+0:0/0 = 0
+
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_water_new"]
+texture = ExtResource("14_water")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dark_edge_north"]
+texture = ExtResource("15_dark_n")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dark_edge_east"]
+texture = ExtResource("16_dark_e")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dark_edge_south"]
+texture = ExtResource("17_dark_s")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dark_edge_west"]
+texture = ExtResource("18_dark_w")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_water_edge_north"]
+texture = ExtResource("19_water_n")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_water_edge_east"]
+texture = ExtResource("20_water_e")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_water_edge_south"]
+texture = ExtResource("21_water_s")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_water_edge_west"]
+texture = ExtResource("22_water_w")
+0:0/0 = 0
+
 [resource]
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "grama"
@@ -767,3 +826,14 @@ terrain_set_0/terrain_2/name = "agua"
 terrain_set_0/terrain_2/color = Color(0, 0.44313726, 0.95686275, 1)
 sources/0 = SubResource("TileSetAtlasSource_1va36")
 sources/2 = SubResource("TileSetAtlasSource_06c4e")
+sources/10 = SubResource("TileSetAtlasSource_grass_new")
+sources/11 = SubResource("TileSetAtlasSource_dark_new")
+sources/14 = SubResource("TileSetAtlasSource_water_new")
+sources/15 = SubResource("TileSetAtlasSource_dark_edge_north")
+sources/16 = SubResource("TileSetAtlasSource_dark_edge_east")
+sources/17 = SubResource("TileSetAtlasSource_dark_edge_south")
+sources/18 = SubResource("TileSetAtlasSource_dark_edge_west")
+sources/19 = SubResource("TileSetAtlasSource_water_edge_north")
+sources/20 = SubResource("TileSetAtlasSource_water_edge_east")
+sources/21 = SubResource("TileSetAtlasSource_water_edge_south")
+sources/22 = SubResource("TileSetAtlasSource_water_edge_west")

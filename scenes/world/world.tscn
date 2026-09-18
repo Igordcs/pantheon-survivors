@@ -12,9 +12,15 @@ script = ExtResource("1_world")
 
 [node name="Ground" type="TileMapLayer" parent="."]
 z_index = -10
+texture_filter = 1
+
+[node name="GroundEdges" type="TileMapLayer" parent="."]
+z_index = -9
+texture_filter = 1
 
 [node name="Decorations" type="TileMapLayer" parent="."]
 z_index = -5
+texture_filter = 1
 
 [node name="Obstacles" type="Node2D" parent="."]
 y_sort_enabled = true

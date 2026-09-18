@@ -2,29 +2,60 @@
 
 [ext_resource type="Script" uid="uid://bcg01dx47c1xo" path="res://scripts/world/biome_data.gd" id="1_biome"]
 [ext_resource type="Script" uid="uid://dlt1xep0kfju6" path="res://scripts/world/world_object_data.gd" id="2_object"]
-[ext_resource type="PackedScene" path="res://scenes/environment/field/tree.tscn" id="3_tree"]
-[ext_resource type="PackedScene" path="res://scenes/environment/field/rock.tscn" id="4_rock"]
+[ext_resource type="PackedScene" path="res://scenes/environment/field/large_tree.tscn" id="3_large_tree"]
+[ext_resource type="PackedScene" path="res://scenes/environment/field/dead_tree.tscn" id="4_dead_tree"]
+[ext_resource type="PackedScene" path="res://scenes/environment/field/tree_stump.tscn" id="5_tree_stump"]
+[ext_resource type="PackedScene" path="res://scenes/environment/field/mushrooms.tscn" id="6_mushrooms"]
+[ext_resource type="PackedScene" path="res://scenes/environment/field/small_rocks_cluster.tscn" id="7_small_rocks"]
+[ext_resource type="PackedScene" path="res://scenes/environment/field/fallen_branch.tscn" id="8_fallen_branch"]
 
-[sub_resource type="Resource" id="Resource_tree"]
+[sub_resource type="Resource" id="Resource_large_tree"]
 script = ExtResource("2_object")
-scene = ExtResource("3_tree")
-weight = 0.68
+scene = ExtResource("3_large_tree")
+weight = 0.35
 clearance_radius = 52.0
 
-[sub_resource type="Resource" id="Resource_rock"]
+[sub_resource type="Resource" id="Resource_dead_tree"]
 script = ExtResource("2_object")
-scene = ExtResource("4_rock")
-weight = 0.32
+scene = ExtResource("4_dead_tree")
+weight = 0.15
+clearance_radius = 32.0
+
+[sub_resource type="Resource" id="Resource_tree_stump"]
+script = ExtResource("2_object")
+scene = ExtResource("5_tree_stump")
+weight = 0.15
 clearance_radius = 26.0
+
+[sub_resource type="Resource" id="Resource_mushrooms"]
+script = ExtResource("2_object")
+scene = ExtResource("6_mushrooms")
+weight = 0.15
+clearance_radius = 8.0
+
+[sub_resource type="Resource" id="Resource_small_rocks"]
+script = ExtResource("2_object")
+scene = ExtResource("7_small_rocks")
+weight = 0.20
+clearance_radius = 8.0
+
+[sub_resource type="Resource" id="Resource_fallen_branch"]
+script = ExtResource("2_object")
+scene = ExtResource("8_fallen_branch")
+weight = 0.10
+clearance_radius = 24.0
 
 [resource]
 script = ExtResource("1_biome")
-max_noise_value = 0.4
-min_noise_value = -0.45
-ground_atlas_coordinates = Vector2i(1, 4)
+biome_id = &"grassland"
+display_name = "Planície"
+max_noise_value = 0.48
+min_noise_value = -0.72
+ground_source_id = 10
+ground_atlas_coordinates = Vector2i(0, 0)
 decoration_density = 0.02
-obstacle_density = 0.04
+obstacle_density = 0.06
 decoration_atlas_coordinates = Array[Vector2i]([Vector2i(1, 10), Vector2i(2, 10), Vector2i(6, 10)])
 rare_decoration_atlas_coordinates = Array[Vector2i]([Vector2i(5, 8)])
 rare_decoration_chance = 0.03
-obstacle_entries = Array[ExtResource("2_object")]([SubResource("Resource_tree"), SubResource("Resource_rock")])
+obstacle_entries = Array[ExtResource("2_object")]([SubResource("Resource_large_tree"), SubResource("Resource_dead_tree"), SubResource("Resource_tree_stump"), SubResource("Resource_mushrooms"), SubResource("Resource_small_rocks"), SubResource("Resource_fallen_branch")])
