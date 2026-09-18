@@ -4,10 +4,18 @@ class_name RunManager
 
 signal state_changed(new_state: String)
 signal boss_warning_started(boss_name: String, duration: float)
+## Emitido junto do aviso, com a lore da Âncora que está chegando.
+signal boss_introduced(boss_id: StringName, display_name: String, duration: float)
+## Frase de abertura da fase, no primeiro instante da run.
+signal phase_started(intro_line: String)
+## Emitido quando uma Âncora cai e a ruptura ainda resiste.
+signal anchor_sealed(remaining: int)
 signal boss_spawned(boss_node: Node2D)
 signal boss_fight_started(boss_pos: Vector2)
 signal boss_fight_ended
 signal run_ended(is_victory: bool, stats: Dictionary)
+## Quantas Âncoras da fase já caíram, e quantas a ruptura tem no total.
+signal anchor_progress_changed(defeated: int, total: int)
 
 enum State { PLAYING, BOSS_WARNING, BOSS_FIGHT, BOSS_REWARD, VICTORY, DEFEAT }
 
@@ -23,13 +31,19 @@ var _bosses_defeated: int = 0
 var _boss_instance: Node2D
 var boss_position := Vector2.ZERO
 var _boss_rng := RandomNumberGenerator.new()
+var active_phase: PhaseData
 
 
 func _ready() -> void:
+	active_phase = _resolve_phase()
+	if boss_encounters.is_empty() and active_phase != null:
+		boss_encounters = _encounters_from_phase(active_phase)
 	if boss_encounters.is_empty():
 		boss_encounters = _default_boss_schedule()
 	_configure_boss_rng()
 	_resolve_boss_candidates()
+	_emit_anchor_progress.call_deferred()
+	_announce_phase.call_deferred()
 
 
 func _process(_delta: float) -> void:
@@ -53,6 +67,7 @@ func _begin_boss_warning(encounter: BossEncounterData) -> void:
 	var keep_ratio := 0.0 if encounter.is_final_boss else horde_keep_ratio_during_boss
 	enemy_spawner.reduce_active_horde(keep_ratio)
 	boss_warning_started.emit(encounter.display_name, encounter.warning_duration)
+	boss_introduced.emit(encounter.id, encounter.display_name, encounter.warning_duration)
 	print("WARNING: %s approaches!" % encounter.display_name)
 	await get_tree().create_timer(encounter.warning_duration).timeout
 	if _current_state == State.BOSS_WARNING:
@@ -90,6 +105,8 @@ func _on_boss_died() -> void:
 	if _current_state != State.BOSS_FIGHT:
 		return
 	_bosses_defeated += 1
+	_emit_anchor_progress()
+	anchor_sealed.emit(get_remaining_anchors())
 	_current_state = State.BOSS_REWARD
 	state_changed.emit("BOSS_REWARD")
 	boss_fight_ended.emit()
@@ -115,7 +132,21 @@ func trigger_victory() -> void:
 	_current_state = State.VICTORY
 	state_changed.emit("VICTORY")
 	boss_fight_ended.emit()
+	_seal_active_phase()
 	_show_results(true)
+
+
+## Derrubar a ultima Ancora fecha a ruptura. O modo sandbox nao altera progresso.
+func _seal_active_phase() -> void:
+	if active_phase == null:
+		return
+	var global_state := get_node_or_null("/root/Global")
+	if global_state != null and bool(global_state.get("sandbox_mode")):
+		return
+	var save_manager := get_node_or_null("/root/SaveManager")
+	if save_manager == null:
+		return
+	save_manager.complete_phase(active_phase.phase_id)
 
 
 func trigger_defeat() -> void:
@@ -137,10 +168,15 @@ func is_boss_reward_pending() -> bool:
 
 func _show_results(is_victory: bool) -> void:
 	get_tree().paused = true
+	var next_phase := PhaseCatalog.get_next_phase(active_phase.phase_id) if active_phase else null
 	var stats := {
 		"time": spawn_director.get_elapsed_time() if spawn_director else 0.0,
 		"coins_collected": 0,
 		"bosses_defeated": _bosses_defeated,
+		"phase_id": active_phase.phase_id if active_phase else &"",
+		"phase_name": active_phase.display_name if active_phase else "",
+		"anchor_count": active_phase.get_anchor_count() if active_phase else 0,
+		"next_phase_name": next_phase.display_name if next_phase else "",
 	}
 	run_ended.emit(is_victory, stats)
 
@@ -162,8 +198,7 @@ func _default_boss_schedule() -> Array[BossEncounterData]:
 	result.append(_encounter(
 		180.0,
 		[_candidate(
-			&"king_slime", "King Slime",
-			preload("res://scenes/bosses/king_slime.tscn")
+			&"king_slime", "King Slime"
 		)],
 		false
 	))
@@ -171,12 +206,10 @@ func _default_boss_schedule() -> Array[BossEncounterData]:
 		390.0,
 		[
 			_candidate(
-				&"orc_warlord", "Orc Warlord",
-				preload("res://scenes/bosses/orc_warlord.tscn")
+				&"orc_warlord", "Orc Warlord"
 			),
 			_candidate(
-				&"cerberus", "Cerberus",
-				preload("res://scenes/bosses/cerberus.tscn")
+				&"cerberus", "Cerberus"
 			),
 		],
 		false
@@ -185,21 +218,65 @@ func _default_boss_schedule() -> Array[BossEncounterData]:
 		600.0,
 		[
 			_candidate(
-				&"corrupted_treant", "Corrupted Treant",
-				preload("res://scenes/bosses/corrupted_treant.tscn")
+				&"corrupted_treant", "Corrupted Treant"
 			),
 			_candidate(
-				&"jormungandr", "Jormungandr",
-				preload("res://scenes/bosses/jormungandr.tscn")
+				&"jormungandr", "Jormungandr"
 			),
 			_candidate(
-				&"fenrir", "Fenrir",
-				preload("res://scenes/bosses/fenrir.tscn")
+				&"fenrir", "Fenrir"
 			),
 		],
 		true
 	))
 	return result
+
+
+## Prioridade: a fase escolhida na sessao, senao a primeira da campanha.
+func _resolve_phase() -> PhaseData:
+	var global_state := get_node_or_null("/root/Global")
+	if global_state != null:
+		var selected: StringName = global_state.get("selected_phase_id")
+		if not String(selected).is_empty():
+			return PhaseCatalog.get_phase(selected)
+	return PhaseCatalog.get_first_phase()
+
+
+func _encounters_from_phase(phase: PhaseData) -> Array[BossEncounterData]:
+	var result: Array[BossEncounterData] = []
+	var anchors := phase.get_anchors()
+	for index in range(anchors.size()):
+		var anchor := anchors[index]
+		var scene := ContentRegistry.get_boss_scene(anchor.boss_id)
+		if scene == null:
+			push_warning("RunManager: Âncora \"%s\" não tem cena." % anchor.boss_id)
+			continue
+		var encounter := BossEncounterData.new()
+		encounter.id = anchor.boss_id
+		encounter.display_name = ContentRegistry.get_boss_display_name(anchor.boss_id)
+		encounter.trigger_time = anchor.trigger_time
+		encounter.boss_scene = scene
+		encounter.warning_duration = anchor.warning_duration
+		encounter.is_final_boss = index == anchors.size() - 1
+		result.append(encounter)
+	return result
+
+
+func _announce_phase() -> void:
+	if active_phase != null and not active_phase.intro_line.is_empty():
+		phase_started.emit(active_phase.intro_line)
+
+
+func _emit_anchor_progress() -> void:
+	anchor_progress_changed.emit(_bosses_defeated, boss_encounters.size())
+
+
+func get_anchor_total() -> int:
+	return boss_encounters.size()
+
+
+func get_remaining_anchors() -> int:
+	return maxi(boss_encounters.size() - _bosses_defeated, 0)
 
 
 func _encounter(
@@ -218,13 +295,12 @@ func _encounter(
 func _candidate(
 	id: StringName,
 	display_name: String,
-	scene: PackedScene,
 	weight: float = 1.0
 ) -> BossCandidateData:
 	var result := BossCandidateData.new()
 	result.id = id
 	result.display_name = display_name
-	result.boss_scene = scene
+	result.boss_scene = ContentRegistry.get_boss_scene(id)
 	result.selection_weight = weight
 	return result
 

@@ -1,0 +1,65 @@
+[gd_resource type="Resource" script_class="BiomeData" format=3]
+
+[ext_resource type="Script" uid="uid://bcg01dx47c1xo" path="res://scripts/world/biome_data.gd" id="1_biome"]
+[ext_resource type="Script" uid="uid://dlt1xep0kfju6" path="res://scripts/world/world_object_data.gd" id="2_object"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/broken_column.tscn" id="3_broken_column"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/burnt_cart.tscn" id="3_burnt_cart"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/broken_statue.tscn" id="3_broken_statue"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/prop_bones.tscn" id="3_prop_bones"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/prop_banner.tscn" id="3_prop_banner"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ruins/prop_orc_shield.tscn" id="3_prop_orc_shield"]
+
+[sub_resource type="Resource" id="Resource_broken_column"]
+script = ExtResource("2_object")
+scene = ExtResource("3_broken_column")
+weight = 0.2
+clearance_radius = 40.0
+
+[sub_resource type="Resource" id="Resource_burnt_cart"]
+script = ExtResource("2_object")
+scene = ExtResource("3_burnt_cart")
+weight = 0.16
+clearance_radius = 40.0
+
+[sub_resource type="Resource" id="Resource_broken_statue"]
+script = ExtResource("2_object")
+scene = ExtResource("3_broken_statue")
+weight = 0.14
+clearance_radius = 32.0
+
+[sub_resource type="Resource" id="Resource_prop_bones"]
+script = ExtResource("2_object")
+scene = ExtResource("3_prop_bones")
+weight = 0.18
+clearance_radius = 22.0
+
+[sub_resource type="Resource" id="Resource_prop_banner"]
+script = ExtResource("2_object")
+scene = ExtResource("3_prop_banner")
+weight = 0.16
+clearance_radius = 18.0
+
+[sub_resource type="Resource" id="Resource_prop_orc_shield"]
+script = ExtResource("2_object")
+scene = ExtResource("3_prop_orc_shield")
+weight = 0.16
+clearance_radius = 20.0
+
+[resource]
+script = ExtResource("1_biome")
+biome_id = &"ruins_ground"
+display_name = "Terra queimada"
+min_noise_value = -0.45
+max_noise_value = 0.4
+ground_source_id = 0
+ground_atlas_coordinates = Vector2i(0, 0)
+ground_modulate = Color(1, 1, 1, 1)
+is_navigable = true
+movement_speed_multiplier = 1.0
+decoration_density = 0.01
+obstacle_density = 0.105
+decoration_source_id = 2
+decoration_atlas_coordinates = Array[Vector2i]([Vector2i(0, 0), Vector2i(2, 0), Vector2i(3, 0)])
+rare_decoration_atlas_coordinates = Array[Vector2i]([Vector2i(4, 0)])
+rare_decoration_chance = 0.05
+obstacle_entries = Array[ExtResource("2_object")]([SubResource("Resource_broken_column"), SubResource("Resource_burnt_cart"), SubResource("Resource_broken_statue"), SubResource("Resource_prop_bones"), SubResource("Resource_prop_banner"), SubResource("Resource_prop_orc_shield")])

@@ -21,6 +21,10 @@ var _coins_collected_this_run: int = 0
 
 
 func _ready() -> void:
+	for registry_error in ContentRegistry.validate():
+		push_error("ContentRegistry: %s" % registry_error)
+	for item_error in ItemCatalog.validate():
+		push_error("ItemCatalog: %s" % item_error)
 	MusicManager.play_game_music()
 	print("Pantheon Survivors — Game started")
 	
@@ -85,7 +89,10 @@ func _ready() -> void:
 	run_manager.run_ended.connect(_on_run_ended)
 	run_manager.boss_fight_started.connect(_on_boss_fight_started)
 	run_manager.boss_fight_ended.connect(_on_boss_fight_ended)
-	run_manager.boss_warning_started.connect(hud.show_boss_warning)
+	run_manager.anchor_progress_changed.connect(hud.update_anchor_progress)
+	run_manager.boss_introduced.connect(_on_boss_introduced)
+	run_manager.phase_started.connect(hud.show_run_message)
+	run_manager.anchor_sealed.connect(_on_anchor_sealed)
 	if Global.sandbox_mode:
 		spawn_director.set_progression_paused(true)
 		enemy_spawner.stop_spawning()
@@ -107,7 +114,7 @@ func _on_boss_spawned(boss_node: Node2D) -> void:
 	var boss_health = boss_node.get_node_or_null("HealthComponent") as HealthComponent
 	if boss_health:
 		boss_health.health_changed.connect(hud.update_boss_hp)
-		hud.show_boss_bar(boss_health.max_health)
+		hud.show_boss_bar(_resolve_boss_name(boss_node), boss_health.max_health)
 	
 	# Conectar morte para dropar o baú
 	if boss_node.has_signal("died"):
@@ -118,6 +125,33 @@ func _on_boss_spawned(boss_node: Node2D) -> void:
 		)
 
 
+## Busca a lore da Âncora no catálogo e entrega à HUD.
+func _on_boss_introduced(boss_id: StringName, display_name: String, duration: float) -> void:
+	var data := ContentRegistry.get_boss_data(boss_id)
+	var epithet := data.epithet if data else ""
+	var lore := data.presentation_text if data else ""
+	hud.show_boss_intro(display_name, epithet, lore, duration)
+
+
+## Marco de progresso da fase, no espírito das mensagens da lore.
+func _on_anchor_sealed(remaining: int) -> void:
+	if remaining > 0:
+		hud.show_run_message("Uma Ancora caiu. A Fenda ainda resiste.", 3.0)
+	else:
+		hud.show_run_message("A ultima Ancora caiu. Sele a ruptura.", 3.0)
+
+
+## O nome mostrado na barra vem do encontro em curso; o nó é o último recurso.
+func _resolve_boss_name(boss_node: Node2D) -> String:
+	var encounters: Array = run_manager.boss_encounters
+	var index: int = run_manager._current_encounter_index
+	if index >= 0 and index < encounters.size():
+		var encounter: BossEncounterData = encounters[index]
+		if not encounter.display_name.is_empty():
+			return encounter.display_name
+	return boss_node.name
+
+
 func _on_boss_died_for_chest(boss_node: Node2D) -> void:
 	var chest_scene = preload("res://scenes/pickups/chest.tscn")
 	var chest = chest_scene.instantiate() as Chest
@@ -125,23 +159,12 @@ func _on_boss_died_for_chest(boss_node: Node2D) -> void:
 	chest.collected.connect(_on_chest_collected)
 	$World.add_child(chest)
 	# Oculta a barra do boss
-	hud.boss_bar.hide()
+	hud.hide_boss_bar()
 
 
 func _on_chest_collected(_chest: Chest) -> void:
-	var recipe = upgrade_system.check_evolutions()
-	if recipe:
-		print("Evolução Divina Encontrada: ", recipe.evolved_weapon.display_name)
-		# Não aplica aqui, aplica só quando o usuário clicar no botão!
-		var opt = UpgradeOption.new()
-		opt.item_data = recipe.evolved_weapon
-		opt.is_new_weapon = true
-		opt.display_text = "EVOLUÇÃO DIVINA: %s" % recipe.evolved_weapon.display_name
-		opt.description_text = recipe.evolved_weapon.description
-		level_up_panel.show_options([opt])
-	else:
-		print("Baú coletado; nenhuma evolução disponível.")
-		run_manager.complete_boss_reward()
+	print("Baú coletado.")
+	run_manager.complete_boss_reward()
 
 
 func _on_run_ended(is_victory: bool, stats: Dictionary) -> void:
@@ -185,25 +208,10 @@ func _on_player_level_up(new_level: int) -> void:
 
 
 func _on_upgrade_option_chosen(option: UpgradeOption) -> void:
-	if option.display_text.begins_with("EVOLUÇÃO"):
-		var recipe = upgrade_system.check_evolutions()
-		if recipe:
-			upgrade_system.apply_evolution(recipe)
-			hud.add_weapon_icon(
-				recipe.evolved_weapon.id,
-				recipe.evolved_weapon.icon,
-				recipe.evolved_weapon.display_name
-			)
-			run_manager.complete_boss_reward()
-		return
-		
 	upgrade_system.apply_option(option)
 	if option.item_data is WeaponData:
 		var weapon_data := option.item_data as WeaponData
 		hud.add_weapon_icon(weapon_data.id, weapon_data.icon, weapon_data.display_name)
-	elif option.item_data is RelicData:
-		var relic_data := option.item_data as RelicData
-		hud.add_weapon_icon(relic_data.id, relic_data.icon, relic_data.display_name)
 	elif option.item_data is ItemData:
 		var item_data := option.item_data as ItemData
 		var controller := player.get_node_or_null("ItemEffectController") as ItemEffectController

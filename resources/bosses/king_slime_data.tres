@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://86db14m2o7mw"]
+[gd_resource type="Resource" script_class="BossData" format=3 uid="uid://86db14m2o7mw"]
 
-[ext_resource type="Script" uid="uid://7sdoy4k44d5y" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" uid="uid://tjsmy6iul4v2" path="res://scripts/enemies/boss_data.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
-id = &"boss_enemy"
+id = &"king_slime"
 display_name = "King Slime"
 max_health = 1500.0
 speed = 21.0
 contact_damage = 18.0
 score_value = 1000
+epithet = "A PRIMEIRA ANCORA"
+presentation_text = "Nao e uma criatura: e o que escorre da ruptura. Residuo magico de mil mitologias, coagulado em algo que aprendeu a se mover e a crescer. Enquanto ele pulsar, a Fenda continua sangrando neste campo."

@@ -5,9 +5,11 @@ extends Node2D
 signal world_generated(seed: int)
 signal chunk_generated(chunk_coordinate: Vector2i)
 signal chunk_removed(chunk_coordinate: Vector2i)
-signal biome_entered(biome_type: int)
+signal biome_entered(biome_index: int)
 
 @export_category("World")
+## Deixe vazio para resolver pelo mapa escolhido na sessao (Global.selected_map_id).
+@export var map_data: MapData
 @export var world_seed: int = 0
 @export var generate_on_ready: bool = true
 
@@ -27,6 +29,7 @@ signal biome_entered(biome_type: int)
 @export var draw_obstacle_positions: bool = false
 
 @onready var ground_layer: TileMapLayer = $Ground
+@onready var ground_edges_layer: TileMapLayer = $GroundEdges
 @onready var decorations_layer: TileMapLayer = $Decorations
 @onready var obstacles_container: Node2D = $Obstacles
 @onready var points_container: Node2D = $PointsOfInterest
@@ -37,6 +40,7 @@ signal biome_entered(biome_type: int)
 @onready var point_of_interest_spawner: PointOfInterestSpawner = $PointOfInterestSpawner
 
 var current_seed: int = 0
+var active_map: MapData
 var obstacle_placements: Array[Dictionary] = []
 
 var _player: Node2D
@@ -46,6 +50,18 @@ var _cache_order: Array[Vector2i] = []
 var _runtime_rng := RandomNumberGenerator.new()
 var _current_biome_type: int = -1
 var _biome_check_elapsed: float = 0.0
+
+const FIELD_GRASS_SOURCE_ID := 10
+const FIELD_DARK_GRASS_SOURCE_ID := 11
+const FIELD_WET_GROUND_SOURCE_ID := 13
+const FIELD_WATER_SOURCE_ID := 14
+const FIELD_EDGE_DIRECTIONS := [
+	Vector2i(0, -1),
+	Vector2i(1, 0),
+	Vector2i(0, 1),
+	Vector2i(-1, 0),
+]
+const FIELD_EDGE_ATLAS_COORDINATES := Vector2i(0, 0)
 
 
 func _ready() -> void:
@@ -70,22 +86,27 @@ func generate_world() -> void:
 	_chunk_cache.clear()
 	_cache_order.clear()
 	ground_layer.clear()
+	ground_edges_layer.clear()
 	decorations_layer.clear()
 	_current_biome_type = -1
 	_biome_check_elapsed = 0.0
 
 	current_seed = _resolve_seed()
 	_runtime_rng.seed = current_seed ^ 0x5F3759DF
+	active_map = _resolve_map()
+	_apply_map_tile_set()
 	if not _validate_configuration():
 		return
-	biome_generator.configure(current_seed)
-	_configure_water_tile()
+	biome_generator.configure(current_seed, active_map)
+	_configure_ground_tiles()
 	chunk_manager.reset_tracking()
 	chunk_manager.initialize_at(initial_spawn_position)
 
 	queue_redraw()
 	if debug_mode:
-		print("WorldGenerator [Phases 2-3] — seed: %d" % current_seed)
+		print("WorldGenerator — mapa: %s | seed: %d" % [
+			active_map.display_name if active_map else "<nenhum>", current_seed,
+		])
 		print("WorldGenerator — active chunks: %d" % _active_chunks.size())
 	world_generated.emit(current_seed)
 
@@ -167,7 +188,7 @@ func is_position_navigable(
 
 func get_biome_at(world_position: Vector2) -> BiomeData:
 	if world_position.distance_squared_to(initial_spawn_position) < safe_radius * safe_radius:
-		return biome_generator.grassland_data
+		return biome_generator.get_safe_biome()
 	return biome_generator.get_biome_at(world_position)
 
 
@@ -257,13 +278,15 @@ func _apply_chunk_tiles(chunk_data: WorldChunkData) -> void:
 			cell_index % cells_per_axis,
 			floori(cell_index / float(cells_per_axis))
 		)
-		var biome := biome_generator.get_biome_by_type(chunk_data.biome_types[cell_index])
+		var biome := biome_generator.get_biome_by_index(chunk_data.biome_types[cell_index])
 		ground_layer.set_cell(
 			start_cell + local_cell,
 			biome.ground_source_id,
 			biome.ground_atlas_coordinates,
 			biome.ground_alternative_tile
 		)
+
+	_apply_field_ground_edges(chunk_data, start_cell, cells_per_axis)
 
 	for data_index in range(0, chunk_data.decoration_cells.size(), 5):
 		var local_cell := Vector2i(
@@ -287,6 +310,7 @@ func _erase_chunk_tiles(chunk_data: WorldChunkData) -> void:
 	for local_y in range(cells_per_axis):
 		for local_x in range(cells_per_axis):
 			ground_layer.erase_cell(start_cell + Vector2i(local_x, local_y))
+			ground_edges_layer.erase_cell(start_cell + Vector2i(local_x, local_y))
 	for data_index in range(0, chunk_data.decoration_cells.size(), 5):
 		decorations_layer.erase_cell(
 			start_cell + Vector2i(
@@ -294,6 +318,78 @@ func _erase_chunk_tiles(chunk_data: WorldChunkData) -> void:
 				chunk_data.decoration_cells[data_index + 1]
 			)
 		)
+
+
+func _apply_field_ground_edges(
+		chunk_data: WorldChunkData,
+		start_cell: Vector2i,
+		cells_per_axis: int
+) -> void:
+	if active_map == null or active_map.map_id != &"field":
+		return
+	for cell_index in range(chunk_data.biome_types.size()):
+		var local_cell := Vector2i(
+			cell_index % cells_per_axis,
+			floori(cell_index / float(cells_per_axis))
+		)
+		var cell := start_cell + local_cell
+		var biome := biome_generator.get_biome_by_index(chunk_data.biome_types[cell_index])
+		if biome == null:
+			continue
+		var edge_source_id := _get_field_edge_source_id(cell, biome)
+		if edge_source_id < 0:
+			continue
+		ground_edges_layer.set_cell(
+			cell,
+			edge_source_id,
+			FIELD_EDGE_ATLAS_COORDINATES
+		)
+
+
+func _get_field_edge_source_id(cell: Vector2i, biome: BiomeData) -> int:
+	var source_id := biome.ground_source_id
+	if source_id != FIELD_GRASS_SOURCE_ID and source_id != FIELD_WET_GROUND_SOURCE_ID:
+		return -1
+	for direction in FIELD_EDGE_DIRECTIONS:
+		var neighbor := _get_biome_for_cell(cell + direction)
+		if neighbor != null and neighbor.ground_source_id == FIELD_WATER_SOURCE_ID:
+			return _get_field_water_edge_source_id(direction)
+	for direction in FIELD_EDGE_DIRECTIONS:
+		var neighbor := _get_biome_for_cell(cell + direction)
+		if neighbor != null and neighbor.ground_source_id == FIELD_DARK_GRASS_SOURCE_ID:
+			return _get_field_dark_edge_source_id(direction)
+	return -1
+
+
+func _get_field_dark_edge_source_id(direction: Vector2i) -> int:
+	if direction == Vector2i(0, -1):
+		return 15
+	if direction == Vector2i(1, 0):
+		return 16
+	if direction == Vector2i(0, 1):
+		return 17
+	if direction == Vector2i(-1, 0):
+		return 18
+	return -1
+
+
+func _get_field_water_edge_source_id(direction: Vector2i) -> int:
+	if direction == Vector2i(0, -1):
+		return 19
+	if direction == Vector2i(1, 0):
+		return 20
+	if direction == Vector2i(0, 1):
+		return 21
+	if direction == Vector2i(-1, 0):
+		return 22
+	return -1
+
+
+func _get_biome_for_cell(cell: Vector2i) -> BiomeData:
+	var world_position := ground_layer.to_global(ground_layer.map_to_local(cell))
+	if world_position.distance_squared_to(initial_spawn_position) < safe_radius * safe_radius:
+		return biome_generator.get_safe_biome()
+	return biome_generator.get_biome_at(world_position)
 
 
 func _get_chunk_start_cell(chunk_coordinate: Vector2i, tile_size: Vector2i) -> Vector2i:
@@ -309,28 +405,38 @@ func _get_biome_type_for_tile(world_position: Vector2, tile_size: Vector2i) -> i
 	if world_position.distance_squared_to(initial_spawn_position) < pow(
 			safe_radius + safe_tile_margin, 2.0
 	):
-		return BiomeGenerator.BiomeType.GRASSLAND
-	return biome_generator.get_biome_type_at(world_position)
+		return biome_generator.safe_biome_index
+	return biome_generator.get_biome_index_at(world_position)
 
 
-func _configure_water_tile() -> void:
-	var water_data := biome_generator.water_data
+## Aplica a aparencia declarada em cada BiomeData ao tile de chao correspondente.
+## Biomas atravessaveis nunca mantem colisao no chao.
+func _configure_ground_tiles() -> void:
 	var tile_set := ground_layer.tile_set
-	if water_data == null or tile_set == null:
+	if tile_set == null:
 		return
-	var atlas_source := tile_set.get_source(water_data.ground_source_id) as TileSetAtlasSource
-	if atlas_source == null:
-		return
-	var tile_data := atlas_source.get_tile_data(
-		water_data.ground_atlas_coordinates,
-		water_data.ground_alternative_tile
-	)
-	if tile_data == null:
-		return
-	tile_data.modulate = Color(0.3, 0.62, 0.9, 1.0)
-	if tile_set.get_physics_layers_count() > 0:
-		while tile_data.get_collision_polygons_count(0) > 0:
-			tile_data.remove_collision_polygon(0, 0)
+	for biome in biome_generator.biomes:
+		if biome == null:
+			continue
+		var atlas_source := tile_set.get_source(biome.ground_source_id) as TileSetAtlasSource
+		if atlas_source == null:
+			continue
+		if not atlas_source.has_tile(biome.ground_atlas_coordinates):
+			push_warning(
+				"WorldGenerator: bioma '%s' aponta para um tile inexistente %s."
+				% [biome.biome_id, biome.ground_atlas_coordinates]
+			)
+			continue
+		var tile_data := atlas_source.get_tile_data(
+			biome.ground_atlas_coordinates,
+			biome.ground_alternative_tile
+		)
+		if tile_data == null:
+			continue
+		tile_data.modulate = biome.ground_modulate
+		if biome.is_navigable and tile_set.get_physics_layers_count() > 0:
+			while tile_data.get_collision_polygons_count(0) > 0:
+				tile_data.remove_collision_polygon(0, 0)
 
 
 func _rebuild_active_obstacle_placements() -> void:
@@ -364,6 +470,28 @@ func _trim_cache() -> void:
 		_chunk_cache.erase(oldest)
 
 
+## Prioridade: o MapData cravado no no, depois o mapa escolhido na sessao,
+## e por fim o mapa padrao do catalogo.
+func _resolve_map() -> MapData:
+	if map_data != null and map_data.is_valid():
+		return map_data
+	# Autoloads nao existem como identificador global em cenarios headless de teste.
+	var global_state := get_node_or_null("/root/Global")
+	if global_state != null:
+		var selected: StringName = global_state.get("selected_map_id")
+		if not String(selected).is_empty():
+			return MapCatalog.get_map(selected)
+	return MapCatalog.get_default_map()
+
+
+func _apply_map_tile_set() -> void:
+	if active_map == null or active_map.tile_set == null:
+		return
+	ground_layer.tile_set = active_map.tile_set
+	ground_edges_layer.tile_set = active_map.tile_set
+	decorations_layer.tile_set = active_map.tile_set
+
+
 func _resolve_seed() -> int:
 	if world_seed != 0:
 		return world_seed
@@ -383,13 +511,8 @@ func _validate_configuration() -> bool:
 	if chunk_manager.chunk_size % tile_size.x != 0:
 		push_error("WorldGenerator: chunk_size must be divisible by the ground tile size.")
 		return false
-	if biome_generator.grassland_data == null \
-			or biome_generator.forest_data == null \
-			or biome_generator.water_data == null:
-		push_error("WorldGenerator: grassland, forest and water BiomeData are required.")
-		return false
-	if biome_generator.water_threshold >= biome_generator.forest_threshold:
-		push_error("WorldGenerator: water_threshold must be below forest_threshold.")
+	if active_map == null or not active_map.is_valid():
+		push_error("WorldGenerator: nenhum MapData valido para gerar o mundo.")
 		return false
 	return true
 
@@ -406,16 +529,16 @@ func _on_current_chunk_changed(chunk_coordinate: Vector2i) -> void:
 
 
 func _update_player_biome(world_position: Vector2) -> void:
-	var next_biome_type := biome_generator.get_biome_type_at(world_position)
+	var next_biome_index := biome_generator.get_biome_index_at(world_position)
 	if world_position.distance_squared_to(initial_spawn_position) < safe_radius * safe_radius:
-		next_biome_type = BiomeGenerator.BiomeType.GRASSLAND
-	if next_biome_type == _current_biome_type:
+		next_biome_index = biome_generator.safe_biome_index
+	if next_biome_index == _current_biome_type:
 		return
-	_current_biome_type = next_biome_type
+	_current_biome_type = next_biome_index
 	if debug_mode:
-		var biome := biome_generator.get_biome_by_type(next_biome_type)
+		var biome := biome_generator.get_biome_by_index(next_biome_index)
 		print("WorldGenerator — player biome: %s" % biome.display_name)
-	biome_entered.emit(next_biome_type)
+	biome_entered.emit(next_biome_index)
 
 
 func _process(delta: float) -> void:

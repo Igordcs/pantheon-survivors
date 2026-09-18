@@ -3,7 +3,7 @@ class_name EnemySpawnEntry
 ## Defines how one enemy participates in a wave, independently of its combat stats.
 
 @export var enemy_data: EnemyData
-@export var scene_key: StringName = &"melee"
+@export var scene_key: StringName = &"melee" # Legado: ignorado quando o ID existe no ContentRegistry.
 @export_range(0.0, 20.0, 0.05) var weight: float = 1.0
 @export_range(0.1, 20.0, 0.1) var threat_cost: float = 1.0
 @export_range(1, 20, 1) var min_group_size: int = 1

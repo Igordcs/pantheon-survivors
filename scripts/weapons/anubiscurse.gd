@@ -31,7 +31,7 @@ func _ready() -> void:
 	if not sprite:
 		var sprite_node := Sprite2D.new()
 		sprite_node.name = "Sprite2D"
-		sprite_node.texture = load("res://assets/sprites/weapons/AnubisCurse.png")
+		sprite_node.texture = load("res://assets/sprites/weapons/anubiscurse.png")
 		sprite_node.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		add_child(sprite_node)
 		sprite = sprite_node

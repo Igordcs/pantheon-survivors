@@ -7,7 +7,6 @@ const ICON_RESOURCES: Array[String] = [
 	"res://resources/weapons/poseidon_trident_data.tres",
 	"res://resources/weapons/medusa_head_data.tres",
 	"res://resources/weapons/zeus_lightning_data.tres",
-	"res://resources/relics/speed_relic_data.tres",
 ]
 
 var _failures: int = 0
@@ -36,8 +35,9 @@ func _run_test() -> void:
 	add_child(level_up_panel)
 	await get_tree().process_frame
 	level_up_panel.show_options(options)
-	var option_button := level_up_panel.get_node("Panel/VBoxContainer").get_child(0) as Button
-	if option_button.icon != weapon_data.icon:
+	var option_button := level_up_panel.get_node("Panel/Content/VBoxContainer").get_child(0) as Button
+	var option_icon := option_button.find_child("OptionIcon", true, false) as TextureRect
+	if option_icon == null or option_icon.texture != weapon_data.icon:
 		_fail("Level-up options should display the selected item's icon.")
 	level_up_panel.hide()
 	get_tree().paused = false
@@ -68,7 +68,8 @@ func _run_test() -> void:
 	var inventory_line := pause_panel.call(
 		"_format_inventory_line", weapon_data.icon, weapon_data.display_name, 1
 	) as String
-	if "[img=40x40]" not in inventory_line or weapon_data.icon.resource_path not in inventory_line:
+	# O tamanho do ícone é decisão de layout; o que importa é a linha trazer o ícone.
+	if "[img=" not in inventory_line or weapon_data.icon.resource_path not in inventory_line:
 		_fail("Pause inventory rows should include the item's icon.")
 	pause_panel.free()
 

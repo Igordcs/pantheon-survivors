@@ -12,8 +12,6 @@ collision_layer = 2
 collision_mask = 0
 script = ExtResource("1")
 boss_data = ExtResource("3")
-sprite_directory = "res://assets/sprites/bosses/fenrir/Idle/rotations"
-visual_height = 144.0
 contact_radius = 46.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

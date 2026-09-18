@@ -4,7 +4,7 @@ extends Control
 ## Emitido ao concluir ou pular a introdução, imediatamente antes da troca de cena.
 signal intro_finished(next_scene_path: String)
 
-const CHARACTER_SELECTION_SCENE := "res://scenes/ui/character_selection.tscn"
+const PHASE_SELECTION_SCENE := "res://scenes/ui/phase_selection.tscn"
 const FADE_OUT_DURATION := 0.14
 const FADE_IN_DURATION := 0.22
 
@@ -180,9 +180,9 @@ func _finish() -> void:
 	if _fade_tween and _fade_tween.is_valid():
 		_fade_tween.kill()
 	_mark_intro_as_seen()
-	intro_finished.emit(CHARACTER_SELECTION_SCENE)
+	intro_finished.emit(PHASE_SELECTION_SCENE)
 	if is_inside_tree():
-		get_tree().change_scene_to_file(CHARACTER_SELECTION_SCENE)
+		get_tree().change_scene_to_file(PHASE_SELECTION_SCENE)
 
 
 func _mark_intro_as_seen() -> void:

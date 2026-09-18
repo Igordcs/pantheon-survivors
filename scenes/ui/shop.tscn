@@ -1,19 +1,55 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://bshopscene001"]
 
 [ext_resource type="Script" path="res://scripts/ui/shop.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/sprites/menu_bg_pixel.jpg" id="2"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/gem/BlueCoin Sheet.png" id="3"]
-[ext_resource type="FontFile" path="res://assets/fonts/PressStart2P-Regular.ttf" id="4"]
+[ext_resource type="FontFile" uid="uid://ctatsqbofgfn5" path="res://assets/fonts/PressStart2P-Regular.ttf" id="4"]
 
 [sub_resource type="AtlasTexture" id="Atlas_coin"]
 atlas = ExtResource("3")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="Shader" id="Shader_gold"]
-code = "shader_type canvas_item;\n\nvoid fragment() {\n\tvec4 source = texture(TEXTURE, UV);\n\tfloat lightness = max(source.r, max(source.g, source.b));\n\tvec3 shadow = vec3(0.24, 0.10, 0.01);\n\tvec3 gold = vec3(1.0, 0.72, 0.04);\n\tvec3 highlight = vec3(1.0, 0.96, 0.42);\n\tvec3 color = mix(shadow, gold, smoothstep(0.08, 0.72, lightness));\n\tcolor = mix(color, highlight, smoothstep(0.78, 1.0, lightness));\n\tCOLOR = vec4(color, source.a);\n}"
+[sub_resource type="Curve" id="Curve_embers"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 0, 0]
+point_count = 2
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gold"]
-shader = SubResource("Shader_gold")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_currency"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.06, 0.05, 0.1, 0.86)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.58, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.08, 0.06, 0.12, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.25, 0.4, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.2, 0.14, 0.05, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.82, 0.2, 1)
+shadow_color = Color(1, 0.6, 0, 0.4)
+shadow_size = 6
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -25,105 +61,193 @@ grow_vertical = 2
 script = ExtResource("1")
 
 [node name="Background" type="TextureRect" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("2")
 expand_mode = 1
 stretch_mode = 6
-modulate = Color(0.45, 0.4, 0.5, 1)
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="DarkOverlay" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 120.0
-offset_top = 45.0
-offset_right = -120.0
-offset_bottom = -45.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03, 0.02, 0.06, 0.78)
 
-[node name="VBox" type="VBoxContainer" parent="Margin"]
-layout_mode = 2
+[node name="EmberParticles" type="CPUParticles2D" parent="."]
+position = Vector2(640, 720)
+amount = 30
+lifetime = 3.5
+preprocess = 2.0
+speed_scale = 0.9
+emission_shape = 3
+emission_rect_extents = Vector2(640, 10)
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, -20)
+initial_velocity_min = 30.0
+initial_velocity_max = 70.0
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_embers")
+color = Color(1, 0.6, 0.15, 0.45)
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 26.0
+offset_right = -48.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 14
-theme_override_fonts/font = ExtResource("4")
 
-[node name="Header" type="HBoxContainer" parent="Margin/VBox"]
+[node name="Header" type="HBoxContainer" parent="Layout"]
 layout_mode = 2
+theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="Margin/VBox/Header"]
+[node name="TitleLabel" type="Label" parent="Layout/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 32
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 0.88, 0.32, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.07, 0.02, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("4")
+theme_override_font_sizes/font_size = 26
 text = "LOJA"
+vertical_alignment = 1
 
-[node name="CoinIcon" type="TextureRect" parent="Margin/VBox/Header"]
-custom_minimum_size = Vector2(32, 32)
+[node name="CurrencyPanel" type="PanelContainer" parent="Layout/Header"]
 layout_mode = 2
-material = SubResource("ShaderMaterial_gold")
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_currency")
+
+[node name="CurrencyRow" type="HBoxContainer" parent="Layout/Header/CurrencyPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CoinIcon" type="TextureRect" parent="Layout/Header/CurrencyPanel/CurrencyRow"]
+texture_filter = 1
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
 texture = SubResource("Atlas_coin")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CurrencyLabel" type="Label" parent="Margin/VBox/Header"]
+[node name="CurrencyLabel" type="Label" parent="Layout/Header/CurrencyPanel/CurrencyRow"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.82, 0.2, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.02, 0.01, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4")
+theme_override_font_sizes/font_size = 14
 text = "MOEDAS: 0"
+vertical_alignment = 1
 
-[node name="Tabs" type="HBoxContainer" parent="Margin/VBox"]
+[node name="NavigationHint" type="Label" parent="Layout"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_colors/font_color = Color(0.72, 0.68, 0.8, 0.9)
+theme_override_colors/font_outline_color = Color(0.04, 0.02, 0.01, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4")
+theme_override_font_sizes/font_size = 10
+text = "SETAS: NAVEGAR  •  ENTER: CONFIRMAR  •  ESC: VOLTAR"
+horizontal_alignment = 1
 
-[node name="CharactersButton" type="Button" parent="Margin/VBox/Tabs"]
-custom_minimum_size = Vector2(200, 44)
+[node name="Tabs" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="CharactersButton" type="Button" parent="Layout/Tabs"]
+custom_minimum_size = Vector2(230, 44)
 layout_mode = 2
 toggle_mode = true
 text = "PERSONAGENS"
-focus_neighbor_right = NodePath("../WeaponsButton")
 
-[node name="WeaponsButton" type="Button" parent="Margin/VBox/Tabs"]
-custom_minimum_size = Vector2(200, 44)
+[node name="WeaponsButton" type="Button" parent="Layout/Tabs"]
+custom_minimum_size = Vector2(230, 44)
 layout_mode = 2
 toggle_mode = true
 text = "ARMAS"
-focus_neighbor_left = NodePath("../CharactersButton")
-focus_neighbor_right = NodePath("../ItemsButton")
 
-[node name="ItemsButton" type="Button" parent="Margin/VBox/Tabs"]
-custom_minimum_size = Vector2(200, 44)
+[node name="ItemsButton" type="Button" parent="Layout/Tabs"]
+custom_minimum_size = Vector2(230, 44)
 layout_mode = 2
 toggle_mode = true
 text = "ITENS"
-focus_neighbor_left = NodePath("../WeaponsButton")
 
-[node name="Scroll" type="ScrollContainer" parent="Margin/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Products" type="VBoxContainer" parent="Margin/VBox/Scroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 10
-
-[node name="EmptyLabel" type="Label" parent="Margin/VBox"]
+[node name="LoadoutLabel" type="Label" parent="Layout"]
 visible = false
 layout_mode = 2
-text = "Nenhum item disponível no momento."
+theme_override_colors/font_color = Color(0.7, 0.86, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.02, 0.01, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4")
+theme_override_font_sizes/font_size = 10
+text = "ITENS EQUIPADOS:"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Scroll" type="ScrollContainer" parent="Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Products" type="VBoxContainer" parent="Layout/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="EmptyLabel" type="Label" parent="Layout"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.68, 0.8, 1)
+theme_override_fonts/font = ExtResource("4")
+theme_override_font_sizes/font_size = 11
+text = "Nada disponivel nesta categoria."
 horizontal_alignment = 1
 
-[node name="FeedbackLabel" type="Label" parent="Margin/VBox"]
+[node name="FeedbackLabel" type="Label" parent="Layout"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.82, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.02, 0.01, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4")
+theme_override_font_sizes/font_size = 11
 text = ""
 horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="BackButton" type="Button" parent="Margin/VBox"]
-custom_minimum_size = Vector2(0, 48)
+[node name="BackButton" type="Button" parent="Layout"]
+custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_focus_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_hover_color = Color(1, 0.9, 0.4, 1)
+theme_override_fonts/font = ExtResource("4")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
 text = "VOLTAR"

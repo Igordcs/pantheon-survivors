@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/boss_data.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
@@ -10,3 +10,5 @@ max_health = 4000.0
 speed = 55.0
 contact_damage = 25.0
 score_value = 1500
+epithet = "O CONQUISTADOR DA PASSAGEM"
+presentation_text = "Atravessou o Veu com um exercito e entendeu o que os outros nao entenderam: a Terra nao tem deuses de plantao. Ele nao veio saquear. Veio ficar, e ja ergueu o primeiro forte sobre as ruinas."

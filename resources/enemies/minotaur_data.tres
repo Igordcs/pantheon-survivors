@@ -1,14 +1,14 @@
-[gd_resource type="Resource" load_steps=10 format=3]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bl7t6ngoxcist"]
 
-[ext_resource type="Script" path="res://scripts/enemies/enemy_data.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/minotaur/idle/rotations/south.png" id="2_south"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/minotaur/idle/rotations/south-east.png" id="3_south_east"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/minotaur/idle/rotations/east.png" id="4_east"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/minotaur/idle/rotations/north-east.png" id="5_north_east"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/minotaur/idle/rotations/north.png" id="6_north"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/minotaur/idle/rotations/north-west.png" id="7_north_west"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/minotaur/idle/rotations/west.png" id="8_west"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/minotaur/idle/rotations/south-west.png" id="9_south_west"]
+[ext_resource type="Script" uid="uid://7sdoy4k44d5y" path="res://scripts/enemies/enemy_data.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cd6r2lgmfhsy3" path="res://assets/sprites/enemies/minotaur/Idle/rotations/south.png" id="2_south"]
+[ext_resource type="Texture2D" uid="uid://b72nfi4snxadd" path="res://assets/sprites/enemies/minotaur/Idle/rotations/south-east.png" id="3_south_east"]
+[ext_resource type="Texture2D" uid="uid://ds1jhgjnisa2a" path="res://assets/sprites/enemies/minotaur/Idle/rotations/east.png" id="4_east"]
+[ext_resource type="Texture2D" uid="uid://dh7igwum7ewa" path="res://assets/sprites/enemies/minotaur/Idle/rotations/north-east.png" id="5_north_east"]
+[ext_resource type="Texture2D" uid="uid://tha74g4017jk" path="res://assets/sprites/enemies/minotaur/Idle/rotations/north.png" id="6_north"]
+[ext_resource type="Texture2D" uid="uid://3md0yr4uqjme" path="res://assets/sprites/enemies/minotaur/Idle/rotations/north-west.png" id="7_north_west"]
+[ext_resource type="Texture2D" uid="uid://f2ven4iba8sf" path="res://assets/sprites/enemies/minotaur/Idle/rotations/west.png" id="8_west"]
+[ext_resource type="Texture2D" uid="uid://bf4kjtd2jdunm" path="res://assets/sprites/enemies/minotaur/Idle/rotations/south-west.png" id="9_south_west"]
 
 [resource]
 script = ExtResource("1_script")
@@ -21,9 +21,7 @@ score_value = 60
 spawn_weight = 0.04
 charge_damage = 40.0
 charge_speed = 340.0
-charge_cooldown = 5.0
 charge_windup = 0.8
-visual_size = 64.0
 sprite_south = ExtResource("2_south")
 sprite_south_east = ExtResource("3_south_east")
 sprite_east = ExtResource("4_east")

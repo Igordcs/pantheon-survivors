@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8i8u2l0y5rvj"]
+
+[ext_resource type="Script" path="res://scripts/weapons/horusfeather_projectile.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ghjl"]
+radius = 12.0
+
+[sub_resource type="Curve" id="Curve_4kwxy"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="HorusfeatherProjectile" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4ghjl")
+
+[node name="FeatherVisual" type="Node2D" parent="."]
+
+[node name="MainFeather" type="Polygon2D" parent="FeatherVisual"]
+polygon = PackedVector2Array(0, -15, 3, -12, 6, 0, 3, 12, 0, 15, -3, 12, -6, 0, -3, -12)
+color = Color(0.78039216041565, 0.51764705777168, 0.15294117688179, 1)
+
+[node name="FeatherSheen" type="Polygon2D" parent="FeatherVisual"]
+polygon = PackedVector2Array(0, -15, 2, -10, 4, -8, 2, 8, 0, 12, -2, 8, -4, -8, -2, -10)
+color = Color(0.91764706373215, 0.75686275959015, 0.56862747669220, 0.4)
+
+[node name="Trail" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0)
+width = 2.0
+width_curve = SubResource("Curve_4kwxy")
+default_color = Color(0.85490196943283, 0.65882354974747, 0.30588235497475, 0.7)
+
+[node name="Glow" type="PointLight2D" parent="."]
+energy = 0.8
+radius = 15.0
+color = Color(0.88235294818878, 0.63921570777893, 0.25098040699959, 1)

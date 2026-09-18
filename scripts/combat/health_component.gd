@@ -7,6 +7,9 @@ signal died
 signal damaged(amount: float, source_pos: Vector2)
 
 @export var max_health: float = 100.0
+## Redução flat de dano recebido (subtraída antes de qualquer outro processamento).
+## Usada pela passiva de Arthur ("Determinação do Rei").
+var flat_damage_reduction: float = 0.0
 
 var current_health: float
 
@@ -17,6 +20,10 @@ func _ready() -> void:
 
 func take_damage(amount: float, source_pos: Vector2 = Vector2.ZERO) -> void:
 	if current_health <= 0.0:
+		return
+	if flat_damage_reduction > 0.0:
+		amount = maxf(0.0, amount - flat_damage_reduction)
+	if amount <= 0.0:
 		return
 	var item_controller := get_parent().get_node_or_null("ItemEffectController") as ItemEffectController
 	if item_controller:

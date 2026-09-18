@@ -13,3 +13,5 @@ score_value = 80
 spawn_weight = 0.035
 visual_size = 72.0
 sprite_directory = "res://assets/sprites/enemies/ammit/Idle/rotations"
+walk_sprite_directory = "res://assets/sprites/enemies/ammit/Walk"
+walk_animation_speed = 8.0

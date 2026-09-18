@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/props/dead_tree.png" id="1_tex"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dead_tree"]
+radius = 20.0
+height = 40.0
+
+[node name="DeadTree" type="StaticBody2D" groups=["world_obstacles"]]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("1_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("CapsuleShape2D_dead_tree")

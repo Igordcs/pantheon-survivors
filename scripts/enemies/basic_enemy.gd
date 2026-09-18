@@ -12,6 +12,7 @@ const CONTACT_COOLDOWN_TIME: float = 0.5
 
 var _fallback_texture: Texture2D
 var _fallback_scale: Vector2
+var _walk_time := 0.0
 
 
 func _ready() -> void:
@@ -45,7 +46,8 @@ func _physics_process(delta: float) -> void:
 
 	var spd := enemy_data.speed if enemy_data else 68.0
 	var direction := global_position.direction_to(_player.global_position)
-	_update_directional_sprite(direction)
+	_walk_time += delta
+	_update_directional_sprite(direction, _walk_time)
 	
 	_knockback_velocity = _knockback_velocity.lerp(Vector2.ZERO, 10.0 * delta)
 	velocity = (direction * spd) + _knockback_velocity
@@ -68,6 +70,7 @@ func reset(pos: Vector2) -> void:
 	global_position = pos
 	velocity = Vector2.ZERO
 	_contact_cooldown = 0.0
+	_walk_time = 0.0
 	_reset_combat_effects()
 	_player = _find_player()
 	_apply_enemy_data()
@@ -94,11 +97,13 @@ func _apply_enemy_data() -> void:
 		sprite.scale = _fallback_scale
 
 
-func _update_directional_sprite(direction: Vector2) -> void:
+func _update_directional_sprite(direction: Vector2, animation_time: float = 0.0) -> void:
 	if not enemy_data:
 		return
 
-	var directional_texture := enemy_data.get_directional_sprite(direction)
+	var frame_index := int(animation_time * enemy_data.walk_animation_speed)
+	var directional_texture := enemy_data.get_walk_frame(direction, frame_index) \
+		if enemy_data.has_walk_animation() else enemy_data.get_directional_sprite(direction)
 	if directional_texture and sprite.texture != directional_texture:
 		sprite.texture = directional_texture
 		_apply_visual_size(directional_texture)

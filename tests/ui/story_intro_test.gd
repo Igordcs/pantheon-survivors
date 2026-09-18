@@ -5,7 +5,7 @@ const SAVE_MANAGER_SCRIPT := preload("res://scripts/core/save_manager.gd")
 const STORY_INTRO_SCRIPT := preload("res://scripts/ui/story_intro.gd")
 const MAIN_MENU_SCENE := "res://scenes/ui/main_menu.tscn"
 const STORY_INTRO_SCENE := "res://scenes/ui/story_intro.tscn"
-const CHARACTER_SELECTION_SCENE := "res://scenes/ui/character_selection.tscn"
+const PHASE_SELECTION_SCENE := "res://scenes/ui/phase_selection.tscn"
 const TEST_SAVE_PATH := "user://story_intro_test_save.json"
 const VIEWPORT_SIZE := Vector2(1280, 720)
 
@@ -182,8 +182,8 @@ func _test_finish_and_skip_target() -> void:
 	completed.intro_finished.connect(_on_completion_finished)
 
 	skipped.skip_button.pressed.emit()
-	if _skip_target != CHARACTER_SELECTION_SCENE:
-		_fail("Skipping should send the player to character selection.")
+	if _skip_target != PHASE_SELECTION_SCENE:
+		_fail("Skipping should send the player to phase selection.")
 	if not SaveManager.has_seen_intro():
 		_fail("Skipping should mark the intro as seen.")
 
@@ -194,8 +194,8 @@ func _test_finish_and_skip_target() -> void:
 		completed._advance()
 	if completed.page_index != STORY_INTRO_SCRIPT.PAGES.size() - 1:
 		_fail("Advancing should stop on the last page before finishing.")
-	if _completion_target != CHARACTER_SELECTION_SCENE:
-		_fail("Finishing the last page should send the player to character selection.")
+	if _completion_target != PHASE_SELECTION_SCENE:
+		_fail("Finishing the last page should send the player to phase selection.")
 	if not SaveManager.has_seen_intro():
 		_fail("Finishing the intro should mark it as seen.")
 

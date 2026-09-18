@@ -1,0 +1,82 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://bataliboiniy0"]
+
+[ext_resource type="Script" uid="uid://25g41b34ykt1" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" uid="uid://dby8hcw36xba6" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+[ext_resource type="Texture2D" uid="uid://c0upe1rof18yk" path="res://assets/sprites/weapons/gjallarhorn.png" id="3_icon"]
+
+[sub_resource type="Resource" id="Level_1"]
+script = ExtResource("2_level")
+description = "O chifre impõe uma aura de pressão, explodindo e empurrando inimigos."
+special_effect = &"knockback"
+special_value = 300.0
+
+[sub_resource type="Resource" id="Level_2"]
+script = ExtResource("2_level")
+description = "+25% de dano e aura ligeiramente maior."
+damage_multiplier = 1.25
+area_multiplier = 1.2
+special_effect = &"knockback"
+special_value = 350.0
+
+[sub_resource type="Resource" id="Level_3"]
+script = ExtResource("2_level")
+description = "O toque do chifre empurra inimigos com ainda mais força."
+damage_multiplier = 1.3
+area_multiplier = 1.2
+special_effect = &"knockback"
+special_value = 500.0
+
+[sub_resource type="Resource" id="Level_4"]
+script = ExtResource("2_level")
+description = "Tempo de recarga menor: o chifre soa com mais frequência."
+damage_multiplier = 1.4
+cooldown_multiplier = 0.8
+area_multiplier = 1.2
+special_effect = &"knockback"
+special_value = 500.0
+
+[sub_resource type="Resource" id="Level_5"]
+script = ExtResource("2_level")
+description = "Área da aura aumentada drasticamente."
+damage_multiplier = 1.5
+cooldown_multiplier = 0.8
+area_multiplier = 1.5
+special_effect = &"knockback"
+special_value = 550.0
+
+[sub_resource type="Resource" id="Level_6"]
+script = ExtResource("2_level")
+description = "Os inimigos atingidos ficam temporariamente atordoados (Stun)."
+damage_multiplier = 1.6
+cooldown_multiplier = 0.8
+area_multiplier = 1.5
+special_effect = &"knockback_stun"
+special_value = 550.0
+
+[sub_resource type="Resource" id="Level_7"]
+script = ExtResource("2_level")
+description = "Recarga ainda menor, mantendo as hordas sempre afastadas."
+damage_multiplier = 1.7
+cooldown_multiplier = 0.6
+area_multiplier = 1.5
+special_effect = &"knockback_stun"
+special_value = 600.0
+
+[sub_resource type="Resource" id="Level_8"]
+script = ExtResource("2_level")
+description = "Sopro de Heimdall: Dano brutal, alcance massivo e atordoamento."
+damage_multiplier = 2.2
+cooldown_multiplier = 0.6
+area_multiplier = 1.8
+special_effect = &"knockback_stun"
+special_value = 800.0
+
+[resource]
+script = ExtResource("1_weapon")
+id = &"gjallarhorn"
+display_name = "Gjallarhorn"
+icon = ExtResource("3_icon")
+description = "O chifre divino de Heimdall impõe uma barreira de pressão ao seu redor que explode empurrando os inimigos."
+area = 100.0
+projectile_speed = 0.0
+levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])

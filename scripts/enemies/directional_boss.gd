@@ -4,8 +4,10 @@ class_name DirectionalBoss
 
 signal died
 
-@export var boss_data: EnemyData
+@export var boss_data: BossData
 @export_dir var sprite_directory: String
+@export_dir var walk_sprite_directory: String
+@export_range(1.0, 30.0, 0.5) var walk_animation_speed: float = 8.0
 @export var visual_height: float = 120.0
 @export var contact_radius: float = 44.0
 @export var contact_cooldown: float = 0.8
@@ -15,13 +17,21 @@ signal died
 
 var _player: CharacterBody2D
 var _directional_sprites: Dictionary = {}
+var _walk_sprites: Dictionary = {}
 var _is_dying: bool = false
 var _contact_timer: float = 0.0
+var _walk_time: float = 0.0
+var _last_direction := Vector2.DOWN
 
 
 func _ready() -> void:
-	_directional_sprites = DirectionalSpriteHelper.load_directory(sprite_directory)
-	_apply_direction(Vector2.DOWN)
+	var idle_path := boss_data.sprite_directory if boss_data and not boss_data.sprite_directory.is_empty() else sprite_directory
+	var walk_path := boss_data.walk_sprite_directory if boss_data and not boss_data.walk_sprite_directory.is_empty() else walk_sprite_directory
+	if boss_data and boss_data.visual_size > 0.0:
+		visual_height = boss_data.visual_size
+	_directional_sprites = DirectionalSpriteHelper.load_directory(idle_path)
+	_walk_sprites = DirectionalSpriteHelper.load_animation_directory(walk_path)
+	_apply_idle_direction(Vector2.DOWN)
 	health_component.max_health = boss_data.max_health
 	health_component.reset()
 	health_component.died.connect(_on_died)
@@ -47,6 +57,7 @@ func _physics_process(delta: float) -> void:
 			return
 
 	_contact_timer = maxf(_contact_timer - delta, 0.0)
+	_walk_time += delta
 	_tick_behavior(delta)
 	_process_contact_damage()
 
@@ -67,6 +78,7 @@ func chase_player(speed_multiplier: float = 1.0) -> void:
 
 func stop_movement() -> void:
 	velocity = Vector2.ZERO
+	_apply_idle_direction(_last_direction)
 
 
 func get_player() -> CharacterBody2D:
@@ -86,8 +98,32 @@ func is_player_inside_radius(center: Vector2, radius: float) -> bool:
 
 
 func _apply_direction(direction: Vector2) -> void:
-	var texture := DirectionalSpriteHelper.get_sprite(_directional_sprites, direction)
+	if not direction.is_zero_approx():
+		_last_direction = direction.normalized()
+	var texture := _get_walk_texture(_last_direction)
+	if not texture:
+		texture = DirectionalSpriteHelper.get_sprite(_directional_sprites, _last_direction)
 	if texture == null or sprite.texture == texture:
+		return
+	sprite.texture = texture
+	var texture_height := float(texture.get_height())
+	if texture_height > 0.0:
+		sprite.scale = Vector2.ONE * visual_height / texture_height
+
+
+func _get_walk_texture(direction: Vector2) -> Texture2D:
+	var frames = _walk_sprites.get(DirectionalSpriteHelper.get_direction_name(direction))
+	if not (frames is Array) or frames.is_empty():
+		frames = _walk_sprites.get(&"south")
+	if not (frames is Array) or frames.is_empty():
+		return null
+	var frame_index := posmod(int(_walk_time * walk_animation_speed), frames.size())
+	return frames[frame_index] as Texture2D
+
+
+func _apply_idle_direction(direction: Vector2) -> void:
+	var texture := DirectionalSpriteHelper.get_sprite(_directional_sprites, direction)
+	if not texture:
 		return
 	sprite.texture = texture
 	var texture_height := float(texture.get_height())

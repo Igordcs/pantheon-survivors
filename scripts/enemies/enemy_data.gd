@@ -2,6 +2,8 @@ extends Resource
 class_name EnemyData
 ## Dados configuráveis de um tipo de inimigo.
 
+const ActorVisualDataType := preload("res://scripts/actors/actor_visual_data.gd")
+
 @export var id: StringName = &""
 @export var display_name: String = ""
 @export var max_health: float = 30.0
@@ -32,8 +34,11 @@ class_name EnemyData
 @export var charge_windup: float = 0.75
 
 @export_group("Visual")
+@export var visual: ActorVisualDataType
 @export_range(16.0, 256.0, 1.0) var visual_size: float = 64.0
 @export_dir var sprite_directory: String = ""
+@export_dir var walk_sprite_directory: String = ""
+@export_range(1.0, 30.0, 0.5) var walk_animation_speed: float = 8.0
 @export var sprite_south: Texture2D
 @export var sprite_south_east: Texture2D
 @export var sprite_east: Texture2D
@@ -45,9 +50,15 @@ class_name EnemyData
 
 var _directory_sprites: Dictionary = {}
 var _directory_sprites_loaded: bool = false
+var _walk_sprites: Dictionary = {}
+var _walk_sprites_loaded: bool = false
 
 
 func get_directional_sprite(direction: Vector2) -> Texture2D:
+	if visual:
+		var configured := visual.get_idle(direction)
+		if configured:
+			return configured
 	var direction_name := DirectionalSpriteHelper.get_direction_name(direction)
 	var directional_sprite: Texture2D
 	match direction_name:
@@ -87,8 +98,37 @@ func has_visual() -> bool:
 	return not _directory_sprites.is_empty()
 
 
+func get_walk_frame(direction: Vector2, frame_index: int) -> Texture2D:
+	if visual:
+		var configured_frames := visual.get_walk_frames(direction)
+		if not configured_frames.is_empty():
+			return configured_frames[posmod(frame_index, configured_frames.size())]
+	_ensure_walk_sprites_loaded()
+	var direction_name := DirectionalSpriteHelper.get_direction_name(direction)
+	var frames = _walk_sprites.get(direction_name)
+	if not (frames is Array) or frames.is_empty():
+		frames = _walk_sprites.get(&"south")
+	if frames is Array and not frames.is_empty():
+		return frames[posmod(frame_index, frames.size())] as Texture2D
+	return get_directional_sprite(direction)
+
+
+func has_walk_animation() -> bool:
+	if visual and visual.has_walk():
+		return true
+	_ensure_walk_sprites_loaded()
+	return not _walk_sprites.is_empty()
+
+
 func _ensure_directory_sprites_loaded() -> void:
 	if _directory_sprites_loaded:
 		return
 	_directory_sprites_loaded = true
 	_directory_sprites = DirectionalSpriteHelper.load_directory(sprite_directory)
+
+
+func _ensure_walk_sprites_loaded() -> void:
+	if _walk_sprites_loaded:
+		return
+	_walk_sprites_loaded = true
+	_walk_sprites = DirectionalSpriteHelper.load_animation_directory(walk_sprite_directory)

@@ -13,6 +13,8 @@ extends Resource
 @export var ground_source_id: int = 0
 @export var ground_atlas_coordinates: Vector2i = Vector2i(1, 7)
 @export var ground_alternative_tile: int = 0
+## Tingimento aplicado ao tile de chao deste bioma.
+@export var ground_modulate: Color = Color(1.0, 1.0, 1.0, 1.0)
 @export var is_navigable: bool = true
 @export_range(0.1, 2.0, 0.05) var movement_speed_multiplier: float = 1.0
 

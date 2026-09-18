@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://bc24lfnxkwrcg" path="res://assets/sprites/environment/ruins/prop_banner.png" id="1_sprite"]
+
+[node name="PropBanner" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_sprite")
+offset = Vector2(0, -24)

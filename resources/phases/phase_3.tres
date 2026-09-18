@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="PhaseData" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/phase_data.gd" id="1_phase"]
+[ext_resource type="Script" path="res://scripts/world/phase_anchor_data.gd" id="2_anchor"]
+
+[sub_resource type="Resource" id="Anchor_0"]
+script = ExtResource("2_anchor")
+boss_id = &"corrupted_treant"
+trigger_time = 180.0
+warning_duration = 3.0
+
+[sub_resource type="Resource" id="Anchor_1"]
+script = ExtResource("2_anchor")
+boss_id = &"jormungandr"
+trigger_time = 420.0
+warning_duration = 3.0
+
+[sub_resource type="Resource" id="Anchor_2"]
+script = ExtResource("2_anchor")
+boss_id = &"fenrir"
+trigger_time = 660.0
+warning_duration = 3.0
+
+[resource]
+script = ExtResource("1_phase")
+phase_id = &"phase_3"
+display_name = "Fronteira do Fim"
+description = "O Fimbulvetr, o inverno que anuncia o fim, atravessou a Fenda antes da hora. As feras do Ragnarok concluiram que a profecia comecou e, se nao podem cumpri-la em Asgard, vao cumpri-la aqui."
+intro_line = "O fim chegou ao mundo errado. Nao deixe que ele se acostume."
+order = 3
+map_id = &"snow"
+anchors = Array[ExtResource("2_anchor")]([SubResource("Anchor_0"), SubResource("Anchor_1"), SubResource("Anchor_2")])
+accent_color = Color(0.45, 0.72, 0.95, 1)

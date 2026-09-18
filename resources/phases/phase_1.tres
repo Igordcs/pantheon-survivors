@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PhaseData" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/phase_data.gd" id="1_phase"]
+[ext_resource type="Script" path="res://scripts/world/phase_anchor_data.gd" id="2_anchor"]
+
+[sub_resource type="Resource" id="Anchor_0"]
+script = ExtResource("2_anchor")
+boss_id = &"king_slime"
+trigger_time = 180.0
+warning_duration = 3.0
+
+[resource]
+script = ExtResource("1_phase")
+phase_id = &"phase_1"
+display_name = "Campos da Ruptura"
+description = "O primeiro ponto em que o Veu falhou. Uma regiao comum, contaminada pela energia que escapa da abertura, por onde as criaturas menores comecaram a atravessar."
+intro_line = "O Veu se rompeu. Reuna os Ecos. Feche a Fenda."
+order = 1
+map_id = &"field"
+anchors = Array[ExtResource("2_anchor")]([SubResource("Anchor_0")])
+accent_color = Color(0.55, 0.82, 0.35, 1)

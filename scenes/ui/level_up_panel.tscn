@@ -1,9 +1,23 @@
-[gd_scene format=3 uid="uid://cev8i1bx7l2wt"]
+[gd_scene format=3 uid="uid://clevelup00001"]
 
 [ext_resource type="Script" uid="uid://cd7350dk2lsi7" path="res://scripts/ui/level_up_panel.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://ctatsqbofgfn5" path="res://assets/fonts/PressStart2P-Regular.ttf" id="2_font"]
 
-[node name="LevelUpPanel" type="Control" unique_id=1972578979]
-process_mode = 3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 30.0
+content_margin_top = 24.0
+content_margin_right = 30.0
+content_margin_bottom = 24.0
+bg_color = Color(0.05, 0.04, 0.09, 0.97)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.8, 0.2, 1)
+shadow_color = Color(0, 0, 0, 0.9)
+shadow_size = 16
+
+[node name="LevelUpPanel" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,53 +26,67 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Panel" type="Panel" parent="." unique_id=959467925]
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.015, 0.04, 0.82)
+
+[node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -250.0
-offset_right = 200.0
-offset_bottom = 250.0
+offset_left = -370.0
+offset_top = -246.0
+offset_right = 370.0
+offset_bottom = 246.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="Title" type="Label" parent="Panel" unique_id=1054927881]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 20.0
-offset_bottom = 60.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
-text = "LEVEL UP!"
+[node name="Content" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.32, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.07, 0.02, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+text = "OS DEUSES CONCEDEM"
 horizontal_alignment = 1
 
-[node name="NavigationHint" type="Label" parent="Panel" unique_id=656316331]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 58.0
-offset_bottom = 80.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.72, 0.76, 0.86, 1)
-theme_override_font_sizes/font_size = 14
-text = "SETAS: ESCOLHER  •  ENTER: CONFIRMAR"
+[node name="LoreLabel" type="Label" parent="Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.83, 0.89, 1)
+theme_override_constants/line_spacing = 8
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "Os Ecos Divinos que voce libertou abriram passagem no Veu.
+Escolha a dadiva que atravessa."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="NavigationHint" type="Label" parent="Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.68, 0.64, 0.78, 0.9)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "SETAS: ESCOLHER  •  ENTER: ACEITAR"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=386500020]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 88.0
-offset_right = -20.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 15
-alignment = 1
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12

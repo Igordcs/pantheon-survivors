@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/field/decorations/fallen_branch.png" id="1_sprite"]
+
+[node name="FallenBranch" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_sprite")

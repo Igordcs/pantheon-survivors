@@ -4,8 +4,9 @@ class_name UpgradeOption
 
 var item_data: Resource
 var is_new_weapon: bool
-var is_relic: bool
 var is_item: bool
 var current_level: int
+## Etiqueta narrativa da dádiva: o que os deuses estão enviando através do Véu.
+var kind_label: String
 var display_text: String
 var description_text: String

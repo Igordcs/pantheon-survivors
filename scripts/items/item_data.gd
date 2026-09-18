@@ -10,7 +10,6 @@ class_name ItemData
 @export var effect_id: StringName
 @export var value: float
 @export var secondary_value: float
-@export var is_fundamental: bool = false
 @export var max_level: int = 1
 @export var level_values: Array[float] = []
 @export var level_descriptions: Array[String] = []

@@ -11,8 +11,8 @@ func generate_chunk_decorations(
 ) -> PackedInt32Array:
 	var result := PackedInt32Array()
 	for cell_index in range(biome_types.size()):
-		var biome_type: int = biome_types[cell_index]
-		var biome := biome_generator.get_biome_by_type(biome_type)
+		var biome_index: int = biome_types[cell_index]
+		var biome := biome_generator.get_biome_by_index(biome_index)
 		if biome == null or biome.decoration_atlas_coordinates.is_empty():
 			continue
 		if rng.randf() > biome.decoration_density:
