@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bbc2glxtq8w74"]
+
+[ext_resource type="Script" uid="uid://c4d13mrs8jcy4" path="res://scripts/enemies/wolf_enemy.gd" id="1_dv6pa"]
+[ext_resource type="Resource" uid="uid://gjmn1da2wkai" path="res://resources/enemies/wolf_data.tres" id="2_0vdvh"]
+[ext_resource type="Texture2D" uid="uid://dlxu4tp5hryao" path="res://assets/sprites/enemies/wolf/wolf_sheet.png" id="3_dv6pa"]
+[ext_resource type="Script" uid="uid://rpi6bjtolxtp" path="res://scripts/combat/health_component.gd" id="4_5rfyw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 6.0
+
+[node name="WolfEnemy" type="CharacterBody2D" unique_id=15159520 groups=["enemies"]]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_dv6pa")
+enemy_data = ExtResource("2_0vdvh")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1077079411]
+texture_filter = 1
+texture = ExtResource("3_dv6pa")
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=592619895]
+position = Vector2(0, 12)
+shape = SubResource("CircleShape2D_1")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=203627486]
+script = ExtResource("4_5rfyw")
+max_health = 30.0

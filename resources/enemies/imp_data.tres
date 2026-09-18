@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cq8e2v3vrr8qq"]
+
+[ext_resource type="Script" uid="uid://7sdoy4k44d5y" path="res://scripts/enemies/enemy_data.gd" id="1_3wra5"]
+
+[resource]
+script = ExtResource("1_3wra5")
+id = &"imp"
+display_name = "Diabrete"
+speed = 65.0
+contact_damage = 8.0
+score_value = 18
+spawn_weight = 0.8
+metadata/_custom_type_script = "uid://7sdoy4k44d5y"

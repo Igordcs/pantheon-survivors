@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="WeaponData" format=3]
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://c5to7hum52cax"]
 
-[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
-[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
-[ext_resource type="Texture2D" path="res://assets/sprites/weapons/gungnir.webp" id="3_icon"]
+[ext_resource type="Script" uid="uid://25g41b34ykt1" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" uid="uid://dby8hcw36xba6" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+[ext_resource type="Texture2D" uid="uid://dtj58l2na5dou" path="res://assets/sprites/weapons/gungnir.webp" id="3_icon"]
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
@@ -77,6 +77,4 @@ base_damage = 18.0
 cooldown = 1.0
 area = 650.0
 projectile_speed = 360.0
-projectile_count = 1
-max_level = 8
 levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])

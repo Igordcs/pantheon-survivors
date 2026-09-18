@@ -13,4 +13,3 @@ class_name EnemySpawnEntry
 
 func is_valid() -> bool:
 	return enemy_data != null and weight > 0.0 and threat_cost > 0.0
-

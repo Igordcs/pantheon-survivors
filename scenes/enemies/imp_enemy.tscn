@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://d27truh27l01s"]
+
+[ext_resource type="Script" uid="uid://b0vmq01wwwqry" path="res://scripts/enemies/imp_enemy.gd" id="1_nkquk"]
+[ext_resource type="Resource" uid="uid://cq8e2v3vrr8qq" path="res://resources/enemies/imp_data.tres" id="2_fh8e3"]
+[ext_resource type="Texture2D" uid="uid://2pfis58imull" path="res://assets/sprites/enemies/imp/imp_enemy.png" id="3_nkquk"]
+[ext_resource type="Script" uid="uid://rpi6bjtolxtp" path="res://scripts/combat/health_component.gd" id="4_0t82y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 9.0
+
+[node name="ImpEnemy" type="CharacterBody2D" unique_id=15159520 groups=["enemies"]]
+collision_layer = 2
+script = ExtResource("1_nkquk")
+enemy_data = ExtResource("2_fh8e3")
+preferred_distance = 160.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1077079411]
+texture_filter = 1
+texture = ExtResource("3_nkquk")
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=592619895]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_1")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=203627486]
+script = ExtResource("4_0t82y")
+max_health = 30.0

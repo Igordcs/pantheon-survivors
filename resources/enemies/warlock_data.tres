@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://drxrcr0ttdcve"]
+
+[ext_resource type="Script" uid="uid://7sdoy4k44d5y" path="res://scripts/enemies/enemy_data.gd" id="1_3w3xb"]
+
+[resource]
+script = ExtResource("1_3w3xb")
+id = &"warlock"
+display_name = "Bruxo"
+max_health = 28.0
+speed = 50.0
+contact_damage = 6.0
+score_value = 18
+spawn_weight = 0.5
+metadata/_custom_type_script = "uid://7sdoy4k44d5y"

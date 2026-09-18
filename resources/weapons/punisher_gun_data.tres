@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="WeaponData" format=3]
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://bk6h1r821bxr1"]
 
-[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
-[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
-[ext_resource type="Texture2D" path="res://assets/sprites/weapons/m4a4.png" id="3_icon"]
+[ext_resource type="Script" uid="uid://25g41b34ykt1" path="res://scripts/weapons/weapon_data.gd" id="1_weapon"]
+[ext_resource type="Script" uid="uid://dby8hcw36xba6" path="res://scripts/weapons/weapon_level_data.gd" id="2_level"]
+[ext_resource type="Texture2D" uid="uid://c8r8tv0ky43hy" path="res://assets/sprites/weapons/m4a4.png" id="3_icon"]
 
 [sub_resource type="Resource" id="Level_1"]
 script = ExtResource("2_level")
@@ -66,12 +66,10 @@ special_value = 3.0
 script = ExtResource("1_weapon")
 id = &"punisher_gun"
 display_name = "Arma do Justiceiro"
-description = "Uma arma automática que dispara balas certeiras contra os inimigos mais próximos."
 icon = ExtResource("3_icon")
+description = "Uma arma automática que dispara balas certeiras contra os inimigos mais próximos."
 base_damage = 18.0
 cooldown = 0.5
 area = 500.0
 projectile_speed = 700.0
-projectile_count = 1
-max_level = 8
 levels = Array[ExtResource("2_level")]([SubResource("Level_1"), SubResource("Level_2"), SubResource("Level_3"), SubResource("Level_4"), SubResource("Level_5"), SubResource("Level_6"), SubResource("Level_7"), SubResource("Level_8")])

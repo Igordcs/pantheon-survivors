@@ -15,6 +15,11 @@ const WEAPONS := {
 const ENEMIES := {
 	"Morcego": ["res://scenes/enemies/bat_enemy.tscn", "res://resources/enemies/bat_data.tres"],
 	"Draugr": ["res://scenes/enemies/basic_enemy.tscn", "res://resources/enemies/draugr_data.tres"],
+	"Esqueleto": ["res://scenes/enemies/skeleton_enemy.tscn", "res://resources/enemies/skeleton_data.tres"],
+	"Lobo": ["res://scenes/enemies/wolf_enemy.tscn", "res://resources/enemies/wolf_data.tres"],
+	"Bruxo": ["res://scenes/enemies/warlock_enemy.tscn", "res://resources/enemies/warlock_data.tres"],
+	"Lagarto": ["res://scenes/enemies/lizard_enemy.tscn", "res://resources/enemies/lizard_data.tres"],
+	"Diabrete": ["res://scenes/enemies/imp_enemy.tscn", "res://resources/enemies/imp_data.tres"],
 	"Harpia": ["res://scenes/enemies/basic_enemy.tscn", "res://resources/enemies/harpy_data.tres"],
 	"Slime Arcano": ["res://scenes/enemies/ranged_enemy.tscn", "res://resources/enemies/ranged_enemy_data.tres"],
 	"Slime Curandeiro": ["res://scenes/enemies/healer_enemy.tscn", "res://resources/enemies/healer_enemy_data.tres"],
