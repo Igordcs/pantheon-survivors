@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://b51w4wlni8014"]
+
+[ext_resource type="Texture2D" uid="uid://b0xmfg5v2a7jv" path="res://assets/sprites/pickups/boss_chest.png" id="1_hbh0r"]
+
+[sub_resource type="GDScript" id="GDScript_hbh0r"]
+script/source = "extends Area2D
+class_name BossChest
+## Baú lendário dropado ao derrotar o chefe final da fase.
+## Permanece fixo no cenário após a abertura.
+
+signal opened(gold_amount: int)
+
+@export var gold_reward: int = 300
+@export var grants_upgrade: bool = true
+
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+
+var _is_opened: bool = false
+
+
+func _ready() -> void:
+	top_level = true
+	sprite.frame = 0
+	body_entered.connect(_on_body_entered)
+	_play_spawn_animation()
+
+
+func _play_spawn_animation() -> void:
+	scale = Vector2.ZERO
+	var tween := create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, \"scale\", Vector2.ONE, 0.45)
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if _is_opened:
+		return
+
+	if body.is_in_group(\"player\"):
+		open_chest(body)
+
+
+func open_chest(_player: Node2D) -> void:
+	_is_opened = true
+	collision_shape.set_deferred(\"disabled\", true)
+
+	# 1. Ciclo sequencial de abertura até o estado aberto com gemas e ouro
+	sprite.frame = 1
+	await get_tree().create_timer(0.12).timeout
+	
+	sprite.frame = 2
+	await get_tree().create_timer(0.15).timeout
+	
+	sprite.frame = 3
+
+	# Brilho de impacto mantendo o sprite nítido no local
+	var shine_tween := create_tween().set_parallel(true)
+	shine_tween.tween_property(sprite, \"modulate\", Color(1.4, 1.3, 0.9), 0.2)
+	shine_tween.tween_property(self, \"scale\", Vector2(1.1, 1.1), 0.2)
+	shine_tween.chain().tween_property(sprite, \"modulate\", Color.WHITE, 0.3)
+	shine_tween.tween_property(self, \"scale\", Vector2.ONE, 0.3)
+
+	# 2. Atribuição de recompensas
+	if \"coins\" in Global:
+		Global.coins += gold_reward
+	elif \"gold\" in Global:
+		Global.gold += gold_reward
+
+	if grants_upgrade:
+		var upgrade_system := get_tree().get_first_node_in_group(\"upgrade_system\")
+		if upgrade_system and upgrade_system.has_method(\"trigger_level_up\"):
+			upgrade_system.trigger_level_up()
+
+	opened.emit(gold_reward)
+
+	# 3. Transição para o fecho da fase mantendo o baú no mapa
+	await get_tree().create_timer(1.2).timeout
+	_finish_stage()
+
+
+func _finish_stage() -> void:
+	var spawner := get_tree().get_first_node_in_group(\"spawner\")
+	if spawner and spawner.has_method(\"stop_spawning\"):
+		spawner.stop_spawning()
+
+	var director := get_tree().get_first_node_in_group(\"spawn_director\")
+	if director and director.has_method(\"set_progression_paused\"):
+		director.set_progression_paused(true)
+
+	var results_panel := get_tree().current_scene.get_node_or_null(\"UI/ResultsPanel\")
+	if results_panel and results_panel.has_method(\"show_victory\"):
+		results_panel.show_victory()
+	elif results_panel and results_panel.has_method(\"open\"):
+		results_panel.open(true)
+	else:
+		if ResourceLoader.exists(\"res://scenes/ui/results_panel.tscn\"):
+			get_tree().change_scene_to_file(\"res://scenes/ui/results_panel.tscn\")
+		elif ResourceLoader.exists(\"res://scenes/ui/phase_selection.tscn\"):
+			get_tree().change_scene_to_file(\"res://scenes/ui/phase_selection.tscn\")
+		else:
+			get_tree().change_scene_to_file(\"res://scenes/ui/main_menu.tscn\")
+"
+
+[node name="BossChest" type="Node2D" unique_id=417057699]
+script = SubResource("GDScript_hbh0r")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1508297209]
+texture_filter = 1
+texture = ExtResource("1_hbh0r")
+hframes = 2
+vframes = 2

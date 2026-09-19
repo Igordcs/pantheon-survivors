@@ -15,6 +15,11 @@ const ENEMIES := {
 	&"minotaur": ["Minotauro", "res://resources/enemies/minotaur_data.tres", "res://scenes/enemies/charger_enemy.tscn"],
 	&"ammit": ["Ammit", "res://resources/enemies/ammit_data.tres", "res://scenes/enemies/ammit.tscn"],
 	&"corrupted_valkyrie": ["Corrupted Valkyrie", "res://resources/enemies/corrupted_valkyrie_data.tres", "res://scenes/enemies/corrupted_valkyrie.tscn"],
+	&"skeleton": ["Esqueleto", "res://resources/enemies/skeleton_data.tres", "res://scenes/enemies/skeleton_enemy.tscn"],
+	&"wolf": ["Lobo", "res://resources/enemies/wolf_data.tres", "res://scenes/enemies/wolf_enemy.tscn"],
+	&"warlock": ["Bruxo", "res://resources/enemies/warlock_data.tres", "res://scenes/enemies/warlock_enemy.tscn"],
+	&"lizard": ["Lagarto", "res://resources/enemies/lizard_data.tres", "res://scenes/enemies/lizard_enemy.tscn"],
+	&"imp": ["Diabrete", "res://resources/enemies/imp_data.tres", "res://scenes/enemies/imp_enemy.tscn"],
 }
 
 const BOSSES := {

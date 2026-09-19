@@ -1,20 +1,21 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://byl5kji1budkm"]
 
-[ext_resource type="Script" path="res://scripts/pickups/chest.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="2_texture"]
+[ext_resource type="Script" uid="uid://jmnsqddgkbw1" path="res://scripts/pickups/chest.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b0xmfg5v2a7jv" path="res://assets/sprites/pickups/boss_chest.png" id="2_odayq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(40, 40)
 
-[node name="Chest" type="Area2D" groups=["pickups"]]
+[node name="Chest" type="Area2D" unique_id=317675868 groups=["pickups"]]
 collision_layer = 8
-collision_mask = 1
 script = ExtResource("1_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=677473122]
 modulate = Color(1, 0.84, 0, 1)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_texture")
+texture = ExtResource("2_odayq")
+hframes = 2
+vframes = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1288325546]
 shape = SubResource("RectangleShape2D_1")
