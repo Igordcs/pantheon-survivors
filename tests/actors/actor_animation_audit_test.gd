@@ -10,8 +10,11 @@ const ENEMY_IDLE_IDS: Array[StringName] = [
 const ENEMY_WALK_IDS: Array[StringName] = [
 	&"ammit", &"corrupted_valkyrie", &"cyclops", &"draugr", &"mummy",
 ]
-const BOSS_IDLE_IDS: Array[StringName] = [&"cerberus", &"jormungandr", &"fenrir"]
-const BOSS_WALK_IDS: Array[StringName] = [&"cerberus", &"fenrir"]
+const BOSS_IDLE_IDS: Array[StringName] = [
+	&"cerberus", &"jormungandr", &"fenrir", &"lernaean_hydra",
+	&"amheh", &"anubis", &"apophis",
+]
+const BOSS_WALK_IDS: Array[StringName] = [&"cerberus", &"fenrir", &"amheh", &"anubis"]
 
 var _failures := 0
 

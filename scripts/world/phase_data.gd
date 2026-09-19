@@ -21,7 +21,7 @@ extends Resource
 func get_anchors() -> Array[PhaseAnchorData]:
 	var result: Array[PhaseAnchorData] = []
 	for anchor in anchors:
-		if anchor != null and not anchor.boss_id.is_empty():
+		if anchor != null and anchor.is_valid():
 			result.append(anchor)
 	return result
 

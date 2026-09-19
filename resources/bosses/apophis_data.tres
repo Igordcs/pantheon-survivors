@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"apophis"
+display_name = "Apophis"
+max_health = 8500.0
+speed = 46.0
+contact_damage = 35.0
+score_value = 3300
+visual_size = 140.0
+sprite_directory = "res://assets/sprites/bosses/apophis/Idle/rotations"
+epithet = "A SERPENTE DO CAOS"
+presentation_text = "Apophis se enrolou ao redor da segunda ruptura. Enquanto sua sombra cobrir as ruinas, a Fenda continuara aberta e o conflito nunca vera o amanhecer."

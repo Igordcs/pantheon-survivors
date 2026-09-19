@@ -247,15 +247,18 @@ func _encounters_from_phase(phase: PhaseData) -> Array[BossEncounterData]:
 	var anchors := phase.get_anchors()
 	for index in range(anchors.size()):
 		var anchor := anchors[index]
-		var scene := ContentRegistry.get_boss_scene(anchor.boss_id)
-		if scene == null:
-			push_warning("RunManager: Âncora \"%s\" não tem cena." % anchor.boss_id)
+		var candidates: Array[BossCandidateData] = []
+		for boss_id in anchor.get_boss_ids():
+			var candidate := _candidate(boss_id, ContentRegistry.get_boss_display_name(boss_id))
+			if candidate.boss_scene == null:
+				push_warning("RunManager: Âncora \"%s\" não tem cena." % boss_id)
+				continue
+			candidates.append(candidate)
+		if candidates.is_empty():
 			continue
 		var encounter := BossEncounterData.new()
-		encounter.id = anchor.boss_id
-		encounter.display_name = ContentRegistry.get_boss_display_name(anchor.boss_id)
+		encounter.candidates = candidates
 		encounter.trigger_time = anchor.trigger_time
-		encounter.boss_scene = scene
 		encounter.warning_duration = anchor.warning_duration
 		encounter.is_final_boss = index == anchors.size() - 1
 		result.append(encounter)

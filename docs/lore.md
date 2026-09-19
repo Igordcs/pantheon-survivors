@@ -54,9 +54,7 @@ Escolhido por Atena, Perseus recebe a **Cabeça de Medusa**. Seu poder vem do le
 
 ## Estrutura da campanha e progresso
 
-A campanha inicial possui três fases. Cada fase é sustentada por um número crescente de **Âncoras**: criaturas que mantêm aquela ruptura aberta e precisam cair em sequência.
-
-O número de Âncoras cresce com a gravidade da ruptura: a primeira fenda é sustentada por uma só, a segunda por duas, a terceira por três. Isso também dá o ritmo da campanha — a primeira fase é curta o bastante para ensinar, a última é uma maratona.
+A campanha inicial possui três fases. Cada fase é sustentada por três **Âncoras**: criaturas que mantêm aquela ruptura aberta e precisam cair em sequência. Na primeira Âncora da campanha, King Slime e Orc Warlord disputam o controle da passagem, por isso apenas um deles se manifesta em cada run.
 
 O jogador só sela a Fenda e conclui a fase após derrotar a última Âncora. Ao fazê-lo, a fase seguinte é desbloqueada e esse progresso é salvo permanentemente.
 
@@ -68,9 +66,13 @@ O primeiro ponto em que o Véu falhou. Uma região antes comum foi contaminada p
 
 Nada aqui *decidiu* atravessar. Simplesmente escorreu.
 
-A Âncora desta fase é o **King Slime**, *a Primeira Âncora*: não é uma criatura, é o que escorre da ruptura. Resíduo mágico de mil mitologias, coagulado em algo que aprendeu a se mover e a crescer. Enquanto ele pulsar, a Fenda continua sangrando neste campo.
+As três Âncoras desta ruptura são:
 
-Derrubá-lo permite reunir a energia da região e selar a primeira Fenda. É a fase mais curta da campanha, e a que ensina o jogador a ler o Véu.
+- **King Slime**, *a Primeira Âncora*, ou **Orc Warlord**, *o Conquistador da Passagem*: um deles é sorteado para guardar o primeiro ponto de estabilidade da Fenda em cada run.
+- **Cerberus**, *o Novo Portão*: vigia a passagem aberta como se ela fosse o portão dos mortos que perdeu.
+- **Lernaean Hydra**, *a Fome de Muitas Cabeças*: encontrou na Fenda um pântano sem margem e mantém cada saída sob a vigilância de uma cabeça diferente.
+
+Derrubar as três permite reunir a energia da região e selar a primeira Fenda.
 
 ## Fase 2 — Ruínas do Conflito
 
@@ -78,10 +80,11 @@ Uma região marcada por guerra, onde as realidades já começaram a se sobrepor.
 
 Aqui a invasão muda de natureza. **O que atravessou não veio saquear: veio ficar.** A Fenda deixou de ser um vazamento e virou a porta de um exército com endereço fixo.
 
-As duas Âncoras dessa ruptura são:
+As três Âncoras dessa ruptura são:
 
-- **Orc Warlord**, *o Conquistador da Passagem*: atravessou o Véu com um exército e entendeu o que os outros não entenderam — a Terra não tem deuses de plantão. Já ergueu o primeiro forte sobre as ruínas.
-- **Cerberus**, *o Novo Portão*: guardava a passagem dos mortos e não sabe fazer outra coisa. Agora trata a ruptura como o portão que perdeu, e vigia os dois lados. Enquanto ele respirar, nada que atravessou volta, e tudo que vem continua vindo.
+- **Amheh**, *o Devorador do Horizonte*: fez das ruínas seu novo território e mantém o exército invasor preso a este mundo.
+- **Anubis**, *o Juiz sem Balança*: transforma cada alma tomada nas ruínas em mais um lacre sobre a Fenda.
+- **Apophis**, *a Serpente do Caos*: enrolou-se ao redor da ruptura; enquanto sua sombra cobrir as ruínas, o conflito não verá o amanhecer.
 
 Ao fechar essa segunda ruptura, os escolhidos descobrem que o problema é maior que uma invasão isolada: todas as fendas parecem estar ligadas à mesma força desconhecida.
 

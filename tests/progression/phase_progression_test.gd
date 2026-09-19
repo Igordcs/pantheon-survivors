@@ -34,6 +34,7 @@ func _run_tests() -> void:
 
 func _test_catalog() -> void:
 	var phases := PhaseCatalog.get_phases()
+	var scheduled_bosses: Dictionary[StringName, bool] = {}
 	if phases.size() != 3:
 		_fail("The campaign should expose the three phases from the lore.")
 		return
@@ -47,8 +48,10 @@ func _test_catalog() -> void:
 			_fail("Phase \"%s\" points at a missing map." % phase.phase_id)
 		# Toda Âncora precisa de um chefe que exista de fato.
 		for anchor in phase.get_anchors():
-			if ContentRegistry.get_boss_scene(anchor.boss_id) == null:
-				_fail("Anchor \"%s\" of %s has no boss scene." % [anchor.boss_id, phase.phase_id])
+			for boss_id in anchor.get_boss_ids():
+				scheduled_bosses[boss_id] = true
+				if ContentRegistry.get_boss_scene(boss_id) == null:
+					_fail("Anchor \"%s\" of %s has no boss scene." % [boss_id, phase.phase_id])
 		if phase.get_anchors().size() >= 2:
 			var anchors := phase.get_anchors()
 			for i in range(anchors.size() - 1):
@@ -61,6 +64,23 @@ func _test_catalog() -> void:
 		_fail("The last phase should have no next phase.")
 	if PhaseCatalog.get_phase(&"nao_existe") != phases[0]:
 		_fail("An unknown phase id should fall back to the first phase.")
+
+	var phase_1 := PhaseCatalog.get_phase(&"phase_1")
+	var phase_2 := PhaseCatalog.get_phase(&"phase_2")
+	if phase_1.get_anchor_count() != 3:
+		_fail("Phase 1 should contain three boss encounters.")
+	elif phase_1.get_anchors()[0].get_boss_ids() != [&"king_slime", &"orc_warlord"]:
+		_fail("Phase 1 should draw its first boss from King Slime and Orc Warlord.")
+	if phase_2.get_anchor_count() != 3:
+		_fail("Phase 2 should contain three boss encounters.")
+	else:
+		var expected_phase_2: Array[StringName] = [&"amheh", &"anubis", &"apophis"]
+		for index in expected_phase_2.size():
+			if phase_2.get_anchors()[index].get_boss_ids() != [expected_phase_2[index]]:
+				_fail("Phase 2 boss %d should be %s." % [index + 1, expected_phase_2[index]])
+	for boss_id in ContentRegistry.BOSSES:
+		if not scheduled_bosses.has(boss_id):
+			_fail("Boss %s is registered but absent from the campaign." % boss_id)
 
 
 func _test_new_save_starts_locked() -> void:
