@@ -16,4 +16,6 @@ attack_range = 380.0
 projectile_damage = 14.0
 projectile_speed = 230.0
 visual_size = 64.0
-sprite_directory = "res://assets/sprites/enemies/mummy/Idle/rotations"
+sprite_directory = "res://assets/sprites/enemies/mummy/idle/rotations"
+walk_sprite_directory = "res://assets/sprites/enemies/mummy/Walk"
+walk_animation_speed = 8.0

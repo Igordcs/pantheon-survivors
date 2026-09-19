@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"anubis"
+display_name = "Anubis"
+max_health = 6800.0
+speed = 52.0
+contact_damage = 31.0
+score_value = 2800
+visual_size = 128.0
+sprite_directory = "res://assets/sprites/bosses/anubis/Idle/rotations"
+walk_sprite_directory = "res://assets/sprites/bosses/anubis/Walk"
+walk_animation_speed = 8.0
+epithet = "O JUIZ SEM BALANCA"
+presentation_text = "Longe do Duat, Anubis nao pesa mais coracoes. Ele julga pela forca e transforma cada alma tomada nas ruinas em mais um lacre sobre a Fenda."

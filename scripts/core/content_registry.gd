@@ -15,12 +15,21 @@ const ENEMIES := {
 	&"minotaur": ["Minotauro", "res://resources/enemies/minotaur_data.tres", "res://scenes/enemies/charger_enemy.tscn"],
 	&"ammit": ["Ammit", "res://resources/enemies/ammit_data.tres", "res://scenes/enemies/ammit.tscn"],
 	&"corrupted_valkyrie": ["Corrupted Valkyrie", "res://resources/enemies/corrupted_valkyrie_data.tres", "res://scenes/enemies/corrupted_valkyrie.tscn"],
+	&"skeleton": ["Esqueleto", "res://resources/enemies/skeleton_data.tres", "res://scenes/enemies/skeleton_enemy.tscn"],
+	&"wolf": ["Lobo", "res://resources/enemies/wolf_data.tres", "res://scenes/enemies/wolf_enemy.tscn"],
+	&"warlock": ["Bruxo", "res://resources/enemies/warlock_data.tres", "res://scenes/enemies/warlock_enemy.tscn"],
+	&"lizard": ["Lagarto", "res://resources/enemies/lizard_data.tres", "res://scenes/enemies/lizard_enemy.tscn"],
+	&"imp": ["Diabrete", "res://resources/enemies/imp_data.tres", "res://scenes/enemies/imp_enemy.tscn"],
 }
 
 const BOSSES := {
 	&"king_slime": ["King Slime", "res://resources/bosses/king_slime_data.tres", "res://scenes/bosses/king_slime.tscn"],
 	&"orc_warlord": ["Orc Warlord", "res://resources/bosses/orc_warlord_data.tres", "res://scenes/bosses/orc_warlord.tscn"],
 	&"cerberus": ["Cerberus", "res://resources/bosses/cerberus_data.tres", "res://scenes/bosses/cerberus.tscn"],
+	&"lernaean_hydra": ["Lernaean Hydra", "res://resources/bosses/lernaean_hydra_data.tres", "res://scenes/bosses/lernaean_hydra.tscn"],
+	&"amheh": ["Amheh", "res://resources/bosses/amheh_data.tres", "res://scenes/bosses/amheh.tscn"],
+	&"anubis": ["Anubis", "res://resources/bosses/anubis_data.tres", "res://scenes/bosses/anubis.tscn"],
+	&"apophis": ["Apophis", "res://resources/bosses/apophis_data.tres", "res://scenes/bosses/apophis.tscn"],
 	&"corrupted_treant": ["Corrupted Treant", "res://resources/bosses/corrupted_treant_data.tres", "res://scenes/bosses/corrupted_treant.tscn"],
 	&"jormungandr": ["Jormungandr", "res://resources/bosses/jormungandr_data.tres", "res://scenes/bosses/jormungandr.tscn"],
 	&"fenrir": ["Fenrir", "res://resources/bosses/fenrir_data.tres", "res://scenes/bosses/fenrir.tscn"],

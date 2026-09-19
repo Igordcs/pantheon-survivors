@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="WeaponData" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://be1f4xll80n5i"]
 
-[ext_resource type="Script" path="res://scripts/weapons/weapon_data.gd" id="1"]
-[ext_resource type="Script" path="res://scripts/weapons/weapon_level_data.gd" id="2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/weapons/blades_of_chaos.png" id="3"]
+[ext_resource type="Script" uid="uid://25g41b34ykt1" path="res://scripts/weapons/weapon_data.gd" id="1"]
+[ext_resource type="Script" uid="uid://dby8hcw36xba6" path="res://scripts/weapons/weapon_level_data.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://ukhdc5t8wkgw" path="res://assets/sprites/weapons/blades_of_chaos.png" id="3"]
 
 [sub_resource type="Resource" id="Level1"]
 script = ExtResource("2")
@@ -23,39 +23,39 @@ area_multiplier = 1.2
 script = ExtResource("2")
 description = "Reduz o intervalo entre golpes em 15%."
 damage_multiplier = 1.25
-area_multiplier = 1.2
 cooldown_multiplier = 0.85
+area_multiplier = 1.2
 
 [sub_resource type="Resource" id="Level5"]
 script = ExtResource("2")
 description = "As trilhas de fogo causam mais dano."
 damage_multiplier = 1.4
-area_multiplier = 1.2
 cooldown_multiplier = 0.85
+area_multiplier = 1.2
 special_value = 0.08
 
 [sub_resource type="Resource" id="Level6"]
 script = ExtResource("2")
 description = "+25% de alcance e +50% de dano total."
 damage_multiplier = 1.5
-area_multiplier = 1.45
 cooldown_multiplier = 0.85
+area_multiplier = 1.45
 special_value = 0.08
 
 [sub_resource type="Resource" id="Level7"]
 script = ExtResource("2")
 description = "Reduz novamente o intervalo entre golpes."
 damage_multiplier = 1.5
-area_multiplier = 1.45
 cooldown_multiplier = 0.7
+area_multiplier = 1.45
 special_value = 0.1
 
 [sub_resource type="Resource" id="Level8"]
 script = ExtResource("2")
 description = "Lâminas divinas: +90% de dano e fogo intensificado."
 damage_multiplier = 1.9
-area_multiplier = 1.55
 cooldown_multiplier = 0.7
+area_multiplier = 1.55
 special_value = 0.15
 
 [resource]

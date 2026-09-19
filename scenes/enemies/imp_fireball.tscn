@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://01tb54a8k5mh"]
+
+[ext_resource type="Script" uid="uid://cyr6gna154il7" path="res://scripts/enemies/imp_fireball.gd" id="1_q62fl"]
+
+[sub_resource type="Gradient" id="Gradient_cluhe"]
+offsets = PackedFloat32Array(0, 0.05528846, 0.103365384, 0.14663461, 0.20913461, 0.25721154, 0.30528846, 0.35817307, 0.42067307, 0.46875, 0.5264423, 0.5793269, 0.62259614, 0.7139423, 0.7860577, 0.8581731, 0.94471157, 1)
+colors = PackedColorArray(1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.31730768, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 1, 0.2, 1, 1, 0.13333334, 0, 1, 1, 0.13333334, 0, 1, 0.63529414, 0.3882353, 0.27450982, 1, 0.4, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0qxht"]
+gradient = SubResource("Gradient_cluhe")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0qxht"]
+radius = 6.0
+
+[node name="ImpFireball" type="Area2D" unique_id=530128367]
+collision_layer = 0
+script = ExtResource("1_q62fl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2054710662]
+texture_filter = 1
+texture = SubResource("GradientTexture2D_0qxht")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1080857916]
+shape = SubResource("CircleShape2D_0qxht")

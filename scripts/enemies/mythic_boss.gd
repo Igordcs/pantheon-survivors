@@ -11,6 +11,7 @@ enum State { SPAWNING, CHASING, TELEGRAPHING, ATTACKING, DYING }
 @export var attack_mode := AttackMode.CHARGE
 @export_dir var spawn_directory: String
 @export_dir var idle_directory: String
+@export_dir var run_directory: String
 @export_dir var attack_directory: String
 @export_dir var death_directory: String
 @export var spawn_duration: float = 1.5
@@ -89,7 +90,11 @@ func _process_chasing(delta: float) -> void:
 		velocity = Vector2.ZERO
 	if direction.x != 0.0:
 		sprite.flip_h = direction.x < 0.0
-	sprite.play(&"IDLE")
+	if sprite.sprite_frames.has_animation(&"RUN") \
+			and sprite.sprite_frames.get_frame_count(&"RUN") > 0:
+		sprite.play(&"RUN")
+	else:
+		sprite.play(&"IDLE")
 	_summon_timer -= delta
 	if _summon_timer <= 0.0:
 		_spawn_minions(2 if _second_phase else 1)
@@ -202,6 +207,7 @@ func _build_animations() -> void:
 	frames.remove_animation(&"default")
 	_add_animation(frames, &"SPAWN", spawn_directory, 6.0, false)
 	_add_animation(frames, &"IDLE", idle_directory, 6.0, true, idle_last_frame_only)
+	_add_animation(frames, &"RUN", run_directory, 8.0, true)
 	_add_animation(frames, &"ATTACK", attack_directory, 9.0, false)
 	_add_animation(frames, &"DEAD", death_directory, 8.0, false)
 	sprite.sprite_frames = frames
@@ -222,7 +228,9 @@ func _add_animation(
 ) -> void:
 	if directory_path.is_empty():
 		return
-	var files := DirAccess.get_files_at(directory_path)
+	# Use a listagem de recursos virtuais para funcionar tanto no editor quanto
+	# dentro do PCK exportado. DirAccess nao garante os nomes-fonte dos imports.
+	var files := ResourceLoader.list_directory(directory_path)
 	files.sort()
 	frames.add_animation(animation_name)
 	frames.set_animation_speed(animation_name, fps)

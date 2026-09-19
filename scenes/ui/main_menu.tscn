@@ -126,17 +126,17 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -470.0
+offset_left = -560.0
 offset_top = -80.0
-offset_right = 470.0
+offset_right = 560.0
 offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 20
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="BottomButtons" unique_id=810229502]
-custom_minimum_size = Vector2(180, 46)
+custom_minimum_size = Vector2(170, 46)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_colors/font_focus_color = Color(1, 0.9, 0.4, 1)
@@ -150,7 +150,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
 text = "JOGAR"
 
 [node name="ShopButton" type="Button" parent="BottomButtons"]
-custom_minimum_size = Vector2(180, 46)
+custom_minimum_size = Vector2(170, 46)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_colors/font_focus_color = Color(1, 0.9, 0.4, 1)
@@ -164,7 +164,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
 text = "LOJA"
 
 [node name="SettingsButton" type="Button" parent="BottomButtons" unique_id=562261055]
-custom_minimum_size = Vector2(210, 46)
+custom_minimum_size = Vector2(190, 46)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_colors/font_focus_color = Color(1, 0.9, 0.4, 1)
@@ -177,8 +177,22 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
 text = "OPÇÕES"
 
+[node name="CreditsButton" type="Button" parent="BottomButtons" unique_id=3847291023]
+custom_minimum_size = Vector2(190, 46)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_focus_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_hover_color = Color(1, 0.9, 0.4, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
+text = "CREDITOS"
+
 [node name="QuitButton" type="Button" parent="BottomButtons" unique_id=206276571]
-custom_minimum_size = Vector2(160, 46)
+custom_minimum_size = Vector2(150, 46)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_colors/font_focus_color = Color(1, 0.4, 0.4, 1)
@@ -280,6 +294,82 @@ theme_override_font_sizes/font_size = 12
 text = "Tela Cheia"
 
 [node name="CloseSettingsButton" type="Button" parent="SettingsModal/VBoxContainer" unique_id=160254056]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "VOLTAR"
+
+[node name="CreditsModal" type="Panel" parent="." unique_id=2948172031]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -240.0
+offset_right = 320.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreditsModal" unique_id=3819472610]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 28.0
+offset_right = -32.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="CreditsTitle" type="Label" parent="CreditsModal/VBoxContainer" unique_id=1948271032]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+text = "CREDITOS"
+horizontal_alignment = 1
+
+[node name="SubjectLabel" type="Label" parent="CreditsModal/VBoxContainer" unique_id=2849173019]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.75, 0.3, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 11
+text = "PROJETO DE JOGOS DIGITAIS"
+horizontal_alignment = 1
+
+[node name="TeamSectionTitle" type="Label" parent="CreditsModal/VBoxContainer" unique_id=3728194028]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 12
+text = "EQUIPE DE DESENVOLVIMENTO:"
+horizontal_alignment = 1
+
+[node name="TeamMembersLabel" type="Label" parent="CreditsModal/VBoxContainer" unique_id=4829103948]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.95)
+theme_override_constants/line_spacing = 8
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 10
+text = "Pedro Lucas Galdino Leite
+Paulo Henrique Silvestre
+Rafael Alves
+Igor Costa
+Rai Araujo
+Airton Da Silva"
+horizontal_alignment = 1
+
+[node name="CloseCreditsButton" type="Button" parent="CreditsModal/VBoxContainer" unique_id=3918274619]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font")

@@ -6,7 +6,20 @@
 [sub_resource type="Resource" id="Anchor_0"]
 script = ExtResource("2_anchor")
 boss_id = &"king_slime"
+boss_ids = Array[StringName]([&"king_slime", &"orc_warlord"])
 trigger_time = 180.0
+warning_duration = 3.0
+
+[sub_resource type="Resource" id="Anchor_1"]
+script = ExtResource("2_anchor")
+boss_id = &"cerberus"
+trigger_time = 420.0
+warning_duration = 3.0
+
+[sub_resource type="Resource" id="Anchor_2"]
+script = ExtResource("2_anchor")
+boss_id = &"lernaean_hydra"
+trigger_time = 660.0
 warning_duration = 3.0
 
 [resource]
@@ -17,5 +30,5 @@ description = "O primeiro ponto em que o Véu falhou. Uma região comum, contami
 intro_line = "O Véu se rompeu. Reúna os Ecos. Feche a Fenda."
 order = 1
 map_id = &"field"
-anchors = Array[ExtResource("2_anchor")]([SubResource("Anchor_0")])
+anchors = Array[ExtResource("2_anchor")]([SubResource("Anchor_0"), SubResource("Anchor_1"), SubResource("Anchor_2")])
 accent_color = Color(0.55, 0.82, 0.35, 1)

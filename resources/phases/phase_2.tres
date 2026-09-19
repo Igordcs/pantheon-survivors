@@ -5,14 +5,20 @@
 
 [sub_resource type="Resource" id="Anchor_0"]
 script = ExtResource("2_anchor")
-boss_id = &"orc_warlord"
+boss_id = &"amheh"
 trigger_time = 180.0
 warning_duration = 3.0
 
 [sub_resource type="Resource" id="Anchor_1"]
 script = ExtResource("2_anchor")
-boss_id = &"cerberus"
+boss_id = &"anubis"
 trigger_time = 420.0
+warning_duration = 3.0
+
+[sub_resource type="Resource" id="Anchor_2"]
+script = ExtResource("2_anchor")
+boss_id = &"apophis"
+trigger_time = 660.0
 warning_duration = 3.0
 
 [resource]
@@ -23,5 +29,5 @@ description = "O que atravessou aqui não veio saquear: veio ocupar. Orcs, ciclo
 intro_line = "Eles não vieram saquear. Vieram ficar. Feche a porta."
 order = 2
 map_id = &"ruins"
-anchors = Array[ExtResource("2_anchor")]([SubResource("Anchor_0"), SubResource("Anchor_1")])
+anchors = Array[ExtResource("2_anchor")]([SubResource("Anchor_0"), SubResource("Anchor_1"), SubResource("Anchor_2")])
 accent_color = Color(0.92, 0.55, 0.25, 1)

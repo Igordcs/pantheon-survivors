@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/Idle_walk/02.png" id="5_idle2"]
 [ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/Idle_walk/03.png" id="6_idle3"]
 [ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/Idle_walk/04.png" id="7_idle4"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/Dead/01.png" id="8_dead1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/Dead/02.png" id="9_dead2"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/Dead/03.png" id="10_dead3"]
-[ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/Dead/04.png" id="11_dead4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/dead/01.png" id="8_dead1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/dead/02.png" id="9_dead2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/dead/03.png" id="10_dead3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/slime/dead/04.png" id="11_dead4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1"]
 animations = [{

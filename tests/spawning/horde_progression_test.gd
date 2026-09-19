@@ -68,9 +68,13 @@ func _run_test() -> void:
 	await _validate_boss_scene("res://scenes/bosses/corrupted_treant.tscn", 8000.0)
 	await _validate_directional_boss_scene("res://scenes/bosses/cerberus.tscn", 3600.0)
 	await _validate_directional_boss_scene("res://scenes/bosses/jormungandr.tscn", 9500.0)
+	await _validate_directional_boss_scene("res://scenes/bosses/lernaean_hydra.tscn", 5200.0)
+	await _validate_directional_boss_scene("res://scenes/bosses/amheh.tscn", 5000.0)
+	await _validate_directional_boss_scene("res://scenes/bosses/anubis.tscn", 6800.0)
+	await _validate_directional_boss_scene("res://scenes/bosses/apophis.tscn", 8500.0)
 
-	# As Âncoras deixaram de ser sorteadas: cada fase declara exatamente quais são,
-	# em ordem, e a última encerra a ruptura (docs/lore.md).
+	# Cada fase declara suas Âncoras em ordem; uma Âncora pode ter um pool sorteável,
+	# e a última sempre encerra a ruptura (docs/lore.md).
 	var phase := PhaseCatalog.get_phase(&"phase_3")
 	Global.selected_phase_id = phase.phase_id
 	var run_manager := RunManager.new()

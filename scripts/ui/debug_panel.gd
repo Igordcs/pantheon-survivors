@@ -30,8 +30,15 @@ func _input(event: InputEvent) -> void:
 			_toggle_dev_menu()
 			get_viewport().set_input_as_handled()
 		return
-	if event.is_action_pressed("debug_f3") or (event is InputEventKey and event.keycode == KEY_F3 and event.pressed):
+	var is_f3_action := InputMap.has_action("debug_f3") and event.is_action_pressed("debug_f3")
+	if is_f3_action or _is_f3_key(event):
 		$MarginContainer.visible = not $MarginContainer.visible
+
+
+func _is_f3_key(event: InputEvent) -> bool:
+	if not (event is InputEventKey):
+		return false
+	return event.keycode == KEY_F3 and event.pressed
 
 
 func _is_dev_menu_shortcut(event: InputEvent) -> bool:

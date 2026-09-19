@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"lernaean_hydra"
+display_name = "Lernaean Hydra"
+max_health = 5200.0
+speed = 44.0
+contact_damage = 27.0
+score_value = 2200
+visual_size = 132.0
+sprite_directory = "res://assets/sprites/bosses/lernaean_hydra/Idle/rotations"
+epithet = "A FOME DE MUITAS CABECAS"
+presentation_text = "A Hidra encontrou na Fenda um pantano sem margem. Cada cabeca vigia uma saida diferente, e todas precisam cair para que a primeira ruptura se feche."

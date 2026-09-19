@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://1p8wp1spxjnw"]
+
+[ext_resource type="Script" uid="uid://b4r8osuy8n1tf" path="res://scripts/enemies/lizard_enemy.gd" id="1_odokc"]
+[ext_resource type="Resource" uid="uid://c3uc0eepwsaub" path="res://resources/enemies/lizard_data.tres" id="2_v4ylp"]
+[ext_resource type="Script" uid="uid://rpi6bjtolxtp" path="res://scripts/combat/health_component.gd" id="4_dercc"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bl5cr"]
+load_path = "res://.godot/imported/lizard_enemy.png-ab316bce1f9ddcf4b52d355a874b7757.ctex"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 8.0
+
+[node name="LizardEnemy" type="CharacterBody2D" unique_id=15159520 groups=["enemies"]]
+collision_layer = 2
+script = ExtResource("1_odokc")
+enemy_data = ExtResource("2_v4ylp")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1077079411]
+texture_filter = 1
+texture = SubResource("CompressedTexture2D_bl5cr")
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=592619895]
+position = Vector2(0, 14)
+shape = SubResource("CircleShape2D_1")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=203627486]
+script = ExtResource("4_dercc")
+max_health = 30.0

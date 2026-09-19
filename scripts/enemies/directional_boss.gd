@@ -29,6 +29,8 @@ func _ready() -> void:
 	var walk_path := boss_data.walk_sprite_directory if boss_data and not boss_data.walk_sprite_directory.is_empty() else walk_sprite_directory
 	if boss_data and boss_data.visual_size > 0.0:
 		visual_height = boss_data.visual_size
+	if boss_data:
+		walk_animation_speed = boss_data.walk_animation_speed
 	_directional_sprites = DirectionalSpriteHelper.load_directory(idle_path)
 	_walk_sprites = DirectionalSpriteHelper.load_animation_directory(walk_path)
 	_apply_idle_direction(Vector2.DOWN)

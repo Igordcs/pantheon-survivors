@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://c3uc0eepwsaub"]
+
+[ext_resource type="Script" uid="uid://7sdoy4k44d5y" path="res://scripts/enemies/enemy_data.gd" id="1_ermpn"]
+
+[resource]
+script = ExtResource("1_ermpn")
+id = &"lizard"
+display_name = "Lagarto"
+max_health = 45.0
+speed = 75.0
+score_value = 22
+spawn_weight = 0.7
+metadata/_custom_type_script = "uid://7sdoy4k44d5y"

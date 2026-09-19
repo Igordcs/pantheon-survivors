@@ -37,6 +37,11 @@ func _ready() -> void:
 	_legacy_scenes[&"charger"] = preload("res://scenes/enemies/charger_enemy.tscn")
 	_legacy_scenes[&"ammit"] = preload("res://scenes/enemies/ammit.tscn")
 	_legacy_scenes[&"corrupted_valkyrie"] = preload("res://scenes/enemies/corrupted_valkyrie.tscn")
+	_legacy_scenes[&"skeleton"] = preload("res://scenes/enemies/skeleton_enemy.tscn")
+	_legacy_scenes[&"wolf"] = preload("res://scenes/enemies/wolf_enemy.tscn")
+	_legacy_scenes[&"warlock"] = preload("res://scenes/enemies/warlock_enemy.tscn")
+	_legacy_scenes[&"lizard"] = preload("res://scenes/enemies/lizard_enemy.tscn")
+	_legacy_scenes[&"imp"] = preload("res://scenes/enemies/imp_enemy.tscn")
 
 	_spawn_timer = Timer.new()
 	_spawn_timer.wait_time = spawn_interval

@@ -26,13 +26,13 @@ Base movement speeds for playable characters, regular enemies and bosses were re
 | 00:00–01:00 | Bat and Draugr introduction, cap 25                          |
 | 01:00–02:00 | Harpies and a 30-Bat swarm event at 01:30, cap 40            |
 | 02:00–03:00 | Ranged Slimes and a 12-Slime surround event at 02:30, cap 55 |
-| 03:00       | King Slime encounter                                         |
+| 03:00       | First phase-specific Anchor encounter                         |
 | 03:00–05:00 | Medusa and Healer Slime, cap 80                              |
 | 05:00–06:30 | Mummy and Cyclops, cap 110                                   |
-| 06:30       | Random medium boss: Orc Warlord or Cerberus                  |
 | 06:30–08:00 | Orcs join, first Minotaur event at 07:30, cap 150            |
+| 07:00       | Second phase-specific Anchor encounter                        |
 | 08:00–10:00 | Full roster and a final 50-Bat swarm at 09:00, cap 220       |
-| 10:00       | Random final boss: Corrupted Treant or Jormungandr           |
+| 11:00       | Final phase-specific Anchor encounter                         |
 
 Horde events request substantially larger groups than routine spawn batches. They still respect the active-enemy cap of the current phase and each enemy type's simultaneous cap, so the actual spawned count can be lower when the battlefield is already full. Bats allow up to 80 simultaneous instances and ranged Slimes up to 24, preventing their species cap from prematurely reducing the configured event.
 
@@ -43,12 +43,17 @@ Horde events request substantially larger groups than routine spawn batches. The
 | King Slime       | 1,500 | Stationary | 18                                                          | 2/5        | Frontal strike and ranged/support Slime summons                           | Chest, then resume  |
 | Orc Warlord      | 4,000 |         55 | 25 contact / 32 charge                                      | 4/5        | Targeted charge, Orc summons and faster phase two                         | Chest, then resume  |
 | Cerberus         | 3,600 |         61 | 24 contact / 28 breath / 38 leap                            | 4/5        | Three infernal breath cones and a targeted crushing leap                  | Chest, then resume  |
+| Lernaean Hydra   | 5,200 |         44 | 27 contact / 34 pulse                                       | 4/5        | Pursuit and a telegraphed circular pulse                                  | Chest, then victory |
+| Amheh            | 5,000 |         58 | 26 contact / 29 pulse                                       | 3/5        | Fast pursuit and a compact circular pulse                                 | Chest, then resume  |
+| Anubis           | 6,800 |         52 | 31 contact / 35 pulse                                       | 4/5        | Pursuit and a medium circular pulse                                       | Chest, then resume  |
+| Apophis          | 8,500 |         46 | 35 contact / 42 pulse                                       | 5/5        | Heavy pursuit and a large circular pulse                                  | Chest, then victory |
 | Corrupted Treant | 8,000 |         32 | 30 contact / 38 eruption                                    | 5/5        | Slow pursuit, targeted ground eruptions, Bat summons and faster phase two | Chest, then victory |
 | Jormungandr      | 9,500 |         49 | 30 contact / 45 bite / 14 impact / 8 poison tick / 12 magic | 5/5        | Emerging bite, poison spit and a radial magic barrage                     | Chest, then victory |
+| Fenrir           | 10,500 |         58 | 32 contact                                                  | 5/5        | Relentless directional pursuit and chained attacks                        | Chest, then victory |
 
 ## Boss selection
 
-Bosses are selected once when the run starts. The 03:00 slot currently contains only King Slime. The 06:30 medium slot has equal weight for Orc Warlord and Cerberus. The 10:00 final slot has equal weight for Corrupted Treant and Jormungandr. New bosses can be added to a slot through `BossCandidateData` without changing the encounter flow.
+Each campaign phase schedules bosses at 03:00, 07:00 and 11:00. Phase 1 draws its first boss with equal weight from King Slime and Orc Warlord, followed by Cerberus and Lernaean Hydra. Phase 2 uses Amheh, Anubis and Apophis. Phase 3 uses Corrupted Treant, Jormungandr and Fenrir. New random pools can be configured directly in a `PhaseAnchorData` resource without changing encounter flow.
 
 `RunManager.boss_selection_seed` controls the selection sequence. A value of `0` creates a random seed and prints it to the console; a manually configured value reproduces the same choices for tests and balancing sessions.
 
