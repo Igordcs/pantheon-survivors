@@ -7,7 +7,10 @@ signal loadout_changed
 signal phase_completed(phase_id: StringName, unlocked_phase_id: StringName)
 signal settings_changed
 
-const SAVE_PATH := "user://save_data.json"
+# Novo slot para a build publica atual. Evita que progresso de builds de teste
+# anteriores (moedas, compras e fases concluidas) seja herdado no primeiro boot.
+# O save anterior permanece intacto no dispositivo como backup.
+const SAVE_PATH := "user://save_data_v2.json"
 const SAVE_VERSION := 8
 const INITIAL_CHARACTER_IDS := ["eirik", "neferu", "perseus"]
 const INITIAL_WEAPON_IDS := ["mjolnir"]

@@ -7,6 +7,7 @@ const ANIMATED_CHARACTER_IDS: Array[StringName] = [
 	&"perseus",
 	&"neferu",
 	&"kratos",
+	&"punisher",
 ]
 
 var _failures: int = 0
@@ -61,6 +62,26 @@ func _validate_player_animation(character_id: StringName) -> void:
 		_fail("%s should play walk_east while moving right." % character_id)
 	if animated_sprite.sprite_frames.get_frame_count(&"walk_east") != 6:
 		_fail("%s walk_east animation should contain 6 frames." % character_id)
+
+	player.call("_update_character_animation", Vector2.LEFT, true)
+	if animated_sprite.animation != &"walk_west":
+		_fail("%s should play walk_west while moving left." % character_id)
+	if animated_sprite.sprite_frames.get_frame_count(&"walk_west") != 6:
+		_fail("%s walk_west animation should contain 6 frames." % character_id)
+	var west_frame := animated_sprite.sprite_frames.get_frame_texture(&"walk_west", 0)
+	if not west_frame or "/Walk/west/" not in west_frame.resource_path:
+		_fail("%s walk_west should use frames from the west directory." % character_id)
+	if animated_sprite.flip_h:
+		_fail("%s walk_west directional frames should not be mirrored." % character_id)
+
+	player.call("_update_character_animation", Vector2(-1.0, -1.0), true)
+	if animated_sprite.animation != &"walk_north-west":
+		_fail("%s should play walk_north-west while moving northwest." % character_id)
+	var northwest_frame := animated_sprite.sprite_frames.get_frame_texture(&"walk_north-west", 0)
+	if not northwest_frame or "/Walk/north-west/" not in northwest_frame.resource_path:
+		_fail("%s walk_north-west should use frames from the north-west directory." % character_id)
+	if animated_sprite.flip_h:
+		_fail("%s walk_north-west directional frames should not be mirrored." % character_id)
 	if character_id == &"kratos":
 		var east_scale := animated_sprite.scale
 		player.call("_update_character_animation", Vector2.DOWN, true)
@@ -70,6 +91,14 @@ func _validate_player_animation(character_id: StringName) -> void:
 	player.call("_update_character_animation", Vector2.RIGHT, false)
 	if animated_sprite.animation != &"idle_east":
 		_fail("%s should return to idle_east after stopping." % character_id)
+	player.call("_update_character_animation", Vector2.LEFT, false)
+	if animated_sprite.animation != &"idle_west":
+		_fail("%s should return to idle_west after stopping." % character_id)
+	var idle_west := animated_sprite.sprite_frames.get_frame_texture(&"idle_west", 0)
+	if not idle_west or not idle_west.resource_path.ends_with("/west.png"):
+		_fail("%s idle_west should use the west texture." % character_id)
+	if animated_sprite.flip_h:
+		_fail("%s idle_west directional texture should not be mirrored." % character_id)
 	player.free()
 
 
