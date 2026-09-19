@@ -1,7 +1,7 @@
 extends Control
 ## Shop — Loja de personagens, armas e itens permanentes.
 
-const PIXEL_FONT := preload("res://assets/fonts/PressStart2P-Regular.ttf")
+const PIXEL_FONT := preload("res://assets/fonts/press_start_2p.tres")
 
 ## Cor da borda do card conforme o estado do produto.
 const ACCENT_AVAILABLE := Color(1.0, 0.82, 0.3)

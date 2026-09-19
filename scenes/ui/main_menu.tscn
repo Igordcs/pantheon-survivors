@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ixdj0mv0nn6m" path="res://scripts/ui/main_menu.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://cgixhss2engb" path="res://assets/sprites/menu_bg_pixel.jpg" id="2_bg"]
-[ext_resource type="FontFile" uid="uid://ctatsqbofgfn5" path="res://assets/fonts/PressStart2P-Regular.ttf" id="3_font"]
+[ext_resource type="FontVariation" path="res://assets/fonts/press_start_2p.tres" id="3_font"]
 
 [sub_resource type="Curve" id="Curve_embers"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 0, 0]

@@ -1,7 +1,7 @@
 extends Control
 ## HUD — Mostra as informações do player e da run na tela.
 
-const PIXEL_FONT := preload("res://assets/fonts/PressStart2P-Regular.ttf")
+const PIXEL_FONT := preload("res://assets/fonts/press_start_2p.tres")
 
 const ANCHOR_PIP_SIZE := Vector2(18, 18)
 const ANCHOR_PENDING := Color(0.95, 0.82, 0.45)

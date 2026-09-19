@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bphasesel0001"]
 
 [ext_resource type="Script" path="res://scripts/ui/phase_selection.gd" id="1_script"]
-[ext_resource type="FontFile" uid="uid://ctatsqbofgfn5" path="res://assets/fonts/PressStart2P-Regular.ttf" id="2_font"]
+[ext_resource type="FontVariation" path="res://assets/fonts/press_start_2p.tres" id="2_font"]
 
 [sub_resource type="Curve" id="Curve_embers"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 0, 0]

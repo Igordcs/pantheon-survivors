@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/shop.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/sprites/menu_bg_pixel.jpg" id="2"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/gem/BlueCoin Sheet.png" id="3"]
-[ext_resource type="FontFile" uid="uid://ctatsqbofgfn5" path="res://assets/fonts/PressStart2P-Regular.ttf" id="4"]
+[ext_resource type="FontVariation" path="res://assets/fonts/press_start_2p.tres" id="4"]
 
 [sub_resource type="AtlasTexture" id="Atlas_coin"]
 atlas = ExtResource("3")

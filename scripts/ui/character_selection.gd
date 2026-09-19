@@ -1,7 +1,7 @@
 extends Control
 ## CharacterSelection — Tela para escolher o personagem antes da Run.
 
-const PIXEL_FONT := preload("res://assets/fonts/PressStart2P-Regular.ttf")
+const PIXEL_FONT := preload("res://assets/fonts/press_start_2p.tres")
 const BACKGROUND_ART_PATH := "res://assets/sprites/character_select_bg.png"
 const BACKGROUND_FALLBACK_PATH := "res://assets/sprites/menu_bg_pixel.jpg"
 

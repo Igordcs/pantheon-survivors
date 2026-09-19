@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cpausepanel01"]
 
 [ext_resource type="Script" path="res://scripts/ui/pause_panel.gd" id="1_script"]
-[ext_resource type="FontFile" uid="uid://ctatsqbofgfn5" path="res://assets/fonts/PressStart2P-Regular.ttf" id="2_font"]
+[ext_resource type="FontVariation" path="res://assets/fonts/press_start_2p.tres" id="2_font"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 content_margin_left = 30.0

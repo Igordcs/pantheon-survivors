@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c6ar13mrqxpce" path="res://scripts/ui/character_selection.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://cb6j2icqtbyf4" path="res://assets/sprites/weapons/hermes_sandals.png" id="2_speed_icon"]
-[ext_resource type="FontFile" uid="uid://ctatsqbofgfn5" path="res://assets/fonts/PressStart2P-Regular.ttf" id="3_font"]
+[ext_resource type="FontVariation" path="res://assets/fonts/press_start_2p.tres" id="3_font"]
 
 [sub_resource type="Curve" id="Curve_embers"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 0, 0]

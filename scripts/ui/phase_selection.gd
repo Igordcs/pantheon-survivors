@@ -1,7 +1,7 @@
 extends Control
 ## PhaseSelection — Escolha da ruptura antes de montar o herói.
 
-const PIXEL_FONT := preload("res://assets/fonts/PressStart2P-Regular.ttf")
+const PIXEL_FONT := preload("res://assets/fonts/press_start_2p.tres")
 const CHARACTER_SELECTION_SCENE := "res://scenes/ui/character_selection.tscn"
 const MAIN_MENU_SCENE := "res://scenes/ui/main_menu.tscn"
 const BACKGROUND_ART_PATH := "res://assets/sprites/character_select_bg.png"

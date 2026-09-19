@@ -3,7 +3,7 @@ extends Control
 
 signal option_chosen(option: UpgradeOption)
 
-const PIXEL_FONT := preload("res://assets/fonts/PressStart2P-Regular.ttf")
+const PIXEL_FONT := preload("res://assets/fonts/press_start_2p.tres")
 const OPTION_ICON_SIZE: int = 56
 const ACCENT := Color(1.0, 0.82, 0.3)
 

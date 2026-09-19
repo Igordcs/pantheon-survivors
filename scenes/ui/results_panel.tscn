@@ -1,6 +1,45 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/results_panel.gd" id="1_script"]
+[ext_resource type="FontVariation" path="res://assets/fonts/press_start_2p.tres" id="2_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 34.0
+content_margin_top = 26.0
+content_margin_right = 34.0
+content_margin_bottom = 26.0
+bg_color = Color(0.05, 0.04, 0.09, 0.97)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.8, 0.2, 1)
+shadow_color = Color(0, 0, 0, 0.9)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.11, 0.08, 0.16, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.46, 0.4, 0.58, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.16, 0.12, 0.22, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.82, 0.3, 1)
 
 [node name="ResultsPanel" type="Control"]
 layout_mode = 3
@@ -18,91 +57,152 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.7)
+color = Color(0.02, 0.015, 0.04, 0.82)
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -250.0
-offset_right = 200.0
-offset_bottom = 250.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
 
-[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(780, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "VICTORY"
-horizontal_alignment = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="PhaseLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.32, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.07, 0.02, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "RUPTURA SELADA"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PhaseLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.83, 0.89, 1)
-theme_override_constants/line_spacing = 6
-theme_override_font_sizes/font_size = 16
+theme_override_colors/font_outline_color = Color(0.04, 0.02, 0.01, 1)
+theme_override_constants/line_spacing = 7
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 10
 text = ""
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="StatsGrid" type="GridContainer" parent="Panel/VBoxContainer"]
+[node name="EpilogueSeparator" type="ColorRect" parent="CenterContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/h_separation = 20
-theme_override_constants/v_separation = 20
+color = Color(0.46, 0.38, 0.18, 0.7)
+
+[node name="EpilogueLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.78, 0.88, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.02, 0.01, 1)
+theme_override_constants/line_spacing = 9
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="StatsGrid" type="GridContainer" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 12
 columns = 2
 
-[node name="TimeLabel" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="TimeLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
-text = "Time Survived:"
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.68, 0.64, 0.78, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "TEMPO NA FENDA"
 
-[node name="TimeValue" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="TimeValue" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.92, 0.9, 0.96, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 10
 text = "10:00"
+horizontal_alignment = 2
 
-[node name="CoinsLabel" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="CoinsLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
-text = "Moedas coletadas:"
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.68, 0.64, 0.78, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "MOEDAS COLETADAS"
 
-[node name="CoinsValue" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="CoinsValue" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.82, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 10
 text = "0"
+horizontal_alignment = 2
 
-[node name="KillsLabel" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="KillsLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
-text = "Enemies Slain:"
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.68, 0.64, 0.78, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "INVASORES ABATIDOS"
 
-[node name="KillsValue" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="KillsValue" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.92, 0.9, 0.96, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 10
 text = "2500"
+horizontal_alignment = 2
 
-[node name="BossesLabel" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="BossesLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
-text = "Bosses Defeated:"
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.68, 0.64, 0.78, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 9
+text = "ANCORAS DERRUBADAS"
 
-[node name="BossesValue" type="Label" parent="Panel/VBoxContainer/StatsGrid"]
+[node name="BossesValue" type="Label" parent="CenterContainer/Panel/VBoxContainer/StatsGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.92, 0.9, 0.96, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 10
 text = "1"
+horizontal_alignment = 2
 
-[node name="RestartButton" type="Button" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="RestartButton" type="Button" parent="CenterContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
+focus_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.9, 0.96, 1)
+theme_override_colors/font_hover_color = Color(1, 0.88, 0.36, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_button_hover")
 text = "MENU PRINCIPAL"
