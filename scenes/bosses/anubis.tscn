@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://scripts/enemies/anchor_boss.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/anubis_boss.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2"]
 [ext_resource type="Resource" path="res://resources/bosses/anubis_data.tres" id="3"]
 
@@ -14,8 +14,6 @@ script = ExtResource("1")
 boss_data = ExtResource("3")
 contact_radius = 45.0
 attack_cooldown = 3.8
-pulse_damage = 35.0
-pulse_radius = 145.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

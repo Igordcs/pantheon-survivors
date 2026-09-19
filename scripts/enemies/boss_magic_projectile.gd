@@ -7,6 +7,7 @@ var speed: float = 280.0
 var damage: float = 12.0
 var max_distance: float = 720.0
 var hit_radius: float = 14.0
+var projectile_color := Color(0.25, 0.65, 1.0, 1.0)
 
 var _player: CharacterBody2D
 var _distance_traveled: float = 0.0
@@ -19,7 +20,8 @@ func setup(
 	travel_direction: Vector2,
 	projectile_speed: float,
 	projectile_damage: float,
-	travel_distance: float
+	travel_distance: float,
+	visual_color: Color = Color(0.25, 0.65, 1.0, 1.0)
 ) -> void:
 	_player = player
 	global_position = start_position
@@ -27,6 +29,7 @@ func setup(
 	speed = projectile_speed
 	damage = projectile_damage
 	max_distance = travel_distance
+	projectile_color = visual_color
 	rotation = direction.angle()
 	z_index = 6
 
@@ -74,6 +77,6 @@ func _damage_player() -> void:
 
 
 func _draw() -> void:
-	draw_line(Vector2(-15.0, 0.0), Vector2(2.0, 0.0), Color(0.25, 0.7, 1.0, 0.45), 7.0)
-	draw_circle(Vector2.ZERO, 8.0, Color(0.25, 0.65, 1.0, 0.42))
-	draw_circle(Vector2.ZERO, 5.0, Color(0.72, 0.92, 1.0, 1.0))
+	draw_line(Vector2(-15.0, 0.0), Vector2(2.0, 0.0), Color(projectile_color, 0.45), 7.0)
+	draw_circle(Vector2.ZERO, 8.0, Color(projectile_color, 0.42))
+	draw_circle(Vector2.ZERO, 5.0, projectile_color.lightened(0.45))

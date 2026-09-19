@@ -43,10 +43,10 @@ Horde events request substantially larger groups than routine spawn batches. The
 | King Slime       | 1,500 | Stationary | 18                                                          | 2/5        | Frontal strike and ranged/support Slime summons                           | Chest, then resume  |
 | Orc Warlord      | 4,000 |         55 | 25 contact / 32 charge                                      | 4/5        | Targeted charge, Orc summons and faster phase two                         | Chest, then resume  |
 | Cerberus         | 3,600 |         61 | 24 contact / 28 breath / 38 leap                            | 4/5        | Three infernal breath cones and a targeted crushing leap                  | Chest, then resume  |
-| Lernaean Hydra   | 5,200 |         44 | 27 contact / 34 pulse                                       | 4/5        | Pursuit and a telegraphed circular pulse                                  | Chest, then victory |
-| Amheh            | 5,000 |         58 | 26 contact / 29 pulse                                       | 3/5        | Fast pursuit and a compact circular pulse                                 | Chest, then resume  |
-| Anubis           | 6,800 |         52 | 31 contact / 35 pulse                                       | 4/5        | Pursuit and a medium circular pulse                                       | Chest, then resume  |
-| Apophis          | 8,500 |         46 | 35 contact / 42 pulse                                       | 5/5        | Heavy pursuit and a large circular pulse                                  | Chest, then victory |
+| Lernaean Hydra   | 5,200 |         44 | 27 contact / 25–31 attacks                                  | 4/5        | Sequential head strikes, chained eruptions and a sweep with a safe opening | Chest, then victory |
+| Amheh            | 5,000 |         58 | 26 contact / 18 burst / 6 fire tick                         | 3/5        | Purple gravefire patterns, persistent zones and an inverse horizon ring   | Chest, then resume  |
+| Anubis           | 6,800 |         52 | 31 contact / 17–40 judgment                                 | 4/5        | Safe-zone judgment, spectral gates and a slowing mummification cone        | Chest, then resume  |
+| Apophis          | 8,500 |         46 | 35 contact / 15 poison / 14 chaos / 41 eclipse              | 5/5        | Poison rain, rotating chaos spirals and alternating eclipse zones          | Chest, then victory |
 | Corrupted Treant | 8,000 |         32 | 30 contact / 38 eruption                                    | 5/5        | Slow pursuit, targeted ground eruptions, Bat summons and faster phase two | Chest, then victory |
 | Jormungandr      | 9,500 |         49 | 30 contact / 45 bite / 14 impact / 8 poison tick / 12 magic | 5/5        | Emerging bite, poison spit and a radial magic barrage                     | Chest, then victory |
 | Fenrir           | 10,500 |         58 | 32 contact                                                  | 5/5        | Relentless directional pursuit and chained attacks                        | Chest, then victory |
@@ -78,6 +78,33 @@ During every boss warning, regular spawning is stopped and the active horde is r
 - **Three infernal breaths:** Cerberus stops and telegraphs three separate fire cones. The cones point in neighboring directions while keeping gaps between them, so positioning in the safe space avoids damage. Damage is applied once when the telegraph resolves.
 - **Crushing leap:** the player's position is captured when the attack starts and marked on the ground. After the warning, Cerberus leaps to that position and deals circular area damage. Moving outside the marked radius avoids the hit.
 - Outside attack wind-ups and recovery, Cerberus continually moves toward the player. Below half health, its chase speed increases slightly.
+
+### Lernaean Hydra — phase 1 final boss
+
+- **Many-headed strike:** three delayed line attacks resolve in sequence. Additional heads awaken at 66% and 33% health, adding one strike each.
+- **Swamp eruption:** circular eruptions travel from the Hydra toward the player's captured position.
+- **Head sweep:** an annular attack covers the area around the Hydra while leaving one visible angular opening.
+
+### Amheh — phase 2 early boss
+
+- **Devourer flames:** five purple-fire circles surround the player's position, explode and remain as temporary damage zones.
+- **Funeral constellation:** staggered gravefire circles form two rings with a deliberately empty escape slot.
+- **Consumed horizon:** a wide annular blast forces the player toward Amheh while purple fire burns directly beneath the boss.
+- Below half health, Amheh summons seven flames, uses denser constellations and attacks more frequently.
+
+### Anubis — phase 2 medium boss
+
+- **Weighing of the heart:** the nearby arena is condemned except for a clearly marked golden safe circle.
+- **Gates of Duat:** four spectral gates surround the captured player position and fire crossing projectiles.
+- **Mummification seal:** a narrow cone damages and temporarily slows the player.
+- Below half health, Anubis opens six gates and combines their volley with a telegraphed mummification seal.
+
+### Apophis — phase 2 final boss
+
+- **Venom rain:** arcing poison projectiles land around the player's captured position and create persistent poison puddles.
+- **Chaos spiral:** several rotating waves of three projectiles create moving escape corridors.
+- **Apophis eclipse:** alternates between a dangerous center and a dangerous outer ring, reversing the required positioning.
+- Below half health, Apophis fires a second poison volley, adds a fourth spiral arm and shortens its attack cycle.
 
 ### Corrupted Treant — final boss
 
