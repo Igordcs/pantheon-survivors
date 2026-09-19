@@ -175,7 +175,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_btn_hover")
-text = "OPCOES"
+text = "OPÇÕES"
 
 [node name="QuitButton" type="Button" parent="BottomButtons" unique_id=206276571]
 custom_minimum_size = Vector2(160, 46)

@@ -60,7 +60,7 @@ func _refresh_inventory() -> void:
 	var lines := PackedStringArray()
 	var experience := _player.get_node_or_null("ExperienceComponent") as ExperienceComponent
 	var hero_level := experience.current_level if experience else 1
-	lines.append("[center][color=%s]NIVEL DO HEROI  %d[/color][/center]" % [GOLD, hero_level])
+	lines.append("[center][color=%s]NÍVEL DO HERÓI  %d[/color][/center]" % [GOLD, hero_level])
 	lines.append("")
 	lines.append(_section("ARMAS"))
 
@@ -95,7 +95,7 @@ func _refresh_inventory() -> void:
 			var item_level := item_controller.get_item_level(item.id)
 			lines.append(_format_inventory_line(item.icon, item.display_name, item_level))
 
-	inventory_text.text = "\n".join(lines)
+	inventory_text.text = PixelText.fit("\n".join(lines))
 
 
 func _section(title: String) -> String:

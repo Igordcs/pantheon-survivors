@@ -60,7 +60,7 @@ func update_anchor_progress(defeated: int, total: int) -> void:
 		return
 	anchor_panel.show()
 	var remaining := maxi(_anchor_total - _anchor_defeated, 0)
-	anchor_label.text = "ANCORAS %d/%d" % [remaining, _anchor_total]
+	anchor_label.text = PixelText.fit("ÂNCORAS %d/%d" % [remaining, _anchor_total])
 	_rebuild_anchor_pips()
 
 
@@ -132,7 +132,8 @@ func show_boss_intro(display_name: String, epithet: String, lore: String,
 		duration: float) -> void:
 	var position_text := ""
 	if _anchor_total > 1:
-		position_text = "ANCORA %d DE %d  ·  " % [_anchor_defeated + 1, _anchor_total]
+		position_text = PixelText.fit("ÂNCORA %d DE %d  ·  "
+				% [_anchor_defeated + 1, _anchor_total])
 	boss_intro_epithet.text = position_text + PixelText.upper(epithet)
 	boss_intro_epithet.visible = not boss_intro_epithet.text.strip_edges().is_empty()
 	boss_intro_name.text = PixelText.upper(display_name)

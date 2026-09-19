@@ -148,10 +148,26 @@ func _test_selection_screen() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-	if screen._cards.size() != PhaseCatalog.get_phases().size():
-		_fail("The selection should show one card per phase.")
+	# Uma fase por card, mais o card de vitrine que anuncia a continuacao.
+	if screen._cards.size() != PhaseCatalog.get_phases().size() + 1:
+		_fail("The selection should show one card per phase plus the teaser.")
 	if screen.start_button.disabled:
 		_fail("The first phase should be playable from a fresh save.")
+
+	# A vitrine nao pode virar uma fase jogavel nem entrar na progressao.
+	if not screen._is_teaser(screen._teaser_index):
+		_fail("The teaser card should be reported as a teaser.")
+	if PhaseCatalog.has_phase(&"phase_4"):
+		_fail("The teaser must stay out of the phase catalog.")
+	screen._select_phase(screen._teaser_index, false)
+	if not screen.start_button.disabled:
+		_fail("The teaser card should never be startable.")
+	if screen.status_label.text != screen.TEASER_STATUS:
+		_fail("The teaser card should announce itself as upcoming.")
+	var before := Global.selected_phase_id
+	screen._on_start_pressed()
+	if Global.selected_phase_id != before:
+		_fail("Starting from the teaser must not change the selected phase.")
 
 	# Uma fase trancada não pode ser iniciada.
 	var locked_index := PhaseCatalog.get_phase_index(&"phase_2")

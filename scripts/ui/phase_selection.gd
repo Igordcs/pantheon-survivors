@@ -15,6 +15,14 @@ const CARD_HEIGHT := 230.0
 
 const LOCKED_ACCENT := Color(0.42, 0.4, 0.48)
 
+## Card de vitrine: uma ruptura que a campanha ainda não alcança. Fica fora do
+## PhaseCatalog de propósito, para não entrar em desbloqueio, save nem progressão.
+const TEASER_CHAINS_PATH := "res://assets/sprites/ui/phase_locked_chains.png"
+const TEASER_ORDER_TEXT := "FASE 4"
+const TEASER_NAME := "???"
+const TEASER_STATUS := "EM BREVE"
+const TEASER_DESCRIPTION := "O Véu não rachou apenas três vezes. Há outras fendas lá fora, fundas demais para serem alcançadas agora."
+
 @onready var background_art: TextureRect = $BackgroundArt
 @onready var card_row: HBoxContainer = $Layout/CardRow
 @onready var name_label: Label = $Layout/DetailsPanel/Details/NameLabel
@@ -27,6 +35,8 @@ const LOCKED_ACCENT := Color(0.42, 0.4, 0.48)
 var _phases: Array[PhaseData] = []
 var _cards: Array[Button] = []
 var _selected_index := -1
+## Índice do card de vitrine em _cards, ou -1 se ele não foi montado.
+var _teaser_index := -1
 
 
 func _ready() -> void:
@@ -96,11 +106,14 @@ func _build_cards() -> void:
 		card.queue_free()
 	_cards.clear()
 
+	_teaser_index = -1
 	var count := _phases.size()
 	if count == 0:
 		return
-	var available := CONTENT_WIDTH - CARD_SEPARATION * float(count - 1)
-	var card_width := clampf(floorf(available / float(count)), CARD_MIN_WIDTH, CARD_MAX_WIDTH)
+	# O card de vitrine ocupa espaço na linha como qualquer outro.
+	var total := count + 1
+	var available := CONTENT_WIDTH - CARD_SEPARATION * float(total - 1)
+	var card_width := clampf(floorf(available / float(total)), CARD_MIN_WIDTH, CARD_MAX_WIDTH)
 
 	for index in range(count):
 		var phase := _phases[index]
@@ -136,7 +149,67 @@ func _build_cards() -> void:
 		card_row.add_child(card)
 		_cards.append(card)
 
+	_build_teaser_card(card_width)
 	_refresh_card_styles()
+
+
+## Card sem fase por trás: anuncia que a campanha continua, sem prometer quando.
+func _build_teaser_card(card_width: float) -> void:
+	var card := Button.new()
+	card.name = "PhaseCardTeaser"
+	card.custom_minimum_size = Vector2(card_width, CARD_HEIGHT)
+	card.focus_mode = Control.FOCUS_ALL
+	_teaser_index = _cards.size()
+	card.pressed.connect(_select_phase.bind(_teaser_index, true))
+
+	# As correntes entram antes do texto, para ficarem atrás dele. Sem a arte o
+	# card ainda lê como trancado, pelo "???" e pelo status.
+	card.clip_contents = true
+	var chains := _load_chains_texture()
+	if chains != null:
+		var overlay := TextureRect.new()
+		overlay.name = "Chains"
+		overlay.texture = chains
+		overlay.anchor_right = 1.0
+		overlay.anchor_bottom = 1.0
+		overlay.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		overlay.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		overlay.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		overlay.modulate = Color(1, 1, 1, 0.55)
+		card.add_child(overlay)
+
+	var box := VBoxContainer.new()
+	box.name = "Content"
+	box.anchor_right = 1.0
+	box.anchor_bottom = 1.0
+	box.offset_left = 14.0
+	box.offset_top = 14.0
+	box.offset_right = -14.0
+	box.offset_bottom = -14.0
+	box.alignment = BoxContainer.ALIGNMENT_CENTER
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.add_theme_constant_override("separation", 10)
+	card.add_child(box)
+
+	box.add_child(_card_label("Order", TEASER_ORDER_TEXT, 10, Color(0.5, 0.48, 0.56)))
+	box.add_child(_card_label("Name", TEASER_NAME, 22, LOCKED_ACCENT, true))
+	box.add_child(_card_label("Anchors", "???", 9, Color(0.5, 0.48, 0.56)))
+	box.add_child(_card_label("Status", TEASER_STATUS, 10, LOCKED_ACCENT, true))
+
+	card_row.add_child(card)
+	_cards.append(card)
+
+
+func _load_chains_texture() -> Texture2D:
+	if not ResourceLoader.exists(TEASER_CHAINS_PATH):
+		push_warning("PhaseSelection: correntes ausentes em \"%s\"." % TEASER_CHAINS_PATH)
+		return null
+	return ResourceLoader.load(TEASER_CHAINS_PATH) as Texture2D
+
+
+func _is_teaser(index: int) -> bool:
+	return _teaser_index >= 0 and index == _teaser_index
 
 
 func _card_label(node_name: String, text: String, size: int, color: Color,
@@ -160,7 +233,7 @@ func _card_label(node_name: String, text: String, size: int, color: Color,
 
 func _anchors_summary(phase: PhaseData) -> String:
 	var count := phase.get_anchor_count()
-	return "%d ANCORA" % count if count == 1 else "%d ANCORAS" % count
+	return PixelText.fit("%d ÂNCORA" % count if count == 1 else "%d ÂNCORAS" % count)
 
 
 func _status_text(phase: PhaseData) -> String:
@@ -181,9 +254,12 @@ func _status_color(phase: PhaseData) -> Color:
 
 func _refresh_card_styles() -> void:
 	for index in range(_cards.size()):
-		var phase := _phases[index]
-		var unlocked := SaveManager.is_phase_unlocked(phase.phase_id)
-		var accent := phase.accent_color if unlocked else LOCKED_ACCENT
+		var unlocked := false
+		var accent := LOCKED_ACCENT
+		if not _is_teaser(index):
+			var phase := _phases[index]
+			unlocked = SaveManager.is_phase_unlocked(phase.phase_id)
+			accent = phase.accent_color if unlocked else LOCKED_ACCENT
 		var selected := index == _selected_index
 		var card := _cards[index]
 		card.add_theme_stylebox_override("normal", _make_card_style(accent, selected, unlocked))
@@ -215,21 +291,36 @@ func _make_card_style(accent: Color, selected: bool, unlocked: bool) -> StyleBox
 
 
 func _select_relative(step: int) -> void:
-	if _phases.is_empty():
+	if _cards.is_empty():
 		return
-	var next_index := wrapi(_selected_index + step, 0, _phases.size())
+	var next_index := wrapi(_selected_index + step, 0, _cards.size())
 	_select_phase(next_index, true)
 	_cards[next_index].grab_focus()
 
 
 func _select_phase(index: int, play_sound: bool = true) -> void:
-	if index < 0 or index >= _phases.size() or index == _selected_index:
+	if index < 0 or index >= _cards.size() or index == _selected_index:
 		return
 	_selected_index = index
 	if play_sound:
 		MusicManager.play_ui_click()
 	_refresh_card_styles()
-	_update_details(index)
+	if _is_teaser(index):
+		_update_teaser_details()
+	else:
+		_update_details(index)
+
+
+## Painel da vitrine: promete continuidade sem prometer data.
+func _update_teaser_details() -> void:
+	name_label.text = TEASER_NAME
+	name_label.add_theme_color_override("font_color", LOCKED_ACCENT)
+	status_label.text = TEASER_STATUS
+	status_label.add_theme_color_override("font_color", LOCKED_ACCENT)
+	description_label.text = PixelText.fit(TEASER_DESCRIPTION)
+	anchors_label.text = "Âncoras desconhecidas."
+	start_button.disabled = true
+	start_button.text = "INICIAR"
 
 
 func _update_details(index: int) -> void:
@@ -243,11 +334,11 @@ func _update_details(index: int) -> void:
 	status_label.add_theme_color_override("font_color", _status_color(phase))
 
 	if unlocked:
-		description_label.text = phase.description
+		description_label.text = PixelText.fit(phase.description)
 		var names: Array[String] = []
 		for anchor in phase.get_anchors():
 			names.append(ContentRegistry.get_boss_display_name(anchor.boss_id))
-		anchors_label.text = "Ancoras da Fenda: %s" % PixelText.fit(", ".join(names))
+		anchors_label.text = "Âncoras da Fenda: %s" % PixelText.fit(", ".join(names))
 	else:
 		var previous := _previous_phase_name(phase)
 		description_label.text = "Esta ruptura ainda não foi detectada." if previous.is_empty() \
@@ -266,7 +357,7 @@ func _previous_phase_name(phase: PhaseData) -> String:
 
 
 func _on_start_pressed() -> void:
-	if _selected_index < 0:
+	if _selected_index < 0 or _is_teaser(_selected_index):
 		return
 	var phase := _phases[_selected_index]
 	if not SaveManager.is_phase_unlocked(phase.phase_id):

@@ -120,13 +120,13 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 			if current_lvl == 0:
 				opt.is_new_weapon = true
 				opt.current_level = 0
-				opt.kind_label = "ARMA DIVINA ATRAVESSA O VEU"
+				opt.kind_label = "ARMA DIVINA ATRAVESSA O VÉU"
 				opt.display_text = data.display_name
 				opt.description_text = data.description
 			else:
 				opt.is_new_weapon = false
 				opt.current_level = current_lvl
-				opt.kind_label = "O ECO DESPERTA  ·  NIVEL %d" % (current_lvl + 1)
+				opt.kind_label = "O ECO DESPERTA  ·  NÍVEL %d" % (current_lvl + 1)
 				opt.display_text = data.display_name
 				var weapon := _get_weapon(data.id)
 				if weapon and weapon.has_method("get_next_upgrade_description"):
@@ -138,8 +138,8 @@ func generate_options(count: int = 3) -> Array[UpgradeOption]:
 			var item := data as ItemData
 			var item_level := _item_controller.get_item_level(item.id)
 			opt.current_level = item_level
-			opt.kind_label = "RELIQUIA CONCEDIDA" if item_level == 0 \
-				else "A RELIQUIA RESSOA  ·  NIVEL %d" % (item_level + 1)
+			opt.kind_label = "RELÍQUIA CONCEDIDA" if item_level == 0 \
+				else "A RELÍQUIA RESSOA  ·  NÍVEL %d" % (item_level + 1)
 			opt.display_text = item.display_name
 			opt.description_text = item.get_level_description(item_level + 1)
 			

@@ -12,5 +12,5 @@ contact_damage = 24.0
 score_value = 1800
 visual_size = 124.0
 sprite_directory = "res://assets/sprites/bosses/cerberus/idle/rotations"
-epithet = "O NOVO PORTAO"
-presentation_text = "Guardava a passagem dos mortos, e nao sabe fazer outra coisa. Agora trata a ruptura como o portao que perdeu, e vigia os dois lados. Enquanto ele respirar, nada que atravessou volta, e tudo que vem continua vindo."
+epithet = "O NOVO PORTÃO"
+presentation_text = "Guardava a passagem dos mortos, e não sabe fazer outra coisa. Agora trata a ruptura como o portão que perdeu, e vigia os dois lados. Enquanto ele respirar, nada que atravessou volta, e tudo que vem continua vindo."
