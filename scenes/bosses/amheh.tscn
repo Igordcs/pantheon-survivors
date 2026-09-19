@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://scripts/enemies/anchor_boss.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/amheh_boss.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/combat/health_component.gd" id="2"]
 [ext_resource type="Resource" path="res://resources/bosses/amheh_data.tres" id="3"]
 
@@ -14,9 +14,8 @@ script = ExtResource("1")
 boss_data = ExtResource("3")
 contact_radius = 43.0
 attack_cooldown = 3.2
-pulse_damage = 29.0
-pulse_radius = 120.0
-chase_speed_multiplier = 1.08
+gravefire_damage = 18.0
+gravefire_tick_damage = 6.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
