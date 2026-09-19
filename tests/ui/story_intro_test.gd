@@ -132,8 +132,12 @@ func _test_intro_pages() -> void:
 		_fail("The first page should show the 1 / 4 progress indicator.")
 	if intro.back_button.visible:
 		_fail("The back button should stay hidden on the first page.")
-	if intro.title_label.text != String(STORY_INTRO_SCRIPT.PAGES[0]["title"]):
+	# Os dados guardam portugues acentuado; a tela mostra o que a fonte suporta.
+	var first_title := String(STORY_INTRO_SCRIPT.PAGES[0]["title"])
+	if intro.title_label.text != PixelText.fit(first_title):
 		_fail("The first page should show the first title.")
+	if first_title != "O VÉU SE ROMPEU":
+		_fail("The stored title should keep its Portuguese accents.")
 
 	for index in range(page_count):
 		intro._go_to_page(index)

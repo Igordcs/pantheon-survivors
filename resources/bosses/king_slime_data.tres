@@ -10,5 +10,5 @@ max_health = 1500.0
 speed = 21.0
 contact_damage = 18.0
 score_value = 1000
-epithet = "A PRIMEIRA ANCORA"
-presentation_text = "Nao e uma criatura: e o que escorre da ruptura. Residuo magico de mil mitologias, coagulado em algo que aprendeu a se mover e a crescer. Enquanto ele pulsar, a Fenda continua sangrando neste campo."
+epithet = "A PRIMEIRA ÂNCORA"
+presentation_text = "Não é uma criatura: é o que escorre da ruptura. Resíduo mágico de mil mitologias, coagulado em algo que aprendeu a se mover e a crescer. Enquanto ele pulsar, a Fenda continua sangrando neste campo."

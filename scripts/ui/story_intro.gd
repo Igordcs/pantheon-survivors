@@ -10,7 +10,7 @@ const FADE_IN_DURATION := 0.22
 
 const PAGES := [
 	{
-		"title": "O VEU SE ROMPEU",
+		"title": "O VÉU SE ROMPEU",
 		"body": "Por eras, o Véu separou a Terra dos domínios de Asgard, Duat, do Olimpo e de mundos esquecidos.\n\nMas uma força desconhecida abriu fendas entre as realidades.\n\nAgora monstros de diferentes mitologias atravessam para a Terra.",
 		"image": "res://assets/sprites/ui/story/intro_01_veil_breaking.png",
 		"fallback_color": Color(0.09, 0.07, 0.16, 1.0),
@@ -135,8 +135,8 @@ func _start_page_transition() -> void:
 
 func _apply_current_page() -> void:
 	var page: Dictionary = PAGES[page_index]
-	title_label.text = String(page.get("title", ""))
-	body_label.text = String(page.get("body", ""))
+	title_label.text = PixelText.fit(String(page.get("title", "")))
+	body_label.text = PixelText.fit(String(page.get("body", "")))
 	fallback_rect.color = page.get("fallback_color", Color(0.08, 0.06, 0.12, 1.0))
 	var texture := _load_page_texture(String(page.get("image", "")))
 	page_image.texture = texture

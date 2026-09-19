@@ -136,9 +136,9 @@ func _on_boss_introduced(boss_id: StringName, display_name: String, duration: fl
 ## Marco de progresso da fase, no espírito das mensagens da lore.
 func _on_anchor_sealed(remaining: int) -> void:
 	if remaining > 0:
-		hud.show_run_message("Uma Ancora caiu. A Fenda ainda resiste.", 3.0)
+		hud.show_run_message("Uma Âncora caiu. A Fenda ainda resiste.", 3.0)
 	else:
-		hud.show_run_message("A ultima Ancora caiu. Sele a ruptura.", 3.0)
+		hud.show_run_message("A última Âncora caiu. Sele a ruptura.", 3.0)
 
 
 ## O nome mostrado na barra vem do encontro em curso; o nó é o último recurso.

@@ -73,8 +73,8 @@ theme_override_colors/font_color = Color(0.85, 0.83, 0.89, 1)
 theme_override_constants/line_spacing = 8
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 9
-text = "Os Ecos Divinos que voce libertou abriram passagem no Veu.
-Escolha a dadiva que atravessa."
+text = "Os Ecos Divinos que você libertou abriram passagem no Véu.
+Escolha a dádiva que atravessa."
 horizontal_alignment = 1
 autowrap_mode = 3
 
