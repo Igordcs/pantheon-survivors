@@ -73,15 +73,30 @@ func _update_time_ui() -> void:
 
 
 func _setup_map_progression() -> void:
-	var scene_name := get_tree().current_scene.name.to_lower()
+	# 1. Busca o ID oficial do mapa registrado no singleton Global ou no WorldGenerator
+	var current_map_id: StringName = &"field"
 	
-	if "ice" in scene_name or "snow" in scene_name or "gelo" in scene_name:
-		_generate_ice_progression()
-	elif "wasteland" in scene_name or "desert" in scene_name or "apocalipse" in scene_name:
-		_generate_wasteland_progression()
+	var global_state := get_node_or_null("/root/Global")
+	if global_state != null and global_state.get("selected_map_id") != null:
+		current_map_id = global_state.get("selected_map_id")
 	else:
-		_generate_plains_progression()
+		var world_gen := get_tree().get_first_node_in_group("world_generator")
+		if world_gen and "active_map" in world_gen and world_gen.active_map != null:
+			current_map_id = world_gen.active_map.map_id
 
+	print("SpawnDirector — Mapa selecionado para a progressão: ", current_map_id)
+
+	# 2. Distribui a lista de monstros de acordo com o MapCatalog (field, ruins, snow)
+	match current_map_id:
+		&"snow":
+			print("SpawnDirector: Carregando ondas do mapa de NEVE / GELO.")
+			_generate_ice_progression()
+		&"ruins":
+			print("SpawnDirector: Carregando ondas do mapa de RUÍNAS / TERRA DEVASTADA.")
+			_generate_wasteland_progression()
+		_:
+			print("SpawnDirector: Carregando ondas do mapa de CAMPOS / PLANÍCIE.")
+			_generate_plains_progression()
 
 # MAPA 1: PLANÍCIE
 func _generate_plains_progression() -> void:
